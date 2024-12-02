@@ -57,6 +57,7 @@ app.get('/', (req, res) => {
     res.send("Hello");
   });
 
+  //This is for admin login yeah?
 app.post('/login', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -77,6 +78,8 @@ app.post('/login', (req, res) => {
   res.redirect("/")
 });
 
+//This code could be really useful to keep for when we need to
+// edit events//volunteers//users
 app.get('/editPoke/:id', (req, res) => {
 let id = req.params.id;
 // Query the Pokémon by ID first
