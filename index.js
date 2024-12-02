@@ -1,7 +1,4 @@
-/*
-Davis Larson
-Assignment 4 - Connects to a pokemon database allowing for displaying, editing, creating and deleting of data
-*/
+
 
 let express = require("express");
 
@@ -54,7 +51,7 @@ app.get('/', (req, res) => {
     //     console.log('Error querying database:', error);
     //     res.status(500).send('Internal Server Error');
     //   });
-    res.send("Hello");
+    res.send("Hello is this working?");
   });
 
 app.post('/login', (req, res) => {
