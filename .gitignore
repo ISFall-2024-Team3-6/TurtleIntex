@@ -128,3 +128,8 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# For Elastic Beanstalk and Auto Deploy
+node_modules/
+.DS_Store
+*.zip
