@@ -308,17 +308,10 @@ app.post('/volunteers/:id', (req, res) => {
   const volunteer_zip = req.body.volunteer_zip
   const volunteer_referral_method = req.body.volunteer_referral_method
   const volunteer_availability = req.body.volunteer_availability; // This will be an array of selected days
-  
+
   const volunteer_hours_willing = parseInt(req.body.volunteer_hours_willing)
-
   const sewing_level = req.body.sewing_level
-
-  
-  
   const preferred_contact = req.body.preferred_contact
-
-  
-
 
   // Update the Volunteer in the database
   knex('volunteer') // pokemon is the table 
@@ -343,17 +336,8 @@ app.post('/volunteers/:id', (req, res) => {
       volunteer_availability: JSON.stringify(volunteer_availability), // Store the array as a JSON string (IN YOUR postgreSQL DATABASE > MAKE SURE THE TYPE OF DATA IS JSONB, not varchar)
 
       volunteer_hours_willing: volunteer_hours_willing,
-
       sewing_level: sewing_level,
-
-      
-
-      preferred_contact: preferred_contact, 
-
-       
-
-    })
-
+      preferred_contact: preferred_contact,   
     })
     .then(() => {
       res.redirect('/'); // Redirect to the list of Pokémon after saving; go back to the route/home page!!! IT IS THE ROUTE, not an ejs file
@@ -361,7 +345,8 @@ app.post('/volunteers/:id', (req, res) => {
     .catch(error => {
       console.error('Error updating Volunteer:', error);
       res.status(500).send('Internal Server Error');
-    });
+    })
+  });
 
 
   
