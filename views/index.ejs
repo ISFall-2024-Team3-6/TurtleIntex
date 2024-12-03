@@ -28,10 +28,26 @@
 </head>
 <body>
 
+<<<<<<< HEAD
+            
+            </td>
+          </tr>
+        <% }) %>
+      <% } else { %>
+        <tr>
+          <td colspan="7">No data available</td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+  <form action="/addPoke" method="GET" style="display: flex; justify-content: center; margin: 20px 0;">
+    <button type="submit">Add</button>
+=======
 <% if (admin) { %> 
   <p>Logged in as an Admin</p>
   <form action="/logout">
     <button type="submit" class="btn btn-danger">Logout</button>
+>>>>>>> b4a0c9022b4047930dee2111a77d3d1e879fedf5
   </form>
 <% } else { %>
   <p>Admin is not logged in</p>
