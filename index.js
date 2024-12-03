@@ -21,18 +21,21 @@ let admin = false;
 const knex = require("knex") ({
   client : "pg",
   connection : {
-      host : process.env.RDS_HOSTNAME || "localhost",
-      user : process.env.RDS_USERNAME || "postgres",
-      password : process.env.RDS_PASSWORD || "iowa",
-      database : process.env.RDS_DB_NAME || "assignment3a",
+      host : process.env.RDS_HOSTNAME || "awseb-e-ivmpumma37-stack-awsebrdsdatabase-upatlbu0rklt.cp6ss68iifrg.us-east-1.rds.amazonaws.com",
+      user : process.env.RDS_USERNAME || "intexUser",
+      password : process.env.RDS_PASSWORD || "Thisisforintex1!",
+      database : process.env.RDS_DB_NAME || "ebdb",
       port : process.env.RDS_PORT ||  5432,
-      ssl : process.env.DB_SSL ? {rejectUnauthorized : false} : false
+      ssl : process.env.DB_SSL ? {rejectUnauthorized : false} : {rejectUnauthorized : false}
   }
 });
 
 // Route to display Pokemon records
 app.get('/', (req, res) => {
-    res.render('index', {admin});
+  knex.select('*').from('events')
+  .then(events => {
+    res.render('index', {events, admin});
+  })
   });
 
 app.get('/eventSignup/', (req, res) => {
@@ -282,16 +285,6 @@ app.post('/events/:id', (req, res) => {
        res.status(500).send('Internal Server Error');
      });
  });
-
-
-
-
-//  this is the post route to delete an event
-
-    <form action="/deleteEvent/<%= row.id %>" method="POST" style="display:inline;">
-      <button type="submit" onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
-    </form>
-
 
 
   // POST ROUTE FOR DELETING characters
