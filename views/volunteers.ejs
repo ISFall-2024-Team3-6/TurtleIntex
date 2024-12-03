@@ -84,7 +84,7 @@
       <option value="word_of_mouth" <%= events.volunteer_referral_method === 'word_of_mouth' ? 'selected' : '' %>>Word of Mouth</option>
     </select>
 
-
+    <!-- GET RID OF VOLUNTEER AVAILABILITY -->
     <!-- Volunteer Availability -> Volunteer can select multiple options for days when they are availble (Mon-Sat) -->
     <label>Volunteer Availability: (can select multiple options)</label><br>
     <input type="checkbox" id="monday" name="volunteer_availability" value="Monday" <%= events.volunteer_availability.includes('Monday') ? 'checked' : '' %>>
@@ -142,7 +142,7 @@
     </label>
 
 
-    
+    <!-- TRUE/FALSE -> values for whether a volunteer is an admin or a volunteer team lead -->
 
 
 

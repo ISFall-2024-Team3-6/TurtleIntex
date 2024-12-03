@@ -37,85 +37,159 @@
     <!-- so you can find the record and update it now -->
     
 
-    <!-- Event Name -->
-    <label for="event_name">Event Name</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="text" id="event_name" name="event_name" value="<%= events.event_name %>">
+    <!-- Contact First Name -->
+    <label for="contact_first_name">First Name</label> 
+    <input type="text" id="contact_first_name" name="contact_first_name" value="<%= events.contact_first_name %>" required>
 
-
-    <!-- Event Description (Radio Buttons) -->
-    <label>Event Description</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <label>
-      <input type="radio" name="description" value="S" <%= events.description === 'M' ? 'checked' : '' %>> Sewing
-    </label>
-    <label>
-      <input type="radio" name="description" value="NS" <%= events.description === 'F' ? 'checked' : '' %>> Non-Sewing
-    </label>
-    <label>
-      <input type="radio" name="description" value="B" <%= events.description === 'U' ? 'checked' : '' %>> Both
-    </label>
-
-
-    <!-- Date of the Event -->
-    <label for="event_date">Event Date</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="date" id="event_date" name="event_date" value="<%= events.event_date.toISOString().split('T')[0] %>" required>
-
-
-    <!-- BackUp Date 1 of the Event -->
-    <label for="back_up_date_1">Backup 1 Event Date</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="date" id="back_up_date_1" name="back_up_date_1" value="<%= events.back_up_date_1.toISOString().split('T')[0] %>">
-
-
-    <!-- BackUp Date 2 of the Event -->
-    <label for="back_up_date_2">Backup 2 Event Date</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="date" id="back_up_date_2" name="back_up_date_2" value="<%= events.back_up_date_2.toISOString().split('T')[0] %>">
-    
-
-    <!-- Event Start Time -->
-    <label for="event_start_time">Select a start time for the event:</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="time" id="event_start_time" name="event_start_time" min="08:00" max="19:00">
-
-
-    <!-- Event Duration Projected -->
-    <label for="event_duration_projected">How long will this event last?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="event_duration_projected" name="event_duration_projected" value="<%= events.event_duration_projected %>" required>
-
-
-    <!-- Event Duration Actual -->
-    <label for="event_duration_actual">How long did this event last?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="event_duration_actual" name="event_duration_actual" value="<%= events.event_duration_actual || events.event_duration_projected %>" required>
-    <!-- It will use the event_duration_actual value if it exists; otherwise, it will default to the event_duration_projected value. -->
-
-
-    <!-- Event Address -->
-    <label for="event_address">Event Address</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="text" id="event_address" name="event_address" value="<%= events.event_address %>" required>
-
-
-    <!-- Expected Number of Attendees --> 
-    <label for="event_num_participants_projected">Number of Expected Participants</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="event_num_participants_projected" name="event_num_participants_projected" value="<%= events.event_num_participants_projected %>" required>
-
-
-    <!-- Actual Number of Attendees -->
-    <label for="event_num_participants_actual">Number of Actual Participants</label>
-    <input type="number" id="event_num_participants_actual" name="event_num_participants_actual" value="<%= events.event_num_participants_actual || events.event_num_participants_projected %>" required>
-    <!-- It will use the event_num_participants_actual value if it exists; otherwise, it will default to the event_num_participants_projected value. -->
-
-
-    <!-- Event Contact Name -->
-    <label for="requestee_name">What is a good contact name?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="text" id="requestee_name" name="requestee_name" value="<%= events.requestee_name %>" required>
+    <!-- Contact Last Name -->
+    <label for="contact_last_name">Last Name</label> 
+    <input type="text" id="contact_last_name" name="contact_last_name" value="<%= events.contact_last_name %>" required>
 
 
     <!-- Event Contact Phone Number -->
-    <label for="requestee_phone">What is a good phone number?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="requestee_phone" name="requestee_phone" value="<%= events.requestee_phone %>" required>
+    <label for="contact_phone">What is a good phone number?</label> 
+    <input type="number" id="contact_phone" name="contact_phone" value="<%= events.contact_phone %>" required>
 
 
     <!-- Event Contact Email -->
-    <label for="requestee_email">What is a good email?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="text" id="requestee_email" name="requestee_email" value="<%= events.requestee_email %>" required>
+    <label for="contact_email">What is a good email?</label> 
+    <input type="text" id="contact_email" name="contact_email" value="<%= events.contact_email %>" required>
+
+
+    <!-- Perferred Contact Method (Radio Buttons) -->
+    <label>What is your perferred contact method? </label> 
+    <label>
+      <input type="radio" name="contact_perferred" value="phone" <%= volunteers.contact_perferred === 'phone' ? 'checked' : '' %>> Phone
+    </label>
+    <label>
+      <input type="radio" name="contact_perferred" value="email" <%= volunteers.contact_perferred === 'email' ? 'checked' : '' %>> Email
+    </label>
     
+
+
+
+
+
+
+    <!-- Event Type (Radio Buttons) -->
+    <label>Event Type</label> 
+    <label>
+      <input type="radio" name="event_type" value="S" <%= events.event_type === 'S' ? 'checked' : '' %>> Sewing
+    </label>
+    <label>
+      <input type="radio" name="event_type" value="NS" <%= events.event_type === 'NS' ? 'checked' : '' %>> Non-Sewing
+    </label>
+    <label>
+      <input type="radio" name="event_type" value="B" <%= events.event_type === 'B' ? 'checked' : '' %>> Both
+    </label>
+
+
+
+    <!-- Event Date -->
+    <label for="event_date">Event Date</label> 
+    <input type="date" id="event_date" name="event_date" value="<%= events.event_date.toISOString().split('T')[0] %>" required>
+
+
+    <!-- Event Backup Date 1 (required) -->
+    <label for="event_backup_date">Event Backup Date</label> 
+    <input type="date" id="event_backup_date" name="event_backup_date" value="<%= events.event_backup_date.toISOString().split('T')[0] %>" required>
+
+
+    <!-- Event Backup Date 2 -->
+    <label for="event_backup_date_2">Event Backup Date 2</label> 
+    <input type="date" id="event_backup_date_2" name="event_backup_date_2" value="<%= events.event_backup_date_2.toISOString().split('T')[0] %>">
+    
+
+    <!-- Event Start Time -->
+    <label for="event_start_time">Select a start time for the event:</label> 
+    <input type="time" id="event_start_time" name="event_start_time" min="08:00" max="19:00">
+
+
+    <!-- Event Expected Duration -->
+    <label for="event_expected_duration">How long do you expect the event last?</label> 
+    <input type="number" id="event_expected_duration" name="event_expected_duration" value="<%= events.event_expected_duration %>" required>
+
+
+    <!-- Event Acutal Duration -->
+    <label for="event_actual_duration">How long did this event actually last?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="number" id="event_actual_duration" name="event_actual_duration" value="<%= events.event_actual_duration || events.event_expected_duration %>" required>
+    <!-- It will use the event_actual_duration value if it exists; otherwise, it will default to the event_expected_duration value. -->
+
+
+    <!-- Event Street Address -->
+    <label for="event_address">Event Street Address</label> 
+    <input type="text" id="event_address" name="event_address" value="<%= events.event_address %>" required>
+
+
+    <!-- Event city -->
+    <label for="event_city">Event City</label> 
+    <input type="text" id="event_city" name="event_city" value="<%= events.event_city %>" required>
+ 
+    <!-- Event State -->
+    <label for="event_state">Event State</label> 
+    <input type="text" id="event_state" name="event_state" value="<%= events.event_state %>" required>
+ 
+    <!-- Event Zipcode -->
+    <label for="event_zip">Event Zipcode</label> 
+    <input type="number" id="event_zip" name="event_zip" value="<%= events.event_zip %>" required>
+ 
+
+    <!-- Event Space Capacity -->
+    <label for="event_space_capacity">Event Space Capacity</label> 
+    <input type="number" id="event_space_capacity" name="event_space_capacity" value="<%= events.event_space_capacity %>" required>
+
+
+
+
+    <!-- Table Type (Radio Buttons) -->
+    <label>Select the majority of table types we will use at your event:</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <label>
+      <input type="radio" name="table_types" value="round" <%= events.table_type === 'round' ? 'checked' : '' %>> Round
+    </label>
+    <label>
+      <input type="radio" name="table_types" value="rectangular" <%= events.table_type === 'rectangular' ? 'checked' : '' %>> Rectangular
+    </label>
+    <label>
+      <input type="radio" name="table_types" value="square" <%= events.table_type === 'square' ? 'checked' : '' %>> Square
+    </label>
+
+    
+    
+    <!-- Number of Sewers --> 
+    <label for="number_sewers">Number of People able to Sew: </label> 
+    <input type="number" id="number_sewers" name="number_sewers" value="<%= events.number_sewers %>" required>
+
+
+    <!-- Number of Machines Volunteered --> 
+    <label for="machines_volunteered">Number of Sewing Machines Participants can bring: </label> 
+    <input type="number" id="machines_volunteered" name="machines_volunteered" value="<%= events.machines_volunteered %>" required>
+    
+    
+    
+    <!-- Expected Number of Adults --> 
+    <label for="event_expected_adults">Number of Expected Adult Participants</label> 
+    <input type="number" id="event_expected_adults" name="event_expected_adults" value="<%= events.event_expected_adults %>" required>
+
+    <!-- Expected Number of Children --> 
+    <label for="event_expected_children">Number of Expected Child Participants</label> 
+    <input type="number" id="event_expected_children" name="event_expected_children" value="<%= events.event_expected_children %>" required>
+
+    
+    
+    <!-- Actual Number of Adults -->
+    <label for="event_actual_adults">Number of Actual Adult Participants</label>
+    <input type="number" id="event_actual_adults" name="event_actual_adults" value="<%= events.event_actual_adults || events.event_expected_adults %>" required>
+    <!-- It will use the event_num_participants_actual value if it exists; otherwise, it will default to the event_num_participants_projected value. -->
+
+
+    <!-- Actual Number of Children -->
+    <label for="event_actual_children">Number of Actual Children Participants</label>
+    <input type="number" id="event_actual_children" name="event_actual_children" value="<%= events.event_actual_children || events.event_expected_children %>" required>
+    <!-- It will use the event_num_participants_actual value if it exists; otherwise, it will default to the event_num_participants_projected value. -->
+
+
+    
+
 
     <!-- Jen Shares Story (Checkbox) -->
     <label for="jen_story"> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
@@ -129,33 +203,78 @@
 
     <!-- SHOULD WE ADD THESE? OR HOW SHOULD WE HANDLE THESE -> THEY ARE NOT ON THE OG EVENT REQUEST FORM -->
 
-    <!-- Pockets Made -->
-    <label for="pockets">How many pockets were made?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="pockets" name="pockets" value="<%= events.pockets %>" required>
 
-    <!-- Collars Made -->
-    <label for="collars">How many collars were made?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="collars" name="collars" value="<%= events.collars %>" required>
+    <!-- POCKETS -->
+    <!-- Number of Supplies to make this many Pockets -->
+    <label for="pockets_brought">How many pockets can we make with the material we've brought?</label> 
+    <input type="number" id="pockets_brought" name="pockets_brought" value="<%= events.pockets_brought %>" required>
 
-    <!-- Envenlopes Made -->
-    <label for="envenlopes">How many envenlopes were made?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="envenlopes" name="envenlopes" value="<%= events.envenlopes %>" required>
+    <!-- Pockets In Progress -->
+    <label for="pockets_in_progress">How many pockets are in process?</label> 
+    <input type="number" id="pockets_in_progress" name="pockets_in_progress" value="<%= events.pockets_in_progress %>" required>
 
-    <!-- Vests Made -->
-    <label for="vests">How many vests were made?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="vests" name="vests" value="<%= events.vests %>" required>
+    <!-- Pockets Finished -->
+    <label for="pockets_finished">How many pockets were finished at the event?</label> 
+    <input type="number" id="pockets_finished" name="pockets_finished" value="<%= events.pockets_finished %>" required>
 
-    <!-- Total products (not completed, just completed individual pieces) -->
-    <label for="event_products_produced">How many total individual pieces were made?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="event_products_produced" name="event_products_produced" value="<%= events.event_products_produced %>" required>
 
-    <!-- Completed Products -->
-    <label for="completed_products">How many completed products were made?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="completed_products" name="completed_products" value="<%= events.completed_products %>" required>
+
+
+
+    <!-- COLLARS -->
+    <!-- Number of Supplies to make this many Collars -->
+    <label for="collars_brought">How many collars can we make with the material we've brought?</label> 
+    <input type="number" id="collars_brought" name="collars_brought" value="<%= events.collars_brought %>" required>
+
+    <!-- Collars In Progress -->
+    <label for="collars_in_progress">How many collars are in process?</label> 
+    <input type="number" id="collars_in_progress" name="collars_in_progress" value="<%= events.collars_in_progress %>" required>
+
+    <!-- Collars Finished -->
+    <label for="collars_finished">How many collars were finished at the event?</label> 
+    <input type="number" id="collars_finished" name="collars_finished" value="<%= events.collars_finished %>" required>
+
+
+
+
+
+    <!-- ENVENLOPES -->
+    <!-- Number of Supplies to make this many Envenlopes -->
+    <label for="envenlopes_brought">How many envenlopes can we make with the material we've brought?</label> 
+    <input type="number" id="envenlopes_brought" name="envenlopes_brought" value="<%= events.envenlopes_brought %>" required>
+
+    <!-- Envenlopes In Progress -->
+    <label for="envenlopes_in_progress">How many envenlopes are in process?</label> 
+    <input type="number" id="envenlopes_in_progress" name="envenlopes_in_progress" value="<%= events.envenlopes_in_progress %>" required>
+
+    <!-- Envenlopes Finished -->
+    <label for="envenlopes_finished">How many envenlopes were finished at the event?</label> 
+    <input type="number" id="envenlopes_finished" name="envenlopes_finished" value="<%= events.envenlopes_finished %>" required>
+
 
     
 
 
+    <!-- VESTS -->
+    <!-- Number of Supplies to make this many Vests -->
+    <label for="vests_brought">How many vests can we make with the material we've brought?</label> 
+    <input type="number" id="vests_brought" name="vests_brought" value="<%= events.vests_brought %>" required>
+
+    <!-- Vests In Progress -->
+    <label for="vests_in_progress">How many vests are in process?</label> 
+    <input type="number" id="vests_in_progress" name="vests_in_progress" value="<%= events.vests_in_progress %>" required>
+
+    <!-- Vests Finished -->
+    <label for="vests_finished">How many vests were finished at the event?</label> 
+    <input type="number" id="vests_finished" name="vests_finished" value="<%= events.vests_finished %>" required>
+
+
+
+    <!-- Completed Products -->
+    <label for="completed_product">How many completed products were made?</label> 
+    <input type="number" id="completed_product" name="completed_product" value="<%= events.completed_product %>" required>
+
+    
 
 
     <!-- This allows you to delete events  -->
