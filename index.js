@@ -1,8 +1,3 @@
-/*
-Davis Larson
-Assignment 4 - Connects to a pokemon database allowing for displaying, editing, creating and deleting of data
-*/
-
 let express = require("express");
 
 // Create the express app
@@ -15,9 +10,12 @@ const port = process.env.PORT || 3000;
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+// Serve static files from the "public" directory
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(express.urlencoded({extended: true}));
 
-let security = false;
+let admin = false;
 
 // Connects to the locally hosted database
 const knex = require("knex") ({
@@ -34,28 +32,93 @@ const knex = require("knex") ({
 
 // Route to display Pokemon records
 app.get('/', (req, res) => {
-    // knex('pokemon')
-    //   .join('poke_type', 'pokemon.poke_type_id', '=', 'poke_type.id')
-    //   .select(
-    //     'pokemon.id',
-    //     'pokemon.description',
-    //     'pokemon.base_total',
-    //     'pokemon.date_created',
-    //     'pokemon.active_poke',
-    //     'pokemon.gender',
-    //     'pokemon.poke_type_id',
-    //     'poke_type.description as poke_type_description'
-    //   )
-    //   .then(pokemon => {
-    //     // Render the index.ejs template and pass the data
-    //     res.render('index', { pokemon, security });
-    //   })
-    //   .catch(error => {
-    //     console.log('Error querying database:', error);
-    //     res.status(500).send('Internal Server Error');
-    //   });
-    res.send("Hello");
+    res.render('index', {admin});
   });
+
+app.get('/eventSignup/', (req, res) => {
+    res.render('eventSignup')
+});
+
+app.get('/volunteerSignup/', (req, res) => {
+
+  const states = [
+    "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
+    "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
+    "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
+    "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
+    "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
+];
+
+  res.render('volunteerSignup', {states} )
+});
+
+app.post('/volunteerSignup', (req, res) => {
+
+  const first_name = req.body.first_name
+  const last_name = req.body.last_name
+  const volunteerEmail = req.body.volunteerEmail
+  const volunteerPhone = req.body.volunteerPhone
+  const volunteerStreetAddress = req.body.volunteerStreetAddress
+  const volunteerCity = req.body.volunteerCity
+  const volunteerState = req.body.volunteerState
+  const volunteerZip = req.body.volunteerZip
+  const volunteerReferral = req.body.volunteerReferral
+  const volunteerHours = req.body.volunteerHours
+  const volunteerSewing = req.body.volunteerSewing
+
+  // knex('volunteers')
+  //   .insert({
+  //     first_name: first_name.toUpperCase(), // Ensure first name is uppercase
+  //     last_name: last_name.toUpperCase(),
+  //     volunteerEmail: volunteerEmail,
+  //     volunteerPhone: volunteerPhone,
+  //     volunteerStreetAddress: volunteerStreetAddress,
+  //     volunteerCity: volunteerCity,
+  //     volunteerState: volunteerState,
+  //     volunteerZip: volunteerZip,
+  //     volunteerReferral: volunteerReferral,
+  //     volunteerHours: volunteerHours,
+  //     volunteerSewing: volunteerSewing
+  //   })
+
+    .then(() => {
+      res.redirect('/volunteerSignup'); // Redirect to the character list page after adding
+  })
+  .catch(error => {
+    console.error('Error adding Volunteer:', error);
+    res.status(500).send('Internal Server Error');
+});
+})
+
+app.get('/sponsors/', (req, res) => {
+    res.render('sponsors')
+});
+
+app.get('/donation/', (req, res) => {
+  res.render('donation')
+});
+
+app.get('/About/contact', (req, res) => {
+  res.render('About/contact')
+});
+
+app.get('/About/faq', (req, res) => {
+  res.render('About/faq')
+});
+
+app.get('/About/ourTech', (req, res) => {
+  res.render('About/ourTech')
+});
+
+app.get('/About/story', (req, res) => {
+  res.render('About/story')
+});
+
+//This is for admin login yeah?
+
+app.get('/adminLogin', (req, res) => {
+    res.render('adminLogin')
+});
 
 app.post('/login', (req, res) => {
   const username = req.body.username;
@@ -67,22 +130,21 @@ app.post('/login', (req, res) => {
           .where({ username, password }) // Replace with hashed password comparison in production
           .first(); // Returns the first matching record
       if (user) {
-          security = true;
+          admin = true;
       } else {
-          security = false;
+          admin = false;
       }
+      res.render('index', { admin });
   } catch (error) {
       res.status(500).send('Database query failed: ' + error.message);
   }
   res.redirect("/")
 });
 
-
-
-
-
-
-
+app.get('/logout', (req, res) => {
+  admin = false;
+  res.redirect('/');
+});
 
 // THIS IS FOR EVENTS.EJS -> FOR THE ADMIN TO EDIT EVENTS
 app.get('/events/:id', (req, res) => {
@@ -382,3 +444,24 @@ app.post('/addPoke', (req, res) => {
 
 // Allows the server to listen
 app.listen(port, () => console.log("Express App has started and server is listening on http://localhost:" + port));
+
+    // knex('pokemon')
+    //   .join('poke_type', 'pokemon.poke_type_id', '=', 'poke_type.id')
+    //   .select(
+    //     'pokemon.id',
+    //     'pokemon.description',
+    //     'pokemon.base_total',
+    //     'pokemon.date_created',
+    //     'pokemon.active_poke',
+    //     'pokemon.gender',
+    //     'pokemon.poke_type_id',
+    //     'poke_type.description as poke_type_description'
+    //   )
+    //   .then(pokemon => {
+    //     // Render the index.ejs template and pass the data
+    //     res.render('index', { pokemon, security });
+    //   })
+    //   .catch(error => {
+    //     console.log('Error querying database:', error);
+    //     res.status(500).send('Internal Server Error');
+    //   });
