@@ -21,18 +21,21 @@ let admin = false;
 const knex = require("knex") ({
   client : "pg",
   connection : {
-      host : process.env.RDS_HOSTNAME || "localhost",
-      user : process.env.RDS_USERNAME || "postgres",
-      password : process.env.RDS_PASSWORD || "iowa",
-      database : process.env.RDS_DB_NAME || "assignment3a",
+      host : process.env.RDS_HOSTNAME || "awseb-e-ivmpumma37-stack-awsebrdsdatabase-upatlbu0rklt.cp6ss68iifrg.us-east-1.rds.amazonaws.com",
+      user : process.env.RDS_USERNAME || "intexUser",
+      password : process.env.RDS_PASSWORD || "Thisisforintex1!",
+      database : process.env.RDS_DB_NAME || "ebdb",
       port : process.env.RDS_PORT ||  5432,
-      ssl : process.env.DB_SSL ? {rejectUnauthorized : false} : false
+      ssl : process.env.DB_SSL ? {rejectUnauthorized : false} : {rejectUnauthorized : false}
   }
 });
 
 app.get('/', (req, res) => {
-  res.render('index', {admin})
-});
+  knex.select('*').from('events')
+  .then(events => {
+    res.render('index', {events, admin});
+  })
+  });
 
 app.get('/eventSignup/', (req, res) => {
     res.render('eventSignup')
@@ -145,33 +148,21 @@ app.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
+
+
+
 // THIS IS FOR EVENTS.EJS -> FOR THE ADMIN TO EDIT EVENTS
+
 app.get('/events/:id', (req, res) => {
 let id = req.params.id;
 // Query the Volunteer by ID first
-knex('pokemon') // CHANGE THIS TO THE NAME OF THE TABLE IN THE DATABASE THAT HOLDS EVENTS
+knex('events') 
     .where('id', id)
     .first()
     .then(events => {
     if (!events) {
         return res.status(404).send('Event not found');
     }
-    
-    // WE MAY OR MAY NOT NEED THIS!! I DON'T THINK SO, BECAUSE WE DO NOT NEED TO PULL DATA FROM ANOTHER 
-    // TABLE TO EDIT THE EVENTS, WE JUST NEED TO EDIT A CERTAIN EVENT (DATA FROM THIS EVENT MAY BE EDITIED, IF SO
-    // THEN WE WOULD NEED THIS SEGMENT BELOW)
-    
-    // Query all Pokémon types after fetching the Pokémon
-    knex('poke_type')
-        .select('id', 'description')
-        .then(poke_types => {
-        // Render the edit form and pass both pokemon and poke_types
-        res.render('editPoke', { pokemon, poke_types });
-        })
-        .catch(error => {
-        console.log('Error fetching Pokémon types:', error);
-        res.status(500).send('Internal Server Error');
-        });
     })
     .catch(error => {
     console.log('Error fetching Event for editing:', error);
@@ -179,46 +170,110 @@ knex('pokemon') // CHANGE THIS TO THE NAME OF THE TABLE IN THE DATABASE THAT HOL
     });
 });
 
+
 app.post('/events/:id', (req, res) => {
   const id = req.params.id;
 
-  const event_name = req.body.event_name
-  const description = req.body.description
+
+  const contact_first_name = req.body.contact_first_name
+  const contact_last_name = req.body.contact_last_name
+  const contact_phone = req.body.contact_phone
+  const contact_email = req.body.contact_email
+  const contact_perferred = req.body.contact_perferred
+  const event_type = req.body.event_type
   const event_date = req.body.event_date
-  const back_up_date_1 = req.body.back_up_date_1
-  const back_up_date_2 = req.body.back_up_date_2
+  const event_backup_date = req.body.event_backup_date
+  const event_backup_date_2 = req.body.event_backup_date_2
   const event_start_time = req.body.event_start_time
-  const event_duration_projected = parseInt(req.body.event_duration_projected)
-  const event_duration_actual = parseInt(req.body.event_duration_actual)
+  const event_expected_duration = req.body.event_expected_duration
+  const event_actual_duration = req.body.event_actual_duration
   const event_address = req.body.event_address
-  const event_num_participants_projected = parseInt(req.body.event_num_participants_projected)
-  const event_num_participants_actual = parseInt(req.body.event_num_participants_actual)
-  const requestee_name = req.body.requestee_name
-  const requestee_phone = req.body.requestee_phone
-  const requestee_email = req.body.requestee_email
-  const jen_story = req.body.jen_story === 'true'
+  const event_city = req.body.event_city
+  const event_state = req.body.event_state
+  const event_zip = req.body.event_zip
+  const event_space_capacity = req.body.event_space_capacity
+  const table_types = req.body.table_types
+  const number_sewers = req.body.number_sewers
+  const machines_volunteered = req.body.machines_volunteered
+  const event_expected_adults = req.body.event_expected_adults
+  const event_expected_children = req.body.event_expected_children
+  const event_actual_adults = req.body.event_actual_adults
+  const event_actual_children = req.body.event_actual_children
+  const jen_story = req.body.jen_story
+
+  const pockets_brought = req.body.pockets_brought
+  const pockets_in_progress = req.body.pockets_in_progress
+  const pockets_finished = req.body.pockets_finished
+
+  const collars_brought = req.body.collars_brought
+  const collars_in_progress = req.body.collars_in_progress
+  const collars_finished = req.body.collars_finished
+
+  const envenlopes_brought = req.body.envenlopes_brought
+  const envenlopes_in_progress = req.body.envenlopes_in_progress
+  const envenlopes_finished = req.body.envenlopes_finished
+
+  const vests_brought = req.body.vests_brought
+  const vests_in_progress = req.body.vests_in_progress
+  const vests_finished = req.body.vests_finished
+
+  const completed_product = req.body.completed_product
+
+
+
+ 
+
 
   // Update the Events in the database
     knex('pokemon') // MAKE SURE THIS IS THE NAME OF THE TABLE IN THE DATABASE
      .where('id', id)
      .update({
 
-       event_name: event_name,
-       description: description,
-       event_date: event_date,
-       back_up_date_1: back_up_date_1,
-       back_up_date_2: back_up_date_2,
-       event_start_time: event_start_time, 
-       event_duration_projected: event_duration_projected, 
-       event_duration_actual: event_duration_actual, 
-       event_address: event_address,
-       event_num_participants_projected: event_num_participants_projected, 
-       event_num_participants_actual: event_num_participants_actual, 
-       requestee_name: requestee_name, 
-       requestee_phone: requestee_phone, 
-       requestee_email: requestee_email, 
-       jen_story: jen_story, 
+      contact_first_name: contact_first_name, 
+      contact_last_name: contact_last_name, 
+      contact_phone: contact_phone, 
+      contact_email: contact_email, 
+      contact_perferred: contact_perferred, 
+      event_type: event_type, 
+      event_date: event_date,
+      event_backup_date: event_backup_date, 
+      event_backup_date_2: event_backup_date_2, 
+      event_start_time: event_start_time, 
+      event_expected_duration: event_expected_duration, 
+      event_actual_duration: event_actual_duration, 
+      event_address: event_address,
+      event_city: event_city, 
+      event_state: event_state, 
+      event_zip: event_zip, 
+      event_space_capacity: event_space_capacity, 
+      table_types: table_types, 
+      number_sewers: number_sewers, 
+      machines_volunteered: machines_volunteered, 
+      event_expected_adults: event_expected_adults, 
+      event_expected_children: event_expected_children, 
+      event_actual_adults: event_actual_adults, 
+      event_actual_children: event_actual_children, 
+      jen_story: jen_story, 
 
+      pockets_brought: pockets_brought, 
+      pockets_in_progress: pockets_in_progress, 
+      pockets_finished: pockets_finished, 
+
+      collars_brought: collars_brought, 
+      collars_in_progress: collars_in_progress, 
+      collars_finished: collars_finished, 
+      
+      envenlopes_brought: envenlopes_brought,
+      envenlopes_in_progress: envenlopes_in_progress,  
+      envenlopes_finished: envenlopes_finished, 
+
+    
+
+      vests_brought: vests_brought, 
+      vests_in_progress: vests_in_progress, 
+      vests_finished: vests_finished, 
+      
+      completed_product: completed_product, 
 
      })
      .then(() => {
@@ -229,6 +284,28 @@ app.post('/events/:id', (req, res) => {
        res.status(500).send('Internal Server Error');
      });
  });
+
+
+  // POST ROUTE FOR DELETING characters
+app.post('/deleteEvent/:id', (req, res) => {
+  const id = req.params.id;
+  knex('events')
+  .where('id', id)
+  .del() // Deletes the record with the specified ID
+  .then(() => {
+    res.redirect('/'); // Redirect to the events list after deletion
+  })
+  // error handling
+  .catch(error => {
+    console.error('Error deleting this Event:', error);
+    res.status(500).send('Internal Server Error');
+    });
+  });
+
+
+
+
+
 
 // THIS IS FOR volunteers.EJS -> for the admin to EDIT INFO FOR VOLUNTEERS
 
