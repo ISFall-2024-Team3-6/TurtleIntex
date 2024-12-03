@@ -42,8 +42,55 @@ app.get('/', (req, res) => {
 });
 
 app.get('/volunteerSignup/', (req, res) => {
-  res.render('volunteerSignup')
+
+  const states = [
+    "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
+    "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
+    "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
+    "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
+    "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
+];
+
+  res.render('volunteerSignup', {states} )
 });
+
+app.post('/volunteerSignup', (req, res) => {
+
+  const first_name = req.body.first_name
+  const last_name = req.body.last_name
+  const volunteerEmail = req.body.volunteerEmail
+  const volunteerPhone = req.body.volunteerPhone
+  const volunteerStreetAddress = req.body.volunteerStreetAddress
+  const volunteerCity = req.body.volunteerCity
+  const volunteerState = req.body.volunteerState
+  const volunteerZip = req.body.volunteerZip
+  const volunteerReferral = req.body.volunteerReferral
+  const volunteerHours = req.body.volunteerHours
+  const volunteerSewing = req.body.volunteerSewing
+
+  // knex('volunteers')
+  //   .insert({
+  //     first_name: first_name.toUpperCase(), // Ensure first name is uppercase
+  //     last_name: last_name.toUpperCase(),
+  //     volunteerEmail: volunteerEmail,
+  //     volunteerPhone: volunteerPhone,
+  //     volunteerStreetAddress: volunteerStreetAddress,
+  //     volunteerCity: volunteerCity,
+  //     volunteerState: volunteerState,
+  //     volunteerZip: volunteerZip,
+  //     volunteerReferral: volunteerReferral,
+  //     volunteerHours: volunteerHours,
+  //     volunteerSewing: volunteerSewing
+  //   })
+
+    .then(() => {
+      res.redirect('/volunteerSignup'); // Redirect to the character list page after adding
+  })
+  .catch(error => {
+    console.error('Error adding Volunteer:', error);
+    res.status(500).send('Internal Server Error');
+});
+})
 
 app.get('/sponsors/', (req, res) => {
     res.render('sponsors')
