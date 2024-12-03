@@ -28,26 +28,10 @@
 </head>
 <body>
 
-<<<<<<< HEAD
-            
-            </td>
-          </tr>
-        <% }) %>
-      <% } else { %>
-        <tr>
-          <td colspan="7">No data available</td>
-        </tr>
-      <% } %>
-    </tbody>
-  </table>
-  <form action="/addPoke" method="GET" style="display: flex; justify-content: center; margin: 20px 0;">
-    <button type="submit">Add</button>
-=======
 <% if (admin) { %> 
   <p>Logged in as an Admin</p>
   <form action="/logout">
     <button type="submit" class="btn btn-danger">Logout</button>
->>>>>>> b4a0c9022b4047930dee2111a77d3d1e879fedf5
   </form>
 <% } else { %>
   <p>Admin is not logged in</p>
@@ -66,10 +50,10 @@
           <a class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/sponsor">Become A Sponsor</a>
+          <a class="nav-link" href="/sponsors/">Become A Sponsor</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/public/">Jen's Story</a>
+          <a class="nav-link" href="/About/story">Jen's Story</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -102,25 +86,7 @@
   <!-- Other content goes here -->
 </div>
 
-<!-- Footer -->
-<footer class="bg-light text-center text-lg-start mt-5">
-  <div class="row justify-content-center">
-    <div class="col-auto">
-      <form action="/About/contact" method="GET" class="d-inline">
-        <button type="submit" class="btn button-color mb-2">Contact Us</button>
-      </form>
-    </div>
-    <div class="col-auto">
-      <form action="/adminLogin" method="GET" class="d-inline">
-        <button type="submit" class="btn button-color mb-2">Login as Admin</button>
-      </form>
-    </div>
-  </div>
-</footer>
 
-<<<<<<< HEAD
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-=======
 
   <!-- Admin Links -->
   <% if (admin) 
@@ -160,6 +126,5 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
->>>>>>> 5770543 (Made FAQ and Contact Us pages with basic CSS. Not super pretty but they have most of the content. Now working on adding links to the other pages from these two)
 </body>
 </html>
