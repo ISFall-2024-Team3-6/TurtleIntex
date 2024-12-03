@@ -251,11 +251,11 @@ app.post('/volunteers/:id', (req, res) => {
 
   const sewing_level = req.body.sewing_level
 
-  const volunteer_consent_for_contact = req.body.volunteer_consent_for_contact === 'true'; // Check if the checkbox is checked
+  
   
   const preferred_contact = req.body.preferred_contact
 
-  const notification_preferences = req.body.notification_preferences
+  
 
 
   // Update the Volunteer in the database
@@ -284,11 +284,11 @@ app.post('/volunteers/:id', (req, res) => {
 
       sewing_level: sewing_level,
 
-      volunteer_consent_for_contact: volunteer_consent_for_contact,  // Store the consent status
+      
 
       preferred_contact: preferred_contact, 
 
-      notification_preferences: notification_preferences, 
+       
 
     })
 
