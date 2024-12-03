@@ -35,34 +35,127 @@
 
     <!-- I really do not think that an admin should be able to change the name of the volunteer -->
 
+    <!-- Volunteer First Name -->
+    <label for="first_name">What is the volunteer's first name?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="text" id="first_name" name="first_name" value="<%= volunteers.first_name %>" required>
 
-    
-    <!-- Volunteer Phone Number -->
-    <label for="volunteer_phone">What is a good phone number?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="volunteer_phone" name="volunteer_phone" value="<%= volunteers.volunteer_phone %>" required>
+    <!-- Volunteer Last Name -->
+    <label for="last_name">What is the volunteer's last name?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="text" id="last_name" name="last_name" value="<%= volunteers.last_name %>" required>
 
     <!-- Volunteer Email -->
     <label for="volunteer_email">What is your email?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
     <input type="text" id="volunteer_email" name="volunteer_email" value="<%= volunteers.volunteer_email %>">
+    
 
-    <!-- Volunteer Address -->
-    <label for="volunteer_address">Volunteer Address</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="text" id="volunteer_address" name="volunteer_address" value="<%= volunteers.volunteer_address %>" required>
+    <!-- Volunteer Phone Number -->
+    <label for="volunteer_phone">What is a good phone number?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="number" id="volunteer_phone" name="volunteer_phone" value="<%= volunteers.volunteer_phone %>" required>
+
+
+    <!-- Volunteer Street Address -->
+    <label for="volunteer_street_address">Volunteer Address</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="text" id="volunteer_street_address" name="volunteer_street_address" value="<%= volunteers.volunteer_street_address %>" required>
+
+    <!-- Volunteer city -->
+    <label for="volunteer_city">Volunteer City</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="text" id="volunteer_city" name="volunteer_city" value="<%= volunteers.volunteer_city %>" required>
+
+    <!-- Volunteer State -->
+    <label for="volunteer_state">Volunteer State</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="text" id="volunteer_state" name="volunteer_state" value="<%= volunteers.volunteer_state %>" required>
+
+    <!-- Volunteer Zip Code -->
+    <label for="volunteer_zip">Volunteer Zipcode</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="number" id="volunteer_zip" name="volunteer_zip" value="<%= volunteers.volunteer_zip %>" required>
+
+
+    <!-- Volunteer Referral Method Dropdown box -> shows the one that has already been selected on the OG form the user filled out -->
+    <label for="volunteer_referral_method">How did you hear about this volunteer opportunity?</label>
+    <select id="volunteer_referral_method" name="volunteer_referral_method" required>
+      <option value="website" <%= events.volunteer_referral_method === 'website' ? 'selected' : '' %>>Website</option>
+      <option value="friend" <%= events.volunteer_referral_method === 'friend' ? 'selected' : '' %>>Friend</option>
+      <option value="social_media" <%= events.volunteer_referral_method === 'social_media' ? 'selected' : '' %>>Social Media</option>
+      <option value="other" <%= events.volunteer_referral_method === 'other' ? 'selected' : '' %>>Other</option>
+      <option value="facebook_ad" <%= events.volunteer_referral_method === 'facebook_ad' ? 'selected' : '' %>>Facebook Ad</option>
+      <option value="newspaper_ad" <%= events.volunteer_referral_method === 'newspaper_ad' ? 'selected' : '' %>>Newspaper Ad</option>
+      <option value="radio_broadcast" <%= events.volunteer_referral_method === 'radio_broadcast' ? 'selected' : '' %>>Radio Broadcast</option>
+      <option value="community_bulletin" <%= events.volunteer_referral_method === 'community_bulletin' ? 'selected' : '' %>>Community Bulletin</option>
+      <option value="word_of_mouth" <%= events.volunteer_referral_method === 'word_of_mouth' ? 'selected' : '' %>>Word of Mouth</option>
+    </select>
+
+
+    <!-- Volunteer Availability -> Volunteer can select multiple options for days when they are availble (Mon-Sat) -->
+    <label>Volunteer Availability: (can select multiple options)</label><br>
+    <input type="checkbox" id="monday" name="volunteer_availability" value="Monday" <%= events.volunteer_availability.includes('Monday') ? 'checked' : '' %>>
+    <label for="monday">Monday</label><br>
+
+    <input type="checkbox" id="tuesday" name="volunteer_availability" value="Tuesday" <%= events.volunteer_availability.includes('Tuesday') ? 'checked' : '' %>>
+    <label for="tuesday">Tuesday</label><br>
+
+    <input type="checkbox" id="wednesday" name="volunteer_availability" value="Wednesday" <%= events.volunteer_availability.includes('Wednesday') ? 'checked' : '' %>>
+    <label for="wednesday">Wednesday</label><br>
+
+    <input type="checkbox" id="thursday" name="volunteer_availability" value="Thursday" <%= events.volunteer_availability.includes('Thursday') ? 'checked' : '' %>>
+    <label for="thursday">Thursday</label><br>
+
+    <input type="checkbox" id="friday" name="volunteer_availability" value="Friday" <%= events.volunteer_availability.includes('Friday') ? 'checked' : '' %>>
+    <label for="friday">Friday</label><br>
+
+    <input type="checkbox" id="saturday" name="volunteer_availability" value="Saturday" <%= events.volunteer_availability.includes('Saturday') ? 'checked' : '' %>>
+    <label for="saturday">Saturday</label><br>
+
+
+
+
+
 
     <!-- Number of Hours Willing to Volunteer Per Month -->
-    <label for="month_hours">How many hours are your willing to volunteer per month?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="month_hours" name="month_hours" value="<%= volunteers.month_hours %>" required>
+    <label for="volunteer_hours_willing ">How many hours are your willing to volunteer per month?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="number" id="volunteer_hours_willing" name="volunteer_hours_willing" value="<%= volunteers.volunteer_hours_willing %>" required>
 
     <!-- Sewing Level (Radio Buttons) -->
     <label>Sewing Level</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
     <label>
-      <input type="radio" name="sewing_level" value="S" <%= volunteers.sewing_level === 'B' ? 'checked' : '' %>> Beginner
+      <input type="radio" name="volunteer_sewing_level " value="S" <%= volunteers.volunteer_sewing_level === 'B' ? 'checked' : '' %>> Beginner
     </label>
     <label>
-      <input type="radio" name="sewing_level" value="NS" <%= volunteers.sewing_level === 'I' ? 'checked' : '' %>> Intermediate
+      <input type="radio" name="volunteer_sewing_level" value="I" <%= volunteers.volunteer_sewing_level === 'I' ? 'checked' : '' %>> Intermediate
     </label>
     <label>
-      <input type="radio" name="sewing_level" value="B" <%= volunteers.sewing_level === 'E' ? 'checked' : '' %>> Experienced
+      <input type="radio" name="volunteer_sewing_level" value="E" <%= volunteers.volunteer_sewing_level === 'E' ? 'checked' : '' %>> Experienced
+    </label>
+
+
+    <!-- Volunteer Consent for Contact (Check Box -> if checked, then they do; if not checked, then they don't) -->
+    <label for="volunteer_consent_for_contact "> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+      <input type="checkbox" id="volunteer_consent_for_contact" name="volunteer_consent_for_contact" value="true" <%= volunteers.volunteer_consent_for_contact ? 'checked' : '' %>>
+      Check this box if you consent to recieve contact from us about reminders or updates! 
+    </label>
+
+    <!-- Perferred Contact Method (Radio Buttons) -->
+    <label>What is your perferred contact method? </label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <label>
+      <input type="radio" name="preferred_contact" value="P" <%= volunteers.preferred_contact === 'P' ? 'checked' : '' %>> Phone
+    </label>
+    <label>
+      <input type="radio" name="preferred_contact" value="E" <%= volunteers.preferred_contact === 'E' ? 'checked' : '' %>> Email
+    </label>
+    <label>
+      <input type="radio" name="preferred_contact" value="B" <%= volunteers.preferred_contact === 'B' ? 'checked' : '' %>> Both
+    </label>
+
+
+    <!-- Notification Method (Radio Buttons) -->
+    <label>What notifications would you like to recieve from us? </label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <label>
+      <input type="radio" name="notification_preferences" value="R" <%= volunteers.notification_preferences === 'R' ? 'checked' : '' %>> Reminders
+    </label>
+    <label>
+      <input type="radio" name="notification_preferences" value="U" <%= volunteers.notification_preferences === 'U' ? 'checked' : '' %>> Updates
+    </label>
+    <label>
+      <input type="radio" name="notification_preferences" value="B" <%= volunteers.notification_preferences === 'B' ? 'checked' : '' %>> Both
     </label>
 
 
@@ -72,29 +165,12 @@
     <!-- LEFTOVERS BELOW -> USE THE TABLE TO FIGURE OUT WHAT YOU WANT YOUR ADMIN TO BE ABLE TO EDIT   -->
 
     
-    <!-- Projected Number of Attendees -->
-    <label for="num_attendees_projected">Number of Estimated Participants</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="num_attendees_projected" name="num_attendees_projected" value="<%= events.num_attendees_projected %>" required>
-    
-    <!-- Date of the Event -->
-    <label for="event_date">Event Date</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="date" id="event_date" name="event_date" value="<%= events.event_date.toISOString().split('T')[0] %>" required>
-
-    <!-- Event Start Time -->
-    <label for="event_start_time">Select a start time for the event:</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="time" id="event_start_time" name="event_start_time" min="08:00" max="19:00">
-    
-    <!-- Jen Shares Story (Checkbox) -->
-    <label for="share_story"> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-      <input type="checkbox" id="share_story" name="share_story" value="true" <%= events.share_story ? 'checked' : '' %>>
-      Check this box if you would like Jen to share her story! 
-    </label>
     
 
     
     
     
-    <!-- DO WE NEED A DROP DOWN OPTION??? -->
+    <!-- DO WE NEED A DROP DOWN OPTION??? YES FOR VOLUNTEER REFERAL METHOD, BUT WE MAY NOT NEED IT IN THIS FORMAT-> I WILL KEEP THIS ON THE PAGE JUST IN CASE -->
 
     <!-- I DO NOT THINK SO, I WOULD ONLY THINK THAT THE "HOW YOU HEARD ABOUT US" COULD GO HERE, BUT I REALLY
      DON'T SEE A NEED FOR AN ADMIN TO BE ABLE TO CHANGE THIS INFO SO I AM NOT GOING TO INCLUDE IT -->
