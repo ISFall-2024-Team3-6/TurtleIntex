@@ -118,35 +118,57 @@ knex('pokemon') // CHANGE THIS TO THE NAME OF THE TABLE IN THE DATABASE THAT HOL
 app.post('/events/:id', (req, res) => {
   const id = req.params.id;
 
+  const event_name = req.body.event_name
   const description = req.body.description
-  const num_attendees_projected = parseInt(req.body.num_attendees_projected)
+  
   const event_date = req.body.event_date
-  const backup1_event_date = req.body.backup1_event_date
-  const backup2_event_date = req.body.backup2_event_date
-  const event_address = req.body.event_address
+  const back_up_date_1 = req.body.back_up_date_1
+  const back_up_date_2 = req.body.back_up_date_2
+  
   const event_start_time = req.body.event_start_time
-  const event_duration = parseInt(req.body.event_duration)
-  const contact_name = req.body.contact_name
-  const contact_phone = parseInt(req.body.contact_phone)
-  const share_story = req.body.share_story === 'true'
-  const activity = req.body.activity
+
+  const event_duration_projected = parseInt(req.body.event_duration_projected)
+  const event_duration_actual = parseInt(req.body.event_duration_actual)
+
+  const event_address = req.body.event_address
+
+  const event_num_participants_projected = parseInt(req.body.event_num_participants_projected)
+  const event_num_participants_actual = parseInt(req.body.event_num_participants_actual)
+
+  const requestee_name = req.body.requestee_name
+  const requestee_phone = req.body.requestee_phone
+  const requestee_email = req.body.requestee_email
+
+  const jen_story = req.body.jen_story === 'true'
 
   // Update the Events in the database
     knex('pokemon') // MAKE SURE THIS IS THE NAME OF THE TABLE IN THE DATABASE
      .where('id', id)
      .update({
+       event_name: event_name,
        description: description,
-       num_attendees_projected: num_attendees_projected,
+       
        event_date: event_date,
-       backup1_event_date: backup1_event_date,
-       backup2_event_date: backup2_event_date,
-       event_address: event_address,
+       back_up_date_1: back_up_date_1,
+       back_up_date_2: back_up_date_2,
+       
        event_start_time: event_start_time, 
-       event_duration: event_duration, 
-       contact_name: contact_name, 
-       contact_phone: contact_phone, 
-       share_story: share_story, 
-       activity: activity
+       
+       event_duration_projected: event_duration_projected, 
+       event_duration_actual: event_duration_actual, 
+       
+       event_address: event_address,
+
+       event_num_participants_projected: event_num_participants_projected, 
+       event_num_participants_actual: event_num_participants_actual, 
+
+       requestee_name: requestee_name, 
+       requestee_phone: requestee_phone, 
+       requestee_email: requestee_email, 
+
+       jen_story: jen_story, 
+
+
      })
      .then(() => {
        res.redirect('/'); // Redirect to the list of events after saving -> FIX THIS ROUTE, IT WILL BE WRONG
@@ -207,11 +229,31 @@ app.get('/volunteers/:id', (req, res) => {
 
 app.post('/volunteers/:id', (req, res) => {
   const id = req.params.id; // this is how you pull out the parameter TO SEE WHAT POKEMON YOU ARE DEALING WITH
-  const volunteer_phone = parseInt(req.body.volunteer_phone)
+  
+
+  const first_name = req.body.first_name
+  const last_name = req.body.last_name
   const volunteer_email = req.body.volunteer_email
-  const volunteer_address = req.body.volunteer_address
-  const month_hours = parseInt(req.body.month_hours)
+  
+  const volunteer_phone = req.body.volunteer_phone
+
+  const volunteer_street_address = req.body.volunteer_street_address
+  const volunteer_city = req.body.volunteer_city
+  const volunteer_state = req.body.volunteer_state
+  const volunteer_zip = req.body.volunteer_zip
+  const volunteer_referral_method = req.body.volunteer_referral_method
+  const volunteer_availability = req.body.volunteer_availability; // This will be an array of selected days
+  
+  const volunteer_hours_willing = parseInt(req.body.volunteer_hours_willing)
+
   const sewing_level = req.body.sewing_level
+
+  const volunteer_consent_for_contact = req.body.volunteer_consent_for_contact === 'true'; // Check if the checkbox is checked
+  
+  const preferred_contact = req.body.preferred_contact
+
+  const notification_preferences = req.body.notification_preferences
+
 
   // Update the Volunteer in the database
   knex('volunteer') // pokemon is the table 
@@ -221,11 +263,32 @@ app.post('/volunteers/:id', (req, res) => {
     // RIGHT: values you want to store in the database that were entered into the FORM! CAN USE VARIABLES BC YOU MADE CONST ONES ABOVE
     // description could have been req.body.description, but since we made these variables up top, we can just use the variables here
     .update({
-      volunteer_phone: volunteer_phone,
+
+      first_name: first_name, 
+      last_name: last_name, 
       volunteer_email: volunteer_email,
-      volunteer_address: volunteer_address,
-      month_hours: month_hours,
+
+      volunteer_phone: volunteer_phone,
+      
+      volunteer_street_address: volunteer_street_address, 
+      volunteer_city: volunteer_city, 
+      volunteer_state: volunteer_state, 
+      volunteer_zip: volunteer_zip,
+      volunteer_referral_method: volunteer_referral_method, 
+      volunteer_availability: JSON.stringify(volunteer_availability), // Store the array as a JSON string (IN YOUR postgreSQL DATABASE > MAKE SURE THE TYPE OF DATA IS JSONB, not varchar)
+
+      volunteer_hours_willing: volunteer_hours_willing,
+
       sewing_level: sewing_level,
+
+      volunteer_consent_for_contact: volunteer_consent_for_contact,  // Store the consent status
+
+      preferred_contact: preferred_contact, 
+
+      notification_preferences: notification_preferences, 
+
+    })
+
     })
     .then(() => {
       res.redirect('/'); // Redirect to the list of Pokémon after saving; go back to the route/home page!!! IT IS THE ROUTE, not an ejs file
@@ -234,7 +297,7 @@ app.post('/volunteers/:id', (req, res) => {
       console.error('Error updating Volunteer:', error);
       res.status(500).send('Internal Server Error');
     });
-});
+
 
   
 
