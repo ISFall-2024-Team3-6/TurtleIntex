@@ -185,52 +185,39 @@ app.post('/events/:id', (req, res) => {
 
   const event_name = req.body.event_name
   const description = req.body.description
-  
   const event_date = req.body.event_date
   const back_up_date_1 = req.body.back_up_date_1
   const back_up_date_2 = req.body.back_up_date_2
-  
   const event_start_time = req.body.event_start_time
-
   const event_duration_projected = parseInt(req.body.event_duration_projected)
   const event_duration_actual = parseInt(req.body.event_duration_actual)
-
   const event_address = req.body.event_address
-
   const event_num_participants_projected = parseInt(req.body.event_num_participants_projected)
   const event_num_participants_actual = parseInt(req.body.event_num_participants_actual)
-
   const requestee_name = req.body.requestee_name
   const requestee_phone = req.body.requestee_phone
   const requestee_email = req.body.requestee_email
-
   const jen_story = req.body.jen_story === 'true'
 
   // Update the Events in the database
     knex('pokemon') // MAKE SURE THIS IS THE NAME OF THE TABLE IN THE DATABASE
      .where('id', id)
      .update({
+
        event_name: event_name,
        description: description,
-       
        event_date: event_date,
        back_up_date_1: back_up_date_1,
        back_up_date_2: back_up_date_2,
-       
        event_start_time: event_start_time, 
-       
        event_duration_projected: event_duration_projected, 
        event_duration_actual: event_duration_actual, 
-       
        event_address: event_address,
-
        event_num_participants_projected: event_num_participants_projected, 
        event_num_participants_actual: event_num_participants_actual, 
-
        requestee_name: requestee_name, 
        requestee_phone: requestee_phone, 
        requestee_email: requestee_email, 
-
        jen_story: jen_story, 
 
 
@@ -243,13 +230,6 @@ app.post('/events/:id', (req, res) => {
        res.status(500).send('Internal Server Error');
      });
  });
-
-
-
-
-
-
-
 
 // THIS IS FOR volunteers.EJS -> for the admin to EDIT INFO FOR VOLUNTEERS
 
@@ -294,36 +274,24 @@ app.get('/volunteers/:id', (req, res) => {
 
 app.post('/volunteers/:id', (req, res) => {
   const id = req.params.id; // this is how you pull out the parameter TO SEE WHAT POKEMON YOU ARE DEALING WITH
-  
 
   const first_name = req.body.first_name
   const last_name = req.body.last_name
   const volunteer_email = req.body.volunteer_email
-  
   const volunteer_phone = req.body.volunteer_phone
-
   const volunteer_street_address = req.body.volunteer_street_address
   const volunteer_city = req.body.volunteer_city
   const volunteer_state = req.body.volunteer_state
   const volunteer_zip = req.body.volunteer_zip
   const volunteer_referral_method = req.body.volunteer_referral_method
   const volunteer_availability = req.body.volunteer_availability; // This will be an array of selected days
-  
   const volunteer_hours_willing = parseInt(req.body.volunteer_hours_willing)
-
   const sewing_level = req.body.sewing_level
-
-  
-  
   const preferred_contact = req.body.preferred_contact
 
-  
-
-
   // Update the Volunteer in the database
-  knex('volunteer') // pokemon is the table 
-    .where('id', id) // in the route, we got the id; if the ID is the same, then do the edit/update
-    // then go update it; 
+  knex('volunteer')
+    .where('id', id)
     // LEFT: column names IN THE TABLE ALREADY
     // RIGHT: values you want to store in the database that were entered into the FORM! CAN USE VARIABLES BC YOU MADE CONST ONES ABOVE
     // description could have been req.body.description, but since we made these variables up top, we can just use the variables here
@@ -332,36 +300,29 @@ app.post('/volunteers/:id', (req, res) => {
       first_name: first_name, 
       last_name: last_name, 
       volunteer_email: volunteer_email,
-
       volunteer_phone: volunteer_phone,
-      
       volunteer_street_address: volunteer_street_address, 
       volunteer_city: volunteer_city, 
       volunteer_state: volunteer_state, 
       volunteer_zip: volunteer_zip,
       volunteer_referral_method: volunteer_referral_method, 
       volunteer_availability: JSON.stringify(volunteer_availability), // Store the array as a JSON string (IN YOUR postgreSQL DATABASE > MAKE SURE THE TYPE OF DATA IS JSONB, not varchar)
-
       volunteer_hours_willing: volunteer_hours_willing,
-
       sewing_level: sewing_level,
-
-      
-
-      preferred_contact: preferred_contact, 
-
-       
-
+      preferred_contact: preferred_contact,
     })
 
-    })
     .then(() => {
       res.redirect('/'); // Redirect to the list of Pokémon after saving; go back to the route/home page!!! IT IS THE ROUTE, not an ejs file
     })
+
     .catch(error => {
       console.error('Error updating Volunteer:', error);
       res.status(500).send('Internal Server Error');
     });
+    });
+
+
 
 
   
@@ -401,7 +362,7 @@ app.post('/volunteers/:id', (req, res) => {
 
 
 
-  app.get('/addPoke', (req, res) => {
+app.get('/addPoke', (req, res) => {
     // Fetch Pokémon types to populate the dropdown
     knex('poke_type')
         .select('id', 'description')
