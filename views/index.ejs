@@ -12,8 +12,8 @@
     .background-section {
       background-image: url('/images/people-sewing.jpg');
       background-size: cover;
-      background-position: center;
-      height: 400px; /* Adjust the height as needed */
+      background-position: 0 -180px;
+      height: 600px; /* Adjust the height as needed */
       position: relative;
     }
     .background-section .content {
@@ -74,20 +74,23 @@
 </nav>
 
 <!-- Background Section -->
-<div class="background-section">
+<div class="background-section"></div>
+
+<!-- Donate Now Button Section -->
+<div class="text-center mt-4">
+  <form action="/donation" method="GET" class="d-inline-block">
+    <button type="submit" class="btn btn-success btn-lg">Donate Now</button>
+  </form>
+</div>
+
+<!-- Main Content -->
+<div class="container mt-5 pt-5 text-center">
   <div class="content">
     <h1>Our Mission</h1>
     <p class="lead">AID THE HOMELESS BY DISTRIBUTING TURTLE SHELTER VESTS.</p>
     <p>WHAT IS A TURTLE SHELTER VEST? A HIGH TECH BUT SIMPLE SOLUTION TO HELP SAVE LIVES - A PORTABLE "SHELTER" YOU CAN CARRY WITH YOU, JUST LIKE A TURTLE... AND YOU CAN HELP!</p>
   </div>
 </div>
-
-<!-- Main Content -->
-<div class="container mt-5 pt-5 text-center">
-  <!-- Other content goes here -->
-</div>
-
-
 
   <!-- Admin Links -->
   <% if (admin) 

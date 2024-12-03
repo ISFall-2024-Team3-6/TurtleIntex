@@ -30,7 +30,6 @@ const knex = require("knex") ({
   }
 });
 
-// Route to display Pokemon records
 app.get('/', (req, res) => {
   knex.select('*').from('events')
   .then(events => {
