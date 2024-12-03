@@ -172,6 +172,7 @@ knex('events')
 app.post('/events/:id', (req, res) => {
   const id = req.params.id;
 
+
   const contact_first_name = req.body.contact_first_name
   const contact_last_name = req.body.contact_last_name
   const contact_phone = req.body.contact_phone
@@ -218,10 +219,14 @@ app.post('/events/:id', (req, res) => {
 
 
 
+ 
+
+
   // Update the Events in the database
     knex('pokemon') // MAKE SURE THIS IS THE NAME OF THE TABLE IN THE DATABASE
      .where('id', id)
      .update({
+
       contact_first_name: contact_first_name, 
       contact_last_name: contact_last_name, 
       contact_phone: contact_phone, 
@@ -260,6 +265,8 @@ app.post('/events/:id', (req, res) => {
       envenlopes_in_progress: envenlopes_in_progress,  
       envenlopes_finished: envenlopes_finished, 
 
+    
+
       vests_brought: vests_brought, 
       vests_in_progress: vests_in_progress, 
       vests_finished: vests_finished, 
@@ -275,6 +282,7 @@ app.post('/events/:id', (req, res) => {
        res.status(500).send('Internal Server Error');
      });
  });
+
 
 
 
@@ -301,6 +309,7 @@ app.post('/deleteEvent/:id', (req, res) => {
     res.status(500).send('Internal Server Error');
     });
   });
+
 
 
 
@@ -349,36 +358,24 @@ app.get('/volunteers/:id', (req, res) => {
 
 app.post('/volunteers/:id', (req, res) => {
   const id = req.params.id; // this is how you pull out the parameter TO SEE WHAT POKEMON YOU ARE DEALING WITH
-  
 
   const first_name = req.body.first_name
   const last_name = req.body.last_name
   const volunteer_email = req.body.volunteer_email
-  
   const volunteer_phone = req.body.volunteer_phone
-
   const volunteer_street_address = req.body.volunteer_street_address
   const volunteer_city = req.body.volunteer_city
   const volunteer_state = req.body.volunteer_state
   const volunteer_zip = req.body.volunteer_zip
   const volunteer_referral_method = req.body.volunteer_referral_method
   const volunteer_availability = req.body.volunteer_availability; // This will be an array of selected days
-  
   const volunteer_hours_willing = parseInt(req.body.volunteer_hours_willing)
-
   const sewing_level = req.body.sewing_level
-
-  
-  
   const preferred_contact = req.body.preferred_contact
 
-  
-
-
   // Update the Volunteer in the database
-  knex('volunteer') // pokemon is the table 
-    .where('id', id) // in the route, we got the id; if the ID is the same, then do the edit/update
-    // then go update it; 
+  knex('volunteer')
+    .where('id', id)
     // LEFT: column names IN THE TABLE ALREADY
     // RIGHT: values you want to store in the database that were entered into the FORM! CAN USE VARIABLES BC YOU MADE CONST ONES ABOVE
     // description could have been req.body.description, but since we made these variables up top, we can just use the variables here
@@ -387,36 +384,29 @@ app.post('/volunteers/:id', (req, res) => {
       first_name: first_name, 
       last_name: last_name, 
       volunteer_email: volunteer_email,
-
       volunteer_phone: volunteer_phone,
-      
       volunteer_street_address: volunteer_street_address, 
       volunteer_city: volunteer_city, 
       volunteer_state: volunteer_state, 
       volunteer_zip: volunteer_zip,
       volunteer_referral_method: volunteer_referral_method, 
       volunteer_availability: JSON.stringify(volunteer_availability), // Store the array as a JSON string (IN YOUR postgreSQL DATABASE > MAKE SURE THE TYPE OF DATA IS JSONB, not varchar)
-
       volunteer_hours_willing: volunteer_hours_willing,
-
       sewing_level: sewing_level,
-
-      
-
-      preferred_contact: preferred_contact, 
-
-       
-
+      preferred_contact: preferred_contact,
     })
 
-    })
     .then(() => {
       res.redirect('/'); // Redirect to the list of Pokémon after saving; go back to the route/home page!!! IT IS THE ROUTE, not an ejs file
     })
+
     .catch(error => {
       console.error('Error updating Volunteer:', error);
       res.status(500).send('Internal Server Error');
     });
+    });
+
+
 
 
   
@@ -456,7 +446,7 @@ app.post('/volunteers/:id', (req, res) => {
 
 
 
-  app.get('/addPoke', (req, res) => {
+app.get('/addPoke', (req, res) => {
     // Fetch Pokémon types to populate the dropdown
     knex('poke_type')
         .select('id', 'description')

@@ -2,12 +2,104 @@
 <html>
 <head>
   <title>FAQs</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="/public/style/styles.css">
   <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      background-color: #f9f9f9;
+      color: #333;
+    }
 
+    h1 {
+      text-align: center;
+      margin: 20px 0;
+      font-size: 2.5em;
+      color: #004085;
+    }
+
+    h5 {
+      font-size: 1.5em;
+      margin-top: 30px;
+      color: #333;
+      border-left: 4px solid #004085;
+      padding-left: 10px;
+    }
+
+    p {
+      margin: 10px 0 20px;
+      font-size: 1.1em;
+    }
+
+    span {
+      color: #007bff;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 20px auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Container for padding */
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
   </style>
 </head>
 <body>
-  <h10>FAQs</h10>
+
+<!-- Navigation bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Turtle Shelter Project</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/sponsors/">Become A Sponsor</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="story">Jen's Story</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            About Us
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="/About/ourTech">Our Tech</a></li>
+            <li><a class="dropdown-item" href="/About/faq">FAQs</a></li>
+          </ul>
+        </li>
+      </ul>
+      <form action="/adminLogin" method="GET" class="d-inline ms-auto">
+        <button type="submit" class="btn button-color mb-2">Login as Admin</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+  <div class="container">
+  <h1>FAQs</h1>
 
   <h5>How and Where are the Vests Distributed?</h5>
     <p>
@@ -97,5 +189,6 @@
     <img src="/assets/volunteer_cutting.jpg">
     <img src="/assets/family_friends.jpg">
     <img src="/assets/quillow.jpg">
+  </div>
 </body>
 </html>
