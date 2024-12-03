@@ -74,16 +74,29 @@ app.post('/login', (req, res) => {
   res.redirect("/")
 });
 
-app.get('/editPoke/:id', (req, res) => {
+
+
+
+
+
+
+
+// THIS IS FOR EVENTS.EJS -> FOR THE ADMIN TO EDIT EVENTS
+app.get('/events/:id', (req, res) => {
 let id = req.params.id;
-// Query the Pokémon by ID first
-knex('pokemon')
+// Query the Volunteer by ID first
+knex('pokemon') // CHANGE THIS TO THE NAME OF THE TABLE IN THE DATABASE THAT HOLDS EVENTS
     .where('id', id)
     .first()
-    .then(pokemon => {
-    if (!pokemon) {
-        return res.status(404).send('Pokémon not found');
+    .then(events => {
+    if (!events) {
+        return res.status(404).send('Event not found');
     }
+    
+    // WE MAY OR MAY NOT NEED THIS!! I DON'T THINK SO, BECAUSE WE DO NOT NEED TO PULL DATA FROM ANOTHER 
+    // TABLE TO EDIT THE EVENTS, WE JUST NEED TO EDIT A CERTAIN EVENT (DATA FROM THIS EVENT MAY BE EDITIED, IF SO
+    // THEN WE WOULD NEED THIS SEGMENT BELOW)
+    
     // Query all Pokémon types after fetching the Pokémon
     knex('poke_type')
         .select('id', 'description')
@@ -97,57 +110,168 @@ knex('pokemon')
         });
     })
     .catch(error => {
-    console.log('Error fetching Pokémon for editing:', error);
+    console.log('Error fetching Event for editing:', error);
     res.status(500).send('Internal Server Error');
     });
 });
 
-app.post('/editPoke/:id', (req, res) => {
-    const id = req.params.id;
-    // Access each value directly from req.body
-    const description = req.body.description;
-    const base_total = parseInt(req.body.base_total); // Convert to integer
-    const date_created = req.body.date_created;
-    // Since active_poke is a checkbox, its value is only sent when the checkbox is checked.
-    // If it is unchecked, no value is sent to the server.
-    // This behavior requires special handling on the server-side to set a default
-    // value for active_poke when it is not present in req.body.
-    const active_poke = req.body.active_poke === 'true'; // Convert checkbox value to boolean
-    const gender = req.body.gender;
-    const poke_type_id = parseInt(req.body.poke_type_id); // Convert to integer
-    // Update the Pokémon in the database
-    knex('pokemon')
-      .where('id', id)
-      .update({
-        description: description,
-        base_total: base_total,
-        date_created: date_created,
-        active_poke: active_poke,
-        gender: gender,
-        poke_type_id: poke_type_id,
-      })
-      .then(() => {
-        res.redirect('/'); // Redirect to the list of Pokémon after saving
-      })
-      .catch(error => {
-        console.log('Error updating Pokémon:', error);
-        res.status(500).send('Internal Server Error');
-      });
-  });
+app.post('/events/:id', (req, res) => {
+  const id = req.params.id;
 
-  app.post('/deletePoke/:id', (req, res) => {
+  const description = req.body.description
+  const num_attendees_projected = parseInt(req.body.num_attendees_projected)
+  const event_date = req.body.event_date
+  const backup1_event_date = req.body.backup1_event_date
+  const backup2_event_date = req.body.backup2_event_date
+  const event_address = req.body.event_address
+  const event_start_time = req.body.event_start_time
+  const event_duration = parseInt(req.body.event_duration)
+  const contact_name = req.body.contact_name
+  const contact_phone = parseInt(req.body.contact_phone)
+  const share_story = req.body.share_story === 'true'
+  const activity = req.body.activity
+
+  // Update the Events in the database
+    knex('pokemon') // MAKE SURE THIS IS THE NAME OF THE TABLE IN THE DATABASE
+     .where('id', id)
+     .update({
+       description: description,
+       num_attendees_projected: num_attendees_projected,
+       event_date: event_date,
+       backup1_event_date: backup1_event_date,
+       backup2_event_date: backup2_event_date,
+       event_address: event_address,
+       event_start_time: event_start_time, 
+       event_duration: event_duration, 
+       contact_name: contact_name, 
+       contact_phone: contact_phone, 
+       share_story: share_story, 
+       activity: activity
+     })
+     .then(() => {
+       res.redirect('/'); // Redirect to the list of events after saving -> FIX THIS ROUTE, IT WILL BE WRONG
+     })
+     .catch(error => {
+       console.log('Error updating Event:', error);
+       res.status(500).send('Internal Server Error');
+     });
+ });
+
+
+
+
+
+
+
+
+// THIS IS FOR volunteers.EJS -> for the admin to EDIT INFO FOR VOLUNTEERS
+
+app.get('/volunteers/:id', (req, res) => {
+  let id = req.params.id; // to extract a parameter out of the route ^^^ , id is the parameter ID; if it was num, do req.params.num
+  // using it to find the record in the database
+  
+  // Query the Volunteer by ID first
+  knex('volunteer') // CHANGE THIS TO THE TABLE NAME
+      // didnt need a select, it is basically select *
+    .where('id', id) // go to the table where the PARAMETER(which is id) = id in the pokemon table
+    .first() // the query will come back as an array, but we say I just want the first record which then it becomes an object with NO ARRAY (BECAUSE ID IS THE PRIMARY KEY!!, which is why I get only 1 record (and play i have a .first()))
+    .then(volunteers => { // store this first record/value that is returned from this query as the variable pokemon
+      if (!volunteers) {
+        return res.status(404).send('Volunteer not found');
+      }
+
+
+
+// SAME THING - DO I REALLY NEED THIS??????
+// Query all Volunteer types after fetching the Volunteers YOU WANT TO UPDATE
+
+      knex('poke_type') // embeded in the other knex for error handling 
+        .select('id', 'description') // from the other table, go grab these 2
+        .then(poke_types => { // pass this data from this query to variable poke_types
+          // Render the edit form and pass both pokemon and poke_types
+          res.render('editPoke', { pokemon, poke_types }); // we are passing editPoke (we need to go make this ejs file) 2 parameters/pieces of data (the 1 record for the id, and the array called poke_types) -> this will get put in a combo box for the user to choose from a drop down ()
+          // if you want more drop down boxes, just pass more parameters after pokemon IN RES.RENDER!!!! this will only be used to build a drop down box in the HTML
+          // an array with all the poke_types POSSIBLE! JUST PULLS THE DATA
+        })
+        .catch(error => {
+          console.error('Error fetching Volunteer types:', error);
+          res.status(500).send('Internal Server Error');
+        });
+    })
+    .catch(error => {
+      console.error('Error fetching Volunteer for editing:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+
+app.post('/volunteers/:id', (req, res) => {
+  const id = req.params.id; // this is how you pull out the parameter TO SEE WHAT POKEMON YOU ARE DEALING WITH
+  const volunteer_phone = parseInt(req.body.volunteer_phone)
+  const volunteer_email = req.body.volunteer_email
+  const volunteer_address = req.body.volunteer_address
+  const month_hours = parseInt(req.body.month_hours)
+  const sewing_level = req.body.sewing_level
+
+  // Update the Volunteer in the database
+  knex('volunteer') // pokemon is the table 
+    .where('id', id) // in the route, we got the id; if the ID is the same, then do the edit/update
+    // then go update it; 
+    // LEFT: column names IN THE TABLE ALREADY
+    // RIGHT: values you want to store in the database that were entered into the FORM! CAN USE VARIABLES BC YOU MADE CONST ONES ABOVE
+    // description could have been req.body.description, but since we made these variables up top, we can just use the variables here
+    .update({
+      volunteer_phone: volunteer_phone,
+      volunteer_email: volunteer_email,
+      volunteer_address: volunteer_address,
+      month_hours: month_hours,
+      sewing_level: sewing_level,
+    })
+    .then(() => {
+      res.redirect('/'); // Redirect to the list of Pokémon after saving; go back to the route/home page!!! IT IS THE ROUTE, not an ejs file
+    })
+    .catch(error => {
+      console.error('Error updating Volunteer:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
+
+  
+
+  // LETS YOU DELETE A VOLUNTEER 
+  app.post('/deleteVolunteer/:id', (req, res) => {
     const id = req.params.id;
-    knex('pokemon')
+    knex('volunteer') // put the name of the database here
       .where('id', id)
       .del() // Deletes the record with the specified ID
       .then(() => {
         res.redirect('/'); // Redirect to the Pokémon list after deletion
       })
       .catch(error => {
-        console.log('Error deleting Pokémon:', error);
+        console.log('Error deleting Volunteer:', error);
         res.status(500).send('Internal Server Error');
       });
   });
+
+  // LETS YOU DELETE AN EVENT 
+  app.post('/deleteEvent/:id', (req, res) => {
+    const id = req.params.id;
+    knex('event') // put the name of the database here
+      .where('id', id)
+      .del() // Deletes the record with the specified ID
+      .then(() => {
+        res.redirect('/'); // Redirect to the Pokémon list after deletion
+      })
+      .catch(error => {
+        console.log('Error deleting Event:', error);
+        res.status(500).send('Internal Server Error');
+      });
+  });
+
+
+
+
+
 
   app.get('/addPoke', (req, res) => {
     // Fetch Pokémon types to populate the dropdown
