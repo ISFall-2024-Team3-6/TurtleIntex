@@ -41,7 +41,6 @@ header h1 {
 
 /* Navigation styling */
 nav {
-   margin: 20px 0;
    text-align: center;
 }
 
@@ -110,4 +109,21 @@ body {
  }
  button:hover {
    opacity: 0.8;
+ }
+ 
+ table {
+   width: 80%;
+   margin: 20px auto;
+   border-collapse: collapse;
+   font-size: 10px; /* Reduce the font size of the table */
+ }
+ th, td {
+   border: 1px solid #ddd;
+   padding: 5px; /* Reduce the padding to decrease row height */
+   text-align: center;
+   line-height: 1.2; /* Adjust line height for smaller rows */
+ }
+ th {
+   background-color: #F2F2F2;
+   font-weight: bold;
  }

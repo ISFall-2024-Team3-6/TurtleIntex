@@ -1,5 +1,3 @@
-
-
 let express = require("express");
 
 // Create the express app
@@ -37,7 +35,7 @@ app.get('/', (req, res) => {
     res.render('index', {admin});
   });
 
-  app.get('/eventSignup/', (req, res) => {
+app.get('/eventSignup/', (req, res) => {
     res.render('eventSignup')
 });
 
@@ -116,7 +114,12 @@ app.get('/About/story', (req, res) => {
   res.render('About/story')
 });
 
-  //This is for admin login yeah?
+//This is for admin login yeah?
+
+app.get('/adminLogin', (req, res) => {
+    res.render('adminLogin')
+});
+
 app.post('/login', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -127,14 +130,20 @@ app.post('/login', (req, res) => {
           .where({ username, password }) // Replace with hashed password comparison in production
           .first(); // Returns the first matching record
       if (user) {
-          security = true;
+          admin = true;
       } else {
-          security = false;
+          admin = false;
       }
+      res.render('index', { admin });
   } catch (error) {
       res.status(500).send('Database query failed: ' + error.message);
   }
   res.redirect("/")
+});
+
+app.get('/logout', (req, res) => {
+  admin = false;
+  res.redirect('/');
 });
 
 //This code could be really useful to keep for when we need to
