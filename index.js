@@ -30,10 +30,9 @@ const knex = require("knex") ({
   }
 });
 
-// Route to display Pokemon records
 app.get('/', (req, res) => {
-    res.render('index', {admin});
-  });
+  res.render('index', {admin})
+});
 
 app.get('/eventSignup/', (req, res) => {
     res.render('eventSignup')
