@@ -127,11 +127,7 @@
     </label>
 
 
-    <!-- Volunteer Consent for Contact (Check Box -> if checked, then they do; if not checked, then they don't) -->
-    <label for="volunteer_consent_for_contact "> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-      <input type="checkbox" id="volunteer_consent_for_contact" name="volunteer_consent_for_contact" value="true" <%= volunteers.volunteer_consent_for_contact ? 'checked' : '' %>>
-      Check this box if you consent to recieve contact from us about reminders or updates! 
-    </label>
+   
 
     <!-- Perferred Contact Method (Radio Buttons) -->
     <label>What is your perferred contact method? </label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
@@ -146,17 +142,7 @@
     </label>
 
 
-    <!-- Notification Method (Radio Buttons) -->
-    <label>What notifications would you like to recieve from us? </label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <label>
-      <input type="radio" name="notification_preferences" value="R" <%= volunteers.notification_preferences === 'R' ? 'checked' : '' %>> Reminders
-    </label>
-    <label>
-      <input type="radio" name="notification_preferences" value="U" <%= volunteers.notification_preferences === 'U' ? 'checked' : '' %>> Updates
-    </label>
-    <label>
-      <input type="radio" name="notification_preferences" value="B" <%= volunteers.notification_preferences === 'B' ? 'checked' : '' %>> Both
-    </label>
+    
 
 
 
@@ -198,6 +184,19 @@
     <!-- </select> -->
     
     
+
+
+
+
+
+    <!-- This allows you to delete volunteers -->
+    <form action="/deleteVolunteer/<%= row.id %>" method="POST" style="display:inline;">
+      <button type="submit" onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
+    </form>
+
+
+
+
     <!-- Submit Button always goes at the end of a form!!-->
     <button type="submit">Save Changes</button>
 
