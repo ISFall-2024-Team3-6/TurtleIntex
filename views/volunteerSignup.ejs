@@ -1,3 +1,5 @@
+<!-- This is the Volunteer Sign Up Page for the Turtle Shelter Project, made by Porter Graham of Team 3-6 for BYU 
+ IS INTEX 2024 -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -133,71 +135,71 @@
     <!-- Each of these fields contains information that management wants to keep track of for each volunteer, which
      is why each is required -->
   <form action="/volunteerSignup/" method="POST">
-    <label for="first_name">First Name</label>
-    <input type="text" id="first_name" name="first_name" required oninput="this.value = this.value.toUpperCase()">
+    <label for="volunteer_first_name">First Name</label>
+    <input type="text" id="volunteer_first_name" name="volunteer_first_name" required oninput="this.value = this.value.toUpperCase()">
 
-    <label for="last_name">Last Name</label>
-    <input type="text" id="last_name" name="last_name" required oninput="this.value = this.value.toUpperCase()">
+    <label for="volunteer_last_name">Last Name</label>
+    <input type="text" id="volunteer_last_name" name="volunteer_last_name" required oninput="this.value = this.value.toUpperCase()">
 
-    <label for="volunteerEmail">Email</label>
-    <input type="text" id="volunteerEmail" name="volunteerEmail" required oninput="this.value = this.value.toUpperCase()">
+    <label for="volunteer_email">Email</label>
+    <input type="text" id="volunteer_email" name="volunteer_email" required oninput="this.value = this.value.toUpperCase()">
 
-    <label for="volunterPhone">Phone Number</label>
-    <input type="text" id="volunteerPhone" name="volunteerPhone" required>
+    <label for="volunteer_phone">Phone Number</label>
+    <input type="text" id="volunteer_phone" name="volunteer_phone" required>
 
-    <label for="volunteerStreetAddress">Street Address</label>
-    <input type="text" id="volunteerStreetAddress" name="volunteerStreetAddress" required oninput="this.value = this.value.toUpperCase()">
+    <label for="volunteer_address">Street Address</label>
+    <input type="text" id="volunteer_address" name="volunteer_address" required oninput="this.value = this.value.toUpperCase()">
 
-    <label for="volunteerCity">City</label>
-    <input type="text" id="volunteerCity" name="volunteerCity" required oninput="this.value = this.value.toUpperCase()">
+    <label for="volunteer_city">City</label>
+    <input type="text" id="volunteer_city" name="volunteer_city" required oninput="this.value = this.value.toUpperCase()">
 
-    <label for="volunteerState">State</label>
-    <select name="volunteerState" id="state" required>
+    <label for="volunteer_state">State</label>
+    <select name="volunteer_state" id="volunteer_state" required>
         <% states.forEach(function(state) { %>
             <option value="<%= state %>"><%= state %></option>
         <% }); %>
     </select>
 
-    <label for="volunteerZip">Zipcode</label>
-    <input type="text" id="volunteerZip" name="volunteerZip" required>
+    <label for="volunteer_zip	">Zipcode</label>
+    <input type="text" id="volunteer_zip	" name="volunteer_zip	" required>
 
     <label>Referral Method:</label>
     <label>
-      <input type="radio" name="volunteerReferral" value="website" required> Website
+      <input type="radio" name="volunteer_referral" value="website" required> Website
     </label>
     <label>
-      <input type="radio" name="volunteerReferral" value="friend" required> Friend
+      <input type="radio" name="volunteer_referral" value="friend" required> Friend
     </label>
     <label>
-      <input type="radio" name="volunteerReferral" value="socialMedia" required> Social Media
+      <input type="radio" name="volunteer_referral" value="socialMedia" required> Social Media
     </label>
     <label>
-      <input type="radio" name="volunteerReferral" value="Podcast" required> Podcast
+      <input type="radio" name="volunteer_referral" value="Podcast" required> Podcast
     </label>
     <label>
-      <input type="radio" name="volunteerReferral" value="other" required> Other
+      <input type="radio" name="volunteer_referral" value="other" required> Other
     </label>
 
-    <label for="volunteerHours">Hours Willing to Work (per Month)</label>
-    <input type="number" id="volunteerHours" name="volunteerHours" max="40" required>
+    <label for="volunteer_willing_hours">Hours Willing to Work (per Month)</label>
+    <input type="number" id="volunteer_willing_hours" name="volunteer_willing_hours" max="40" required>
 
     <label>Sewing Experience:</label>
     <label>
-      <input type="radio" name="volunteerSewing" value="Beginner" required> Beginner
+      <input type="radio" name="volunteer_sewing_level" value="Beginner" required> Beginner
     </label>
     <label>
-      <input type="radio" name="volunteerSewing" value="Intermediate" required> Intermediate
+      <input type="radio" name="volunteer_sewing_level" value="Intermediate" required> Intermediate
     </label>
     <label>
-      <input type="radio" name="volunteerSewing" value="Advanced" required> Advanced
+      <input type="radio" name="volunteer_sewing_level" value="Advanced" required> Advanced
     </label>
 
     <label>Preferred Method of Contact:</label>
     <label>
-      <input type="radio" name="volunteerPreference" value="Phone" required> Phone
+      <input type="radio" name="volunteer_preferred_contact" value="Phone" required> Phone
     </label>
     <label>
-      <input type="radio" name="volunteerPreference" value="Email" required> Email
+      <input type="radio" name="volunteer_preferred_contact" value="Email" required> Email
     </label>
 
     <label for="volunteerLead">
@@ -206,7 +208,9 @@
       <span style="font-size: 75%;">This means you will help to direct events requested by participants. You will not be asked to coordinate events, but may be asked to help transport materials and communicate with other volunteers.</span>
     </label>
 
-    <button>Submit</button>
+    <!-- This button will not only submit the volunteer sign up form, but will also notify the user that their submission
+     is being processed as they are routed back to the home page -->
+    <button type="submit" onclick="return confirm('Your Submission is Being Processed!');">Submit</button>
   </form>
 </body>
 </html>
