@@ -1,66 +1,117 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Pokemon Records</title>
-  <style>
-    table {
-      width: 80%;
-      margin: 20px auto;
-      border-collapse: collapse;
-      font-size: 10px; /* Reduce the font size of the table */
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 5px; /* Reduce the padding to decrease row height */
-      text-align: center;
-      line-height: 1.2; /* Adjust line height for smaller rows */
-    }
-    th {
-      background-color: #F2F2F2;
-      font-weight: bold;
-    }
-    button {
-      padding: 4px 8px; /* Adjust button size */
-      margin: 2px;
-      font-size: 12px; /* Adjust button font size */
-      cursor: pointer;
-    }
-  </style>
+  <title>Turtle Shelter Project</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="/style/styles.css">
 </head>
-<body>
-  <div style="width: 300px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #F9F9F9;">
+<body
+<% let admin = true; %>
 
-    <form action="/eventSignup" method="GET" style="display:inline;">
-      <button type="submit">Request an Event</button>
-    </form>
+  <!-- Navigation bar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Turtle Shelter Project</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
 
-    <form action="/volunteerSignup" method="GET" style="display:inline;">
-      <button type="submit">Volunteer</button>
-    </form>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/sponsor">Become A Sponsor</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/public/">Jen's Story</a>
+          </li>
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                About Us
+              </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li>   
+                <a class="dropdown-item" href="/About/ourTech">Our Tech</a>       
+              </li>
+              <li>         
+                <a class="dropdown-item" href="/About/faq">FAQs</a> 
+            </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+<div class="container mt-5 text-center">
+  <img src="/images/people-sewing.jpg" alt="Turtle Shelter Vest" class="img-fluid mb-4">
+  <br>
+  <br>
+  <br>
+  <h1 class="text-center">Our Mission</h1>
+  <br>
+  <p class="lead text-center">AID THE HOMELESS BY DISTRIBUTING TURTLE SHELTER VESTS.</p>
+  <p class="text-center">WHAT IS A TURTLE SHELTER VEST? A HIGH TECH BUT SIMPLE SOLUTION TO HELP SAVE LIVES -
+    A PORTABLE "SHELTER" YOU CAN CARRY WITH YOU, JUST LIKE A TURTLE...
+    AND YOU CAN HELP!</p>
+  <br>
+  <form action="/donation" method="GET" class="d-inline-block">
+    <button type="submit" class="btn btn-success btn-lg">Donate Now</button>
+  </form>
+</div>
 
-    <form action="/sponsors" method="GET" style="display:inline;">
-      <button type="submit">Our Sponsors</button>
-    </form>
+<!-- Body -->
+  <div class="container mt-4">
+    <h2 class="card-title text-center">How You Can Help</h2>
+    <div class="card-body text-center">
+      <form action="/eventSignup" method="GET" class="d-inline-block mb-3">
+        <button type="submit" class="btn button-color btn-sm">Request an Event</button>
+      </form>
+  <br>
+      <form action="/volunteerSignup" method="GET" class="d-inline-block mb-3">
+        <button type="submit" class="btn button-color btn-sm">Sign up to be Volunteer!</button>
+      </form>
+    </div>
+  </div>
 
-    <form action="/donation" method="GET" style="display:inline;">
-      <button type="submit">Donate Now</button>
-    </form>
 
-    <form action="/About/contact" method="GET" style="display:inline;">
-      <button type="submit">Contact Us</button>
-    </form>
+  <!-- Admin Links -->
+  <% if (admin) 
+  { %>
+  <div class="container mt-4">
+    <h2 class="card-title text-center">Admin Links</h2>
+    <div class="card-body text-center">
+      <form action="/events" method="GET" class="d-inline-block mb-3">
+        <button type="submit" class="btn button-color btn-sm">Event Maintenance</button>
+      </form>
+      <br>
+      <form action="/volunteers" method="GET" class="d-inline-block mb-3">
+        <button type="submit" class="btn button-color btn-sm">Volunteer Maintenance</button>
+      </form>
+      <br>
+      <form action="/adminEdit" method="GET" class="d-inline-block mb-3">
+        <button type="submit" class="btn button-color btn-sm">Admin Account Maintenance</button>
+    </div>
+  </div>
+  <% } %>
 
-    <form action="/About/faq" method="GET" style="display:inline;">
-      <button type="submit">FAQs</button>
-    </form>
+  <!-- Footer -->
+  <footer class="bg-light text-center text-lg-start mt-5">
+      <div class="row justify-content-center">
+        <div class="col-auto">
+          <form action="/About/contact" method="GET" class="d-inline">
+            <button type="submit" class="btn button-color mb-2">Contact Us</button>
+          </form>
+        </div>
+        <div class="col-auto">
+          <form action="/adminLogin" method="GET" class="d-inline">
+            <button type="submit" class="btn button-color mb-2">Login as Admin</button>
+          </form>
+        </div>
+      </div>
+  </footer>
 
-    <form action="/About/ourTech" method="GET" style="display:inline;">
-      <button type="submit">Our Tech</button>
-    </form>
-
-    <form action="/About/story" method="GET" style="display:inline;">
-      <button type="submit">Jen's Story</button>
-    </form>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

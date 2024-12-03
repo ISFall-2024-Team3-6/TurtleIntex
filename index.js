@@ -1,7 +1,4 @@
-/*
-Davis Larson
-Assignment 4 - Connects to a pokemon database allowing for displaying, editing, creating and deleting of data
-*/
+
 
 let express = require("express");
 
@@ -15,9 +12,12 @@ const port = process.env.PORT || 3000;
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+// Serve static files from the "public" directory
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(express.urlencoded({extended: true}));
 
-let security = false;
+let admin = false;
 
 // Connects to the locally hosted database
 const knex = require("knex") ({
@@ -34,7 +34,7 @@ const knex = require("knex") ({
 
 // Route to display Pokemon records
 app.get('/', (req, res) => {
-    res.render('index');
+    res.render('index', {admin});
   });
 
   app.get('/eventSignup/', (req, res) => {
