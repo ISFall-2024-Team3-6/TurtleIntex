@@ -29,5 +29,103 @@
 </head>
 <body>
     <h5>This will be the volunteer maintenance page</h5>
+    <h1 style="text-align: center;">Edit Volunteers</h1>
+  <form action="/volunteers/<%= event.id %>" method="POST">
+    
+
+    <!-- I really do not think that an admin should be able to change the name of the volunteer -->
+
+
+    
+    <!-- Volunteer Phone Number -->
+    <label for="volunteer_phone">What is a good phone number?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="number" id="volunteer_phone" name="volunteer_phone" value="<%= volunteers.volunteer_phone %>" required>
+
+    <!-- Volunteer Email -->
+    <label for="volunteer_email">What is your email?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="text" id="volunteer_email" name="volunteer_email" value="<%= volunteers.volunteer_email %>">
+
+    <!-- Volunteer Address -->
+    <label for="volunteer_address">Volunteer Address</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="text" id="volunteer_address" name="volunteer_address" value="<%= volunteers.volunteer_address %>" required>
+
+    <!-- Number of Hours Willing to Volunteer Per Month -->
+    <label for="month_hours">How many hours are your willing to volunteer per month?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="number" id="month_hours" name="month_hours" value="<%= volunteers.month_hours %>" required>
+
+    <!-- Sewing Level (Radio Buttons) -->
+    <label>Sewing Level</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <label>
+      <input type="radio" name="sewing_level" value="S" <%= volunteers.sewing_level === 'B' ? 'checked' : '' %>> Beginner
+    </label>
+    <label>
+      <input type="radio" name="sewing_level" value="NS" <%= volunteers.sewing_level === 'I' ? 'checked' : '' %>> Intermediate
+    </label>
+    <label>
+      <input type="radio" name="sewing_level" value="B" <%= volunteers.sewing_level === 'E' ? 'checked' : '' %>> Experienced
+    </label>
+
+
+
+
+
+    <!-- LEFTOVERS BELOW -> USE THE TABLE TO FIGURE OUT WHAT YOU WANT YOUR ADMIN TO BE ABLE TO EDIT   -->
+
+    
+    <!-- Projected Number of Attendees -->
+    <label for="num_attendees_projected">Number of Estimated Participants</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="number" id="num_attendees_projected" name="num_attendees_projected" value="<%= events.num_attendees_projected %>" required>
+    
+    <!-- Date of the Event -->
+    <label for="event_date">Event Date</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="date" id="event_date" name="event_date" value="<%= events.event_date.toISOString().split('T')[0] %>" required>
+
+    <!-- Event Start Time -->
+    <label for="event_start_time">Select a start time for the event:</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="time" id="event_start_time" name="event_start_time" min="08:00" max="19:00">
+    
+    <!-- Jen Shares Story (Checkbox) -->
+    <label for="share_story"> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+      <input type="checkbox" id="share_story" name="share_story" value="true" <%= events.share_story ? 'checked' : '' %>>
+      Check this box if you would like Jen to share her story! 
+    </label>
+    
+
+    
+    
+    
+    <!-- DO WE NEED A DROP DOWN OPTION??? -->
+
+    <!-- I DO NOT THINK SO, I WOULD ONLY THINK THAT THE "HOW YOU HEARD ABOUT US" COULD GO HERE, BUT I REALLY
+     DON'T SEE A NEED FOR AN ADMIN TO BE ABLE TO CHANGE THIS INFO SO I AM NOT GOING TO INCLUDE IT -->
+
+    
+     
+    <!-- Pokémon Type -->
+    <!-- <label for="poke_type_id">Pokémon Type</label> -->
+    
+    <!-- MAKES A DROP DOWN LIST WITH OPTIONS with THE <Select> html tag -->
+    <!-- for an option, you provide a value and descrition -->
+
+    <!-- <select id="poke_type_id" name="poke_type_id"> -->
+      <!-- <% poke_types.forEach(type => { %>  -->
+        <!-- for every record in the array called poke_types, pass it to the variable called type one at a time - WE MADE THIS ARRAY IN OUR SECOND KNEX STATEMENT FOR EDIT IN THE INDEX.JS FILE-->
+        
+	<!-- <option value="<%= type.id %>" <%= pokemon.poke_type_id === type.id ? 'selected' : '' %>> -->
+            <!-- make an option (one of the many options ), the value is the id from the type; if the type is the current type, then just have this already selected and chosen -->
+            <!-- if your current poke_type_id has the same id, then highlight that record (ie SELECTED) -->
+            <!--  -->
+            <!-- <%= type.description %> -->
+            <!-- now you display the description -->
+        <!-- </option> -->
+      <!-- <% }) %> -->
+    <!-- </select> -->
+    
+    
+    <!-- Submit Button always goes at the end of a form!!-->
+    <button type="submit">Save Changes</button>
+
+
+  </form>
 </body>
 </html>

@@ -29,5 +29,98 @@
 </head>
 <body>
     <h5>This will be the Events Maintenance page</h5>
+    <!-- first thing you HAVE IS A FORM, SO MAKE SURE TO HAVE YOUR INPUTS NAMED -->
+  <h1 style="text-align: center;">Edit Events</h1>
+  <form action="/events/<%= event.id %>" method="POST">
+    <!-- calling a route to edit, has a parameter called id -->
+    <!-- you can now pass the record Number through, so you pass it back as a PARAMETER -->
+    <!-- so you can find the record and update it now -->
+    
+
+
+    <!-- Event Description -->
+    <label for="description">Description</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="text" id="description" name="description" value="<%= events.description %>">
+    
+    <!-- Projected Number of Attendees -->
+    <label for="num_attendees_projected">Number of Estimated Participants</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="number" id="num_attendees_projected" name="num_attendees_projected" value="<%= events.num_attendees_projected %>" required>
+    
+    <!-- Date of the Event -->
+    <label for="event_date">Event Date</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="date" id="event_date" name="event_date" value="<%= events.event_date.toISOString().split('T')[0] %>" required>
+
+    <!-- BackUp Date 1 of the Event -->
+    <label for="backup1_event_date">Backup 1 Event Date</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="date" id="backup1_event_date" name="backup1_event_date" value="<%= events.backup1_event_date.toISOString().split('T')[0] %>">
+
+    <!-- BackUp Date 2 of the Event -->
+    <label for="backup2_event_date">Backup 2 Event Date</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="date" id="backup2_event_date" name="backup2_event_date" value="<%= events.backup2_event_date.toISOString().split('T')[0] %>">
+
+    <!-- Event Address -->
+    <label for="event_address">Event Address</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="text" id="event_address" name="event_address" value="<%= events.event_address %>" required>
+
+    <!-- Event Start Time -->
+    <label for="event_start_time">Select a start time for the event:</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="time" id="event_start_time" name="event_start_time" min="08:00" max="19:00">
+
+    <!-- Event Duration -->
+    <label for="event_duration">How long will this event last?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="number" id="event_duration" name="event_duration" value="<%= events.event_duration %>" required>
+
+    <!-- Event Contact Name -->
+    <label for="contact_name">What is a good contact name?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="text" id="contact_name" name="contact_name" value="<%= events.contact_name %>" required>
+
+    <!-- Event Contact Phone Number -->
+    <label for="contact_phone">What is a good phone number?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <input type="number" id="contact_phone" name="contact_phone" value="<%= events.contact_phone %>" required>
+    
+    <!-- Jen Shares Story (Checkbox) -->
+    <label for="share_story"> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+      <input type="checkbox" id="share_story" name="share_story" value="true" <%= events.share_story ? 'checked' : '' %>>
+      Check this box if you would like Jen to share her story! 
+    </label>
+    
+
+    <!-- Activity at Event (Radio Buttons) -->
+    <label>Activity</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
+    <label>
+      <input type="radio" name="activity" value="S" <%= events.activity === 'M' ? 'checked' : '' %>> Sewing
+    </label>
+    <label>
+      <input type="radio" name="activity" value="NS" <%= events.activity === 'F' ? 'checked' : '' %>> Non-Sewing
+    </label>
+    <label>
+      <input type="radio" name="activity" value="B" <%= events.activity === 'U' ? 'checked' : '' %>> Both
+    </label>
+    
+    
+    <!-- DO WE NEED A DROP DOWN OPTION??? -->
+     
+    <!-- Pokémon Type -->
+    <label for="poke_type_id">Pokémon Type</label>
+    
+    <!-- MAKES A DROP DOWN LIST WITH OPTIONS with THE <Select> html tag -->
+    <!-- for an option, you provide a value and descrition -->
+
+    <select id="poke_type_id" name="poke_type_id">
+      <% poke_types.forEach(type => { %> 
+        <!-- for every record in the array called poke_types, pass it to the variable called type one at a time - WE MADE THIS ARRAY IN OUR SECOND KNEX STATEMENT FOR EDIT IN THE INDEX.JS FILE-->
+        
+	<option value="<%= type.id %>" <%= pokemon.poke_type_id === type.id ? 'selected' : '' %>>
+            <!-- make an option (one of the many options ), the value is the id from the type; if the type is the current type, then just have this already selected and chosen -->
+            <!-- if your current poke_type_id has the same id, then highlight that record (ie SELECTED) -->
+            <!--  -->
+            <%= type.description %>
+            <!-- now you display the description -->
+        </option>
+      <% }) %>
+    </select>
+    <!-- Submit Button always goes at the end of a form!!-->
+    <button type="submit">Save Changes</button>
+  </form>
 </body>
 </html>
