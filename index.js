@@ -191,17 +191,62 @@ app.get('/viewEvents', async (req, res) => {
 
 
 
+
+
+
+// THIS ALLOWS THE ADMIN TO View all EVENTS
+app.get('/eventMaintenance', (req, res) => {
+  const currentDate = new Date();  // This should create a valid Date object
+  
+  if (isNaN(currentDate)) {
+    console.log('Error: Invalid current date');
+    res.status(500).send('Server error: Invalid current date');
+    return;
+  }
+  knex.select('*').from('events').orderBy('event_date')
+      .then(events => {
+        const upcomingEvents = events.filter(event => new Date(event.event_date) > currentDate);
+        const pastEvents = events.filter(event => new Date(event.event_date) <= currentDate);
+      
+      // Render the view and pass the data
+      res.render('events', { upcomingEvents, pastEvents }); 
+      })
+  });
+
+
+
+
 // THIS ALLOWS THE ADMIN TO EDIT EVENTS
-app.get('/events/:id', (req, res) => {
-let id = req.params.id;
-// Query the Volunteer by ID first
-knex('events') 
-    .where('id', id)
+app.get('/editEvents/:id', (req, res) => {
+  let id = req.params.id;
+  // Query the Event by ID 
+  knex('events') 
+    .where('eventid', id)
     .first()
-    .then(events => {
-    if (!events) {
+    .then(event => {
+    if (!event) {
         return res.status(404).send('Event not found');
     }
+    res.render('editEvents', { event });
+    })
+    .catch(error => {
+    console.log('Error fetching Event for editing:', error);
+    res.status(500).send('Internal Server Error');
+    });
+});
+
+// THIS ALLOWS THE ADMIN TO EDIT UPCOMING EVENTS
+app.get('/editUpcomingEvents/:id', (req, res) => {
+  let id = req.params.id;
+  // Query the Event by ID 
+  knex('events') 
+    .where('eventid', id)
+    .first()
+    .then(event => {
+    if (!event) {
+        return res.status(404).send('Event not found');
+    }
+    res.render('editUpcomingEvents', { event });
     })
     .catch(error => {
     console.log('Error fetching Event for editing:', error);
@@ -210,18 +255,32 @@ knex('events')
 });
 
 
-app.post('/events/:id', (req, res) => {
+
+
+
+app.post('/updateEvents/:id', (req, res) => {
   const id = req.params.id;
 
   const contact_first_name = req.body.contact_first_name
   const contact_last_name = req.body.contact_last_name
   const contact_phone = req.body.contact_phone
   const contact_email = req.body.contact_email
-  const contact_perferred = req.body.contact_perferred
+  const contact_preferred_contact = req.body.contact_preferred_contact
   const event_type = req.body.event_type
+  
+  // Extract the date fields from the request body
   const event_date = req.body.event_date
   const event_backup_date = req.body.event_backup_date
-  const event_backup_date_2 = req.body.event_backup_date_2
+  let event_backup_date_2 = req.body.event_backup_date_2
+
+  // Handle empty or invalid dates by setting them to null if they are empty strings
+  // const event_backup_date_2 = req.body.event_backup_date_2.trim() === "" ? null : req.body.event_backup_date_2;
+
+  if (!event_backup_date_2) {
+    event_backup_date_2 = null;
+  }
+  
+
   const event_start_time = req.body.event_start_time
   const event_expected_duration = req.body.event_expected_duration
   const event_actual_duration = req.body.event_actual_duration
@@ -244,24 +303,24 @@ app.post('/events/:id', (req, res) => {
   const collars_brought = req.body.collars_brought
   const collars_in_progress = req.body.collars_in_progress
   const collars_finished = req.body.collars_finished
-  const envenlopes_brought = req.body.envenlopes_brought
-  const envenlopes_in_progress = req.body.envenlopes_in_progress
-  const envenlopes_finished = req.body.envenlopes_finished
+  const envelopes_brought = req.body.envelopes_brought
+  const envelopes_in_progress = req.body.envelopes_in_progress
+  const envelopes_finished = req.body.envelopes_finished
   const vests_brought = req.body.vests_brought
   const vests_in_progress = req.body.vests_in_progress
   const vests_finished = req.body.vests_finished
-  const completed_product = req.body.completed_product
+  const completed_products = req.body.completed_products
 
   // Update the Events in the database
     knex('events') 
-     .where('id', id)
+     .where('eventid', id)
      .update({
 
       contact_first_name: contact_first_name, 
       contact_last_name: contact_last_name, 
       contact_phone: contact_phone, 
       contact_email: contact_email, 
-      contact_perferred: contact_perferred, 
+      contact_preferred_contact: contact_preferred_contact, 
       event_type: event_type, 
       event_date: event_date,
       event_backup_date: event_backup_date, 
@@ -288,17 +347,17 @@ app.post('/events/:id', (req, res) => {
       collars_brought: collars_brought, 
       collars_in_progress: collars_in_progress, 
       collars_finished: collars_finished, 
-      envenlopes_brought: envenlopes_brought,
-      envenlopes_in_progress: envenlopes_in_progress,  
-      envenlopes_finished: envenlopes_finished, 
+      envelopes_brought: envelopes_brought,
+      envelopes_in_progress: envelopes_in_progress,  
+      envelopes_finished: envelopes_finished, 
       vests_brought: vests_brought, 
       vests_in_progress: vests_in_progress, 
       vests_finished: vests_finished, 
-      completed_product: completed_product, 
+      completed_products: completed_products, 
 
      })
      .then(() => {
-       res.redirect('/adminIndex'); // Redirect to the list of events after saving -> FIX THIS ROUTE, IT WILL BE WRONG
+       res.redirect('/eventMaintenance'); // Redirect to the list of events after saving -> FIX THIS ROUTE, IT WILL BE WRONG
      })
      .catch(error => {
        console.log('Error updating Event:', error);
@@ -308,14 +367,118 @@ app.post('/events/:id', (req, res) => {
 
 
 
-  // POST ROUTE FOR DELETING characters
-app.post('/deleteEvent/:id', (req, res) => {
+
+// POST ROUTE TO PUSH UPDATED CHANGES FROM UPCOMING EVENTS
+ app.post('/updateUpcomingEvents/:id', (req, res) => {
+  const id = req.params.id;
+
+  const contact_first_name = req.body.contact_first_name
+  const contact_last_name = req.body.contact_last_name
+  const contact_phone = req.body.contact_phone
+  const contact_email = req.body.contact_email
+  const contact_preferred_contact = req.body.contact_preferred_contact
+  const event_type = req.body.event_type
+  
+  // Extract the date fields from the request body
+  const event_date = req.body.event_date
+  const event_backup_date = req.body.event_backup_date
+  let event_backup_date_2 = req.body.event_backup_date_2
+
+  // Handle empty or invalid dates by setting them to null if they are empty strings
+  // const event_backup_date_2 = req.body.event_backup_date_2.trim() === "" ? null : req.body.event_backup_date_2;
+
+  if (!event_backup_date_2) {
+    event_backup_date_2 = null;
+  }
+  
+
+  const event_start_time = req.body.event_start_time
+  const event_expected_duration = req.body.event_expected_duration
+  
+  const event_address = req.body.event_address
+  const event_city = req.body.event_city
+  const event_state = req.body.event_state
+  const event_zip = req.body.event_zip
+  const event_space_capacity = req.body.event_space_capacity
+  const table_types = req.body.table_types
+  const number_sewers = req.body.number_sewers
+  const machines_volunteered = req.body.machines_volunteered
+  const event_expected_adults = req.body.event_expected_adults
+  const event_expected_children = req.body.event_expected_children
+
+  const jen_story = req.body.jen_story
+
+ 
+
+  // Update the Events in the database
+    knex('events') 
+     .where('eventid', id)
+     .update({
+
+      contact_first_name: contact_first_name, 
+      contact_last_name: contact_last_name, 
+      contact_phone: contact_phone, 
+      contact_email: contact_email, 
+      contact_preferred_contact: contact_preferred_contact, 
+      event_type: event_type, 
+      event_date: event_date,
+      event_backup_date: event_backup_date, 
+      event_backup_date_2: event_backup_date_2, 
+      event_start_time: event_start_time, 
+      event_expected_duration: event_expected_duration, 
+      
+      event_address: event_address,
+      event_city: event_city, 
+      event_state: event_state, 
+      event_zip: event_zip, 
+      event_space_capacity: event_space_capacity, 
+      table_types: table_types, 
+      number_sewers: number_sewers, 
+      machines_volunteered: machines_volunteered, 
+      event_expected_adults: event_expected_adults, 
+      event_expected_children: event_expected_children, 
+ 
+      jen_story: jen_story, 
+    
+
+     })
+     .then(() => {
+       res.redirect('/eventMaintenance'); // Redirect to the list of events after saving -> FIX THIS ROUTE, IT WILL BE WRONG
+     })
+     .catch(error => {
+       console.log('Error updating Event:', error);
+       res.status(500).send('Internal Server Error');
+     });
+ });
+
+
+
+
+  // POST ROUTE FOR DELETING Past Events
+app.post('/deleteEvents/:id', (req, res) => {
   const id = req.params.id;
   knex('events')
-  .where('id', id)
+  .where('eventid', id)
   .del() // Deletes the record with the specified ID
   .then(() => {
-    res.redirect('/adminIndex'); // Redirect to the events list after deletion
+    res.redirect('/eventMaintenance'); // Redirect to the events list after deletion
+  })
+  // error handling
+  .catch(error => {
+    console.error('Error deleting this Event:', error);
+    res.status(500).send('Internal Server Error');
+    });
+  });
+
+
+    // POST ROUTE FOR DELETING Upcoming Events
+app.post('/deleteUpcomingEvents/:id', (req, res) => {
+  const id = req.params.id;
+  knex('events')
+  .where('eventid', id)
+  .del() // Deletes the record with the specified ID
+  .then(() => {
+    res.redirect('/eventMaintenance'); // Redirect to the events list after deletion
   })
   // error handling
   .catch(error => {
