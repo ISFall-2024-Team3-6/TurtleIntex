@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title> Admin Pokemon cords</title>
+  <title> Volunteer and Event Dashboard </title>
   <style>
     table {
       width: 80%;
@@ -26,69 +26,65 @@
       cursor: pointer;
     }
   </style>
+  <title> Admin Pokemon cords</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="/style/styles.css">
 </head>
 <body>
-  <div style="width: 300px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #F9F9F9;">
-    <form action="/login" method="post">
-        <!-- User Name -->
-        <label for="username" style="display: block; margin-bottom: 5px;">User Name:</label>
-        <input type="text" id="username" name="username" placeholder="Enter your username" style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px;" required>
-        <!-- Password -->
-        <label for="password" style="display: block; margin-bottom: 5px;">Password:</label>
-        <input type="password" id="password" name="password" placeholder="Enter your password" style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px;" required>
-        <!-- Submit Button -->
-        <button type="submit" style="width: 100%; padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">
-            Submit
-        </button>
+
+<% if (admin) 
+{ %>
+
+<!-- Navigation bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/adminIndex">Admin Console</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+      <form action="/logout" method="GET" class="d-inline ms-auto">
+        <button type="submit" class="btn button-color mb-2">Logout</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-4 pt-5">
+  <h2 class="card-title text-center">Admin Links</h2>
+  <div class="card-body text-center">
+    <form action="/viewEvents" method="GET" class="d-inline-block mb-3">
+      <button type="submit" class="btn button-color btn-sm">Event Maintenance</button>
     </form>
+    <br>
+    <form action="/volunteerMaintenance" method="GET" class="d-inline-block mb-3">
+      <button type="submit" class="btn button-color btn-sm">Volunteer Maintenance</button>
+    </form>
+    <br>
+    <form action="/adminEdit" method="GET" class="d-inline-block mb-3">
+      <button type="submit" class="btn button-color btn-sm">Admin Account Maintenance</button>
+    </form>
+  </div>
 </div>
-  <h1 style="text-align: center;">Admin Pokemon Records</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Pokemon</th>
-        <th>Base Total</th>
-        <th>Date Created</th>
-        <th>Active</th>
-        <th>Gender</th>
-        <th>Type</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% if (pokemon.length > 0) { %>
-        <% pokemon.forEach(row => { %>
-          <tr>
-            <input type="hidden" value="row.id">
-            <input type="hidden" value="row.poke_type_id">
-            <td><%= row.description %></td>
-            <td><%= row.base_total %></td>
-            <td><%= new Date(row.date_created).toLocaleDateString('en-US') %></td> <!-- Format date -->
-            <td><%= row.active_poke ? 'Yes' : 'No' %></td>
-            <td><%= row.gender %></td>
-            <td><%= row.poke_type_description %></td>
-            <td>
-              <form action="/pokemon/<%= row.id %>" method="GET" style="display:inline;">
-                <button type="submit">View</button>
-              </form>
-              <form action="/editPoke/<%= row.id %>" method="GET" style="display:inline;">
-                <button type="submit">Edit</button>
-              </form>
-              <form action="/deletePoke/<%= row.id %>" method="POST" style="display:inline;">
-                <button type="submit" onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
-              </form>
-            </td>
-          </tr>
-        <% }) %>
-      <% } else { %>
-        <tr>
-          <td colspan="7">No data available</td>
-        </tr>
-      <% } %>
-    </tbody>
-  </table>
-  <form action="/addPoke" method="GET" style="display: flex; justify-content: center; margin: 20px 0;">
-    <button type="submit">Add</button>
-  </form>
+
+<h1>Admin Dashboard about Volunteer and Event Stats</h1>
+  
+  <div>
+    <p>Welcome to the Admin Dashboard! Below you will find the latest data visualizations to help you view the success of past events and volunteer efforts effectively.</p>
+    <p>Use the filters and interactive elements within the dashboard to explore the data in detail.</p>
+  </div>
+  
+  <div>
+    <!-- Embed Tableau Public Dashboard -->
+    <iframe src="PUT EMBEDDED LINK HERE"></iframe>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<% }
+else{
+%> <p>Invalid Admin Credentials.</p>
+<% } %>
+
+
+
 </body>
 </html>

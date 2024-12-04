@@ -12,9 +12,9 @@
 body {
    font-family: 'Roboto', sans-serif;
    line-height: 1.6;
-   background-color: #f4f4f4;
+   background-color: #f9f9f9;
    color: #333;
-   padding: 20px;
+   padding-top: 80px; /* Adjust for fixed navigation bar */
 }
 
 /* Container for centering content */
@@ -42,6 +42,15 @@ header h1 {
 /* Navigation styling */
 nav {
    text-align: center;
+}
+
+.navbar {
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add slight shadow for depth */
+}
+
+.navbar-brand {
+   font-weight: bold;
+   font-size: 1.5rem;
 }
 
 nav a {
@@ -93,37 +102,120 @@ footer p {
    border: none;
    border-radius: 5px;
    cursor: pointer;
+   transition: background-color 0.3s ease;
 }
 
-body {
-   font-family: Arial, sans-serif;
-   text-align: center;
-   background-color: #e0f7fa; /* Very light blue background color */
- }
- button {
-   background-color: #20a2d6;
-   color: white;
-   border: none;
-   cursor: pointer;
-   width: 100%;
- }
- button:hover {
-   opacity: 0.8;
- }
- 
- table {
+.button-color:hover {
+   background-color: #0056b3;
+}
+
+/* Table styling */
+table {
    width: 80%;
    margin: 20px auto;
    border-collapse: collapse;
    font-size: 10px; /* Reduce the font size of the table */
- }
- th, td {
+}
+
+th, td {
    border: 1px solid #ddd;
    padding: 5px; /* Reduce the padding to decrease row height */
    text-align: center;
    line-height: 1.2; /* Adjust line height for smaller rows */
- }
- th {
+}
+
+th {
    background-color: #F2F2F2;
    font-weight: bold;
+}
+
+/* Body starts below the navbar */
+body {
+   padding-top: 80px;
+   background-color: #f9f9f9;
+   font-family: 'Georgia', serif; /* Use a serif font for a professional feel */
+   color: #333;
+   line-height: 1.8; /* Make text easier to read */
  }
+
+ /* Navbar customization */
+ .navbar {
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add slight shadow for depth */
+ }
+ .navbar-brand {
+   font-weight: bold;
+   font-size: 1.5rem;
+ }
+
+
+ /* Headings styling */
+ h1 {
+   text-align: center;
+   margin-top: 20px;
+   color: #2c3e50;
+ }
+ h5 {
+   margin-top: 30px;
+   color: #34495e;
+   font-style: italic;
+ }
+
+ /* Paragraph styling */
+ p {
+   margin: 20px auto;
+   width: 90%; /* Center the text */
+   text-align: justify; /* Justify text for a clean layout */
+   background: #ffffff;
+   padding: 20px;
+   border-radius: 10px;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+ }
+
+ /* Links */
+ a {
+   color: #007bff;
+   text-decoration: none;
+   font-weight: bold;
+ }
+ a:hover {
+   text-decoration: underline;
+ }
+
+ /* Image styling */
+ img {
+   display: block;
+   margin: 20px auto;
+   max-width: 100%;
+   height: auto;
+   border-radius: 10px;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+ }
+
+/* Style for sponsor images */
+.sponsor-logos {
+   display: flex;
+   flex-wrap: wrap; /* This will allow the logos to wrap onto new lines */
+   justify-content: center; /* Center the logos horizontally */
+   gap: 20px; /* Adds space between logos */
+   padding: 20px 0; /* Add padding to the top and bottom of the container */
+ }
+ 
+ .sponsor-logo {
+  border: #007BFF;
+ }
+ 
+ 
+ 
+ /* For responsiveness, adjust the size on smaller screens */
+ @media (max-width: 768px) {
+   .sponsor-logo {
+     max-width: 120px; /* Make images smaller on smaller screens */
+   }
+ }
+ 
+ @media (max-width: 480px) {
+   .sponsor-logo {
+     max-width: 100px; /* Make images even smaller on very small screens */
+   }
+ }
+

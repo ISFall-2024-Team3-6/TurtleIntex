@@ -27,17 +27,6 @@
   </style>
 </head>
 <body>
-  <% console.log(events); %>
-
-<% if (admin) { %> 
-  <p>Logged in as an Admin</p>
-  <form action="/logout">
-    <button type="submit" class="btn btn-danger">Logout</button>
-  </form>
-<% } else { %>
-  <p>Admin is not logged in</p>
-<% } %>
-
 <!-- Navigation bar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
   <div class="container-fluid">
@@ -51,14 +40,14 @@
           <a class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/sponsors/">Become A Sponsor</a>
+          <a class="nav-link" href="/sponsors/">Sponsors</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/About/story">Jen's Story</a>
+          <a class="nav-link" href="/About/story">Our Story</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            About Us
+            More Info
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <li><a class="dropdown-item" href="/About/ourTech">Our Tech</a></li>
@@ -66,9 +55,6 @@
           </ul>
         </li>
       </ul>
-      <form action="/adminLogin" method="GET" class="d-inline ms-auto">
-        <button type="submit" class="btn button-color mb-2">Login as Admin</button>
-      </form>
     </div>
   </div>
 </nav>
@@ -91,29 +77,8 @@
     <p>WHAT IS A TURTLE SHELTER VEST? A HIGH TECH BUT SIMPLE SOLUTION TO HELP SAVE LIVES - A PORTABLE "SHELTER" YOU CAN CARRY WITH YOU, JUST LIKE A TURTLE... AND YOU CAN HELP!</p>
   </div>
 </div>
-
-  <!-- Admin Links -->
-  <% if (admin) 
-  { %>
-  <div class="container mt-4">
-    <h2 class="card-title text-center">Admin Links</h2>
-    <div class="card-body text-center">
-      <form action="/events" method="GET" class="d-inline-block mb-3">
-        <button type="submit" class="btn button-color btn-sm">Event Maintenance</button>
-      </form>
-      <br>
-      <form action="/volunteers" method="GET" class="d-inline-block mb-3">
-        <button type="submit" class="btn button-color btn-sm">Volunteer Maintenance</button>
-      </form>
-      <br>
-      <form action="/adminEdit" method="GET" class="d-inline-block mb-3">
-        <button type="submit" class="btn button-color btn-sm">Admin Account Maintenance</button>
-      </form>
-    </div>
-  </div>
-  <% } %>
-
-  <!-- Footer -->
+  
+  <!-- Footer --> 
   <footer class="bg-light text-center text-lg-start mt-5">
       <div class="row justify-content-center">
         <div class="col-auto">

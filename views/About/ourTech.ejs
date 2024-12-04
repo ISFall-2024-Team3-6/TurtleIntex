@@ -1,33 +1,166 @@
+<!-- This is the ourTech page for the Turtle Shelter Project, made by Porter Graham of Team 3-6 for BYU IS INTEX 2024 -->
 <!DOCTYPE html>
 <html>
 <head>
   <title>Our Tech</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="/style/styles.css">
   <style>
-    table {
-      width: 80%;
-      margin: 20px auto;
-      border-collapse: collapse;
-      font-size: 10px; /* Reduce the font size of the table */
+    /* Body starts below the navbar */
+    body {
+      padding-top: 80px;
+      background-color: #f9f9f9;
+      font-family: 'Georgia', serif; /* Use a serif font for a professional feel */
+      color: #333;
+      line-height: 1.8; /* Make text easier to read */
     }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 5px; /* Reduce the padding to decrease row height */
+
+    /* Navbar customization */
+    .navbar {
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add slight shadow for depth */
+    }
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    /* Headings styling */
+    h1 {
       text-align: center;
-      line-height: 1.2; /* Adjust line height for smaller rows */
+      margin-top: 20px;
+      color: #2c3e50;
     }
-    th {
-      background-color: #F2F2F2;
+    h5 {
+      margin-top: 30px;
+      color: #34495e;
+      font-style: italic;
+    }
+
+    /* Paragraph styling */
+    p {
+      margin: 20px auto;
+      width: 90%; /* Center the text */
+      text-align: justify; /* Justify text for a clean layout */
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Links */
+    a {
+      color: #007bff;
+      text-decoration: none;
       font-weight: bold;
     }
-    button {
-      padding: 4px 8px; /* Adjust button size */
-      margin: 2px;
-      font-size: 12px; /* Adjust button font size */
-      cursor: pointer;
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Image styling */
+    img {
+      display: block;
+      margin: 20px auto;
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
   </style>
 </head>
 <body>
-    <h5>This will be the vests page</h5>
+
+<!-- Navigation bar -->
+ <!-- Our Navigation Bar allows users to navigate from this page back to the Home page, or to any other page on the website -->
+ <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Turtle Shelter Project</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+      <!-- This is the beginning of the "list" of items in our navigation bar -->
+      <ul class="navbar-nav">
+
+        <!-- This is the button to go back to the home page -->
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+
+        <!-- This is the button to go to the Sponsors page -->
+        <li class="nav-item">
+          <a class="nav-link" href="/sponsors/">Sponsors</a>
+        </li>
+
+        <!-- This button leads to the web page's info page -->
+        <li class="nav-item">
+          <a class="nav-link" href="story">Our Story</a>
+        </li>
+
+        <!-- This is a dropdown with links to the Our Tech and FAQ pages -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            More Info
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="/About/ourTech">Our Tech</a></li>
+            <li><a class="dropdown-item" href="/About/faq">FAQs</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- All of the content below was taken right from the original Turtle Shelter Project website. Until we better understand
+ the technology, we thought it best to keep the original statements -->
+ <div class="container">
+    <h5>Our Vests</h5>
+    <p>Foam clothing technology was invented by outdoor survival expert Jim Phillips. 
+      He has done extensive testing using open-cell polyurethane foam as the insulation 
+      layer in jackets, hoods, pants, boots, gloves, and sleeping bags.<br>
+
+      Jim Phillips' foam clothing is brilliant technology because of what it can do to help 
+      save a person's life in freezing temperatures. The insulation layer foam clothing provides 
+      is so effective that even if a person gets wet it will keep them warm -- BUT, wearing synthetic 
+      fabrics is an important layer to include with the foam clothing. Foam clothing can be effective
+       while wearing cotton if the wearer stays dry, but if the wearer gets wet, the cotton will absorb 
+       and hold water and keep the wearer cold.  If a person is not wearing any cotton with the foam 
+       clothing, and they happen to get wet, they will still be able to maintain their core body temperature.  
+       The reason why this works is because the shell and lining fabrics and the foam are all synthetic and 
+       breathable - providing moisture wicking properties and allowing perspiration and other moisture to evaporate.</p>
+
+       <h5>Foam clothing dramatically reduces moisture as being a threat to a person's life in the cold!</h5>
+       <p>Foam clothing is marketed to emergency preparedness and extreme sports audiences because of its ability 
+        to keep you warm in winter conditions.  Being cold is one thing, but being cold and wet is miserable. Being 
+        cold, wet, and without shelter can be life threatening. <br>
+
+        This technology is usually sold in emergency preparedness venues and super expensive. It does make sense 
+        because the technology is super valuable that the clothing should cost a lot, but we disagree:  nobody 
+        likes to be cold and people function a lot better when they are not freezing to death!  So we created a 
+        foam vest that covers the core and we called the Turtle Shelter because it acts like a shelter and harnesses 
+        the wearer's body heat even while wet and even in freezing temperatures. </p>
+
+        <h5>Jen's perspective:  Every life has value!</h5>
+        <p>"Hearing about this technology in an emergency Preparedness venue provoked a lot of 
+          thought about how many homeless peoples lives could not only be saved but also improved 
+          by this technology? Emergency preparedness is all about people getting prepared for when 
+          disaster strikes...and it seems like to get prepared can be pretty pricey...but isn't a 
+          person who is homeless living in their emergency right this very moment? They are not waiting 
+          for disaster to strike because for them it already has and I know from experience that once 
+          the disaster of homelessness strikes it can be extremely hard to recover from it. For many 
+          it is far more than simply losing a home or a place to stay...for me and many others it was 
+          also about losing my confidence, my energy, my drive, and even my hope...I felt completely 
+          broken and defeated!<br>
+
+          I remember how every simple task felt like an overwhelming obstacle but even more so when it 
+          was so cold I couldn't even think. Everything just felt harder when it was cold and wet and miserable...
+          I believe that this foam clothing can help relieve some of the suffering for anyone who is homeless and 
+          living in the cold...I believe it doesn't have to cost a lot to make these. Not for the homeless 
+          and not for our families...lives can be saved from this technology."</p>
+</div>
+
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
