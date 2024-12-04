@@ -1,5 +1,5 @@
 let express = require("express");
-const { devNull } = require("os");
+const session = require('express-session');
 
 // Create the express app
 let app = express();
@@ -16,7 +16,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.urlencoded({extended: true}));
 
-let admin = false;
+// Configure session middleware
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'keyboard',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true } // Set to true if using HTTPS
+}));
+
 
 // Connects to the locally hosted database
 const knex = require("knex") ({
@@ -34,7 +41,7 @@ const knex = require("knex") ({
 app.get('/', (req, res) => {
   knex.select('*').from('events')
   .then(events => {
-    res.render('index', {events, admin});
+    res.render('index', {events});
   })
   });
 
@@ -145,10 +152,12 @@ app.post('/login', async (req, res) => {
           .first(); // Returns the first matching record
 
       if (user && user.password === password) { // Replace with hashed password comparison in production
-          admin = true;
-          res.render('adminIndex', { admin });
+          req.session.admin = true;
+          req.session.username = username;
+          res.render('adminIndex', { admin : req.session.admin });
+
       } else {
-          admin = false;
+        req.session.admin = false;
           res.render('adminLogin', { error: 'Invalid credentials' }); // Render login page with error
       }
   } catch (error) {
@@ -157,12 +166,21 @@ app.post('/login', async (req, res) => {
 });
 
 app.get('/adminIndex', (req, res) => {
-  res.render('adminIndex', { admin: true }); // Pass the admin variable as needed
+  console.log("This is the session.admin " + req.session.admin);
+  if (req.session.admin) {
+    res.render('adminIndex', { admin: req.session.admin });
+  } else {
+    res.redirect('/adminLogin');
+  }
 });
 
 app.get('/logout', (req, res) => {
-  admin = false;
-  res.redirect('/');
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).send('Failed to log out');
+    }
+    res.redirect('/adminLogin');
+  });
 });
 
 
