@@ -212,7 +212,7 @@ app.get('/eventSignup', (req, res) => {
         .filter((date) => date !== null); // Remove null or invalid dates if any
 
       // Pass the unavailable dates array to the EJS template
-      console.log("Unavailable Dates from DB:", unavailableDatesArray);
+      // console.log("Unavailable Dates from DB:", unavailableDatesArray);
       res.render('eventSignup', { unavailableDates: unavailableDatesArray });
 
     })
@@ -231,7 +231,7 @@ app.get('/unavailable-dates', (req, res) => {
         .map((dateObj) => dateObj.event_date)
         .filter((date) => date !== null); // Filter out invalid dates
 
-      console.log("Unavailable Dates Sent via API:", unavailableDatesArray);
+      // console.log("Unavailable Dates Sent via API:", unavailableDatesArray);
       res.json(unavailableDatesArray); // Send JSON response
     })
     .catch((error) => {
