@@ -190,9 +190,92 @@ app.get('/logout', (req, res) => {
   });
 });
 
+// This is for the eventSignup.ejs
+app.get('/eventSignup', (req, res) => {
+  knex('events')
+    .select('event_date')
+    .then((results) => {
+      // Extract event_date values and ensure they are valid dates
+      const unavailableDatesArray = results
+        .map((dateObj) => dateObj.event_date)
+        .filter((date) => date !== null); // Remove null or invalid dates if any
 
-// THIS IS FOR EVENTS.EJS -> FOR THE ADMIN TO EDIT EVENTS
+      // Pass the unavailable dates array to the EJS template
+      res.render('eventSignup', { unavailableDates: unavailableDatesArray });
+    })
+    .catch((error) => {
+      // Log the error and respond with a user-friendly message
+      console.error('Error fetching unavailable dates:', error);
+      res.status(500).send('Internal Server Error: Unable to retrieve unavailable dates.');
+    });
+});
 
+
+app.post('/submit-event-request', (req, res) => {
+  // Extract form data from the request body
+  const {
+    event_date,
+    back_up_date: event_backup_date,
+    back_up_date_2: event_backup_date_2,
+    event_type,
+    event_start_time,
+    desired_event_duration: event_expected_duration,
+    event_address,
+    event_city,
+    event_state,
+    event_zip,
+    event_space_capacity,
+    number_sewers,
+    machines_volunteered,
+    event_expected_adults,
+    event_expected_children,
+    table_types,
+    jen_story,
+    requestee_first_name: contact_first_name,
+    requestee_last_name: contact_last_name,
+    requestee_email: contact_email,
+    requestee_phone: contact_phone,
+    preferred_contact_method: contact_preferred_contact,
+  } = req.body;
+
+  const data = {
+    event_date,
+    event_backup_date,
+    event_backup_date_2,
+    event_type,
+    event_start_time,
+    event_expected_duration,
+    event_address,
+    event_city,
+    event_state,
+    event_zip,
+    event_space_capacity,
+    number_sewers,
+    machines_volunteered,
+    event_expected_adults,
+    event_expected_children,
+    table_types,
+    jen_story,
+    contact_first_name: contact_first_name.toLowerCase(),
+    contact_last_name: contact_last_name.toLowerCase(),
+    contact_email,
+    contact_phone,
+    contact_preferred_contact,
+  };
+
+  // Use Knex.js to insert data into the 'event_requests' table
+  knex('events')
+    .insert(data)
+    .then(() => {
+      // Redirect to a confirmation page or send a success response
+      res.redirect('/'); // Redirect to a success page
+    })
+    .catch((error) => {
+      // Log and handle errors
+      console.error('Error adding Event Request:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
 
 
 
