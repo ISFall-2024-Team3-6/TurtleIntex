@@ -79,10 +79,15 @@ main p {
    margin-bottom: 20px;
 }
 
+.bg-dark-gray {
+   background-color: #333; /* Dark grey color */
+   color: white; /* White text for contrast */
+ }
+
 /* Footer styling */
 footer {
    background: #333;
-   color: #fff;
+   color: #333;
    text-align: center;
    padding: 10px 0;
    width: 100%;
@@ -92,8 +97,35 @@ footer {
 }
 
 footer p {
-   margin: 0;
-}
+   padding: 0; /* Adjust as needed */
+   text-align: center;
+   color: #ffffff;
+   background-color: transparent;
+   margin: 0 auto; /* Ensures horizontal centering */
+   max-width: 100%; /* Prevents any unexpected offset */
+ }
+
+/* Button styling: no background, white text */
+footer .btn {
+   background-color: transparent; /* No background color */
+   border: 1px solid white; /* Optional: white border for better visibility */
+   color: white; /* White text */
+ }
+ 
+ footer .btn:hover {
+   background-color: white; /* Optional: Add a white background on hover */
+   color: #333; /* Text turns dark grey on hover */
+   border: 1px solid white; /* Ensure the border remains white */
+ }
+ 
+ /* Facebook icon: white or light grey */
+ footer .fab.fa-facebook {
+   color: white; /* White color */
+ }
+ 
+ footer .fab.fa-facebook:hover {
+   color: lightgrey; /* Light grey hover effect */
+ }
 
 .button-color {
    background-color: #4574a7d0;
