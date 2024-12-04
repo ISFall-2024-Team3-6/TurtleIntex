@@ -3,7 +3,9 @@
 <head>
   <title>Events</title> 
  
-  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="/style/styles.css">
+ 
   <style>
     table {
       width: 80%;
@@ -29,6 +31,9 @@
     }
   </style>
   
+
+</head>
+<body>
   <!-- Navigation bar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container-fluid">
@@ -44,8 +49,7 @@
   </nav>
 </head>
 
-<body>
-  <div class="container mt-5 pt-5"></div>
+
   <h1 style="text-align: center;">Upcoming Events</h1>
   <table>
     <thead>
@@ -130,37 +134,24 @@
         </tr>
     </tbody>
   </table>
-</div>
-  <div class="container mt-5 pt-5">
+
   <h1 style="text-align: center;">Past Events</h1>
   <table>
     <thead>
       <tr>
-        <th>Event ID</th>
-        <th>Contact First Name</th>
-        <th>Contact Last Name</th>
-        <th>Contact Phone</th>
         <th>Contact Email</th>
-        <th>Contact Preferred</th>
         <th>Event Type</th>
         <th>Event Date</th>
-        <th>Event Backup Date</th>
-        <th>Event Backup Date 2</th>
         <th>Event Start Time</th>
-        <th>Event Expected Duration</th>
         <th>Event Actual Duration</th>
         <th>Event Address</th>
         <th>Event City</th>
         <th>Event State</th>
         <th>Event Zipcode</th>
         <th>Event Space Capacity</th>
-        <th>Table Type</th>
         <th>Number of Sewers</th>
-        <th>Expected Adults</th>
-        <th>Expected Children</th>
         <th>Actual Adults</th>
         <th>Actual Children</th>
-        <th>Do you want to hear Jen's story?</th>
         <th>Pockets Brought</th>
         <th>Pockets In Progress</th>
         <th>Pockets Finished</th>
@@ -177,39 +168,23 @@
         <th>Actions</th>
       </tr>
     </thead>
-  </table>
-  
-
-    <tbody>
+      <tbody>
       <% if (pastEvents && pastEvents.length > 0) { %>
         <% pastEvents.forEach(row => { %>
           <tr>
-            <td><%= row.eventid %></td>
-            <td><%= row.contact_first_name %></td>
-            <td><%= row.contact_last_name %></td>
-            <td><%= row.contact_phone %></td>
             <td><%= row.contact_email %></td>
-            <td><%= row.contact_preferred_contact %></td>
             <td><%= row.event_type %></td>
             <td><%= row.event_date ? row.event_date.toISOString().split('T')[0] : '' %></td>
-
-            <td><%= row.event_backup_date ? row.event_backup_date.toISOString().split('T')[0] : '' %></td>
-            <td><%= row.event_backup_date_2 ? row.event_backup_date_2.toISOString().split('T')[0] : '' %></td>
             <td><%= row.event_start_time %></td>
-            <td><%= row.event_expected_duration %></td>
             <td><%= row.event_actual_duration %></td>
             <td><%= row.event_address %></td>
             <td><%= row.event_city %></td>
             <td><%= row.event_state %></td>
             <td><%= row.event_zip %></td>
             <td><%= row.event_space_capacity %></td>
-            <td><%= row.table_types %></td>
             <td><%= row.number_sewers %></td>
-            <td><%= row.event_expected_adults %></td>
-            <td><%= row.event_expected_children %></td>
             <td><%= row.event_actual_adults %></td>
             <td><%= row.event_actual_children %></td>
-            <td><%= row.jen_story %></td>
             <td><%= row.pockets_brought %></td>
             <td><%= row.pockets_in_progress %></td>
             <td><%= row.pockets_finished %></td>
@@ -232,11 +207,12 @@
               </form>
             </td>
           </tr>
+
           <% }) %>
           <% } else { %>
             <tr><td colspan="36">No past events found</td></tr>
           <% } %>
-    </tbody>
+        </tbody>
   </table>
 
 </body>
