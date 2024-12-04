@@ -128,4 +128,32 @@ body {
    font-weight: bold;
  }
 
+/* Style for sponsor images */
+.sponsor-logos {
+   display: flex;
+   flex-wrap: wrap; /* This will allow the logos to wrap onto new lines */
+   justify-content: center; /* Center the logos horizontally */
+   gap: 20px; /* Adds space between logos */
+   padding: 20px 0; /* Add padding to the top and bottom of the container */
+ }
+ 
+ .sponsor-logo {
+  border: #007BFF;
+ }
+ 
+ 
+ 
+ /* For responsiveness, adjust the size on smaller screens */
+ @media (max-width: 768px) {
+   .sponsor-logo {
+     max-width: 120px; /* Make images smaller on smaller screens */
+   }
+ }
+ 
+ @media (max-width: 480px) {
+   .sponsor-logo {
+     max-width: 100px; /* Make images even smaller on very small screens */
+   }
+ }
+ 
  
