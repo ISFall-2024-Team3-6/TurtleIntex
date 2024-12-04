@@ -1,6 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title> Volunteer and Event Dashboard </title>
+  <style>
+    table {
+      width: 80%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      font-size: 10px; /* Reduce the font size of the table */
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 5px; /* Reduce the padding to decrease row height */
+      text-align: center;
+      line-height: 1.2; /* Adjust line height for smaller rows */
+    }
+    th {
+      background-color: #F2F2F2;
+      font-weight: bold;
+    }
+    button {
+      padding: 4px 8px; /* Adjust button size */
+      margin: 2px;
+      font-size: 12px; /* Adjust button font size */
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Admin Dashboard about Volunteer and Event Stats</h1>
+  
+  <div>
+    <p>Welcome to the Admin Dashboard! Below you will find the latest data visualizations to help you view the success of past events and volunteer efforts effectively.</p>
+    <p>Use the filters and interactive elements within the dashboard to explore the data in detail.</p>
+  </div>
+  
+  <div>
+    <!-- Embed Tableau Public Dashboard -->
+    <iframe src="PUT EMBEDDED LINK HERE"></iframe>
+  </div>
   <title> Admin Pokemon cords</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="/styles/styles.css">
@@ -44,6 +83,7 @@
 else{
 %> <p>Invalid Admin Credentials.</p>
 <% } %>
+
 
 
 </body>
