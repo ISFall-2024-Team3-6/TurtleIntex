@@ -1,5 +1,6 @@
 let express = require("express");
 const session = require('express-session');
+const pgSession = require('connect-pg-simple')(session);
 
 // Create the express app
 let app = express();
@@ -21,7 +22,10 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'keyboard',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true } // Set to true if using HTTPS
+  cookie: { 
+    secure: false, // TODO Set to true if using HTTPS
+    maxAge: 24 * 60 * 60 * 1000 // 1 day
+  }
 }));
 
 
@@ -166,7 +170,6 @@ app.post('/login', async (req, res) => {
 });
 
 app.get('/adminIndex', (req, res) => {
-  console.log("This is the session.admin " + req.session.admin);
   if (req.session.admin) {
     res.render('adminIndex', { admin: req.session.admin });
   } else {
@@ -179,7 +182,7 @@ app.get('/logout', (req, res) => {
     if (err) {
       return res.status(500).send('Failed to log out');
     }
-    res.redirect('/adminLogin');
+    res.redirect('/');
   });
 });
 
