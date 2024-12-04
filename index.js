@@ -359,22 +359,49 @@ app.get('/eventMaintenance', (req, res) => {
 
 
 // THIS ALLOWS THE ADMIN TO EDIT EVENTS
-app.get('/editEvents/:id', (req, res) => {
+app.get('/editEvents/:id', async (req, res) => {
   let id = req.params.id;
   // Query the Event by ID 
-  knex('events') 
+  let chosenEvent;
+  try {
+  chosenEvent = await knex('events') 
     .where('eventid', id)
     .first()
-    .then(event => {
-    if (!event) {
+    if (!chosenEvent) {
         return res.status(404).send('Event not found');
     }
-    res.render('editEvents', { event });
-    })
-    .catch(error => {
+   } catch {(error => {
     console.log('Error fetching Event for editing:', error);
     res.status(500).send('Internal Server Error');
     });
+  }
+
+  let volunteers_attended;
+  try {// Function to get event volunteers with a dynamic eventid
+    volunteers_attended = await knex('eventvolunteers as ev')
+          .innerJoin('volunteers as v', 'ev.volunteerid', 'v.volunteerid')
+          .where('ev.eventid', id)
+          .pluck('ev.volunteerid');
+      } catch (error) {
+        console.error('Error fetching event volunteers:', error);
+        throw error;
+      }
+
+  let matchedVolunteers;
+  try {
+    matchedVolunteers = await knex('volunteers')
+    .select('volunteerid', 'volunteer_first_name', 'volunteer_last_name')
+    .where('volunteer_state', chosenEvent.event_state)
+    .orderBy('volunteer_last_name');
+  } catch (error) {
+    console.log('Error fetching Volunteers:', error);
+    res.status(500).send('Internal Server Error');
+  }
+
+
+  console.log(volunteers_attended);
+
+  res.render('editEvents', { event : chosenEvent , volunteers : matchedVolunteers, eventvolunteers : volunteers_attended });
 });
 
 // THIS ALLOWS THE ADMIN TO EDIT UPCOMING EVENTS
@@ -400,8 +427,12 @@ app.get('/editUpcomingEvents/:id', (req, res) => {
 
 
 
-app.post('/updateEvents/:id', (req, res) => {
+app.post('/updateEvents/:id', async (req, res) => {
   const id = req.params.id;
+
+  let volunteerIDs = req.body.volunteers_attended;
+
+  console.log(volunteerIDs);
 
   const contact_first_name = req.body.contact_first_name
   const contact_last_name = req.body.contact_last_name
@@ -454,7 +485,8 @@ app.post('/updateEvents/:id', (req, res) => {
   const completed_products = req.body.completed_products
 
   // Update the Events in the database
-    knex('events') 
+  try { 
+  knex('events') 
      .where('eventid', id)
      .update({
 
@@ -498,14 +530,25 @@ app.post('/updateEvents/:id', (req, res) => {
       completed_products: completed_products, 
 
      })
-     .then(() => {
-       res.redirect('/eventMaintenance'); // Redirect to the list of events after saving -> FIX THIS ROUTE, IT WILL BE WRONG
-     })
-     .catch(error => {
+
+      // This adds the volunteers to the eventvolunteers table
+      let insertPromises = volunteerIDs.map(volID => {
+      return knex('eventvolunteers')
+        .insert({
+          eventid: id,
+          volunteerid: volID
+      });
+    });
+
+      await Promise.all(insertPromises);
+
+      res.redirect('/eventMaintenance'); // Redirect to the list of events after saving
+    } catch {(error => {
        console.log('Error updating Event:', error);
        res.status(500).send('Internal Server Error');
      });
- });
+    }
+});
 
 
 

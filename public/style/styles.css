@@ -203,6 +203,12 @@ body {
  .sponsor-logo {
   border: #007BFF;
  }
+ .scrollable-section {
+   max-height: 200px; /* Adjust the height as needed */
+   overflow-y: auto;
+   border: 1px solid #ccc; /* Optional: Add a border for better visibility */
+   padding: 10px; /* Optional: Add padding for better spacing */
+ }
  
  
  
