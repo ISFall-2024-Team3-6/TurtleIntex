@@ -41,6 +41,8 @@ app.get('/eventSignup/', (req, res) => {
     res.render('eventSignup')
 });
 
+//This is the GET route to access the Volunteer Sign Up Page. Upon loading, we insert an array of state abberviations
+// to eliminate as much human error as we know how. These values will populate the state dropdown on the page
 app.get('/volunteerSignup/', (req, res) => {
 
   const states = [
@@ -54,43 +56,53 @@ app.get('/volunteerSignup/', (req, res) => {
   res.render('volunteerSignup', {states} )
 });
 
-app.post('/volunteerSignup', (req, res) => {
+// This POST route runs when a user submits the form located on the Volunteer Sign Up page. It passes in all of the data
+// they entered, most of which is required. Here we insert that data into our Database as a new record. We default the
+// admin field as false, and leave the username and password as null until management reaches out to this new employee
+app.post('/volunteerSignup/', (req, res) => {
 
-  const first_name = req.body.first_name
-  const last_name = req.body.last_name
-  const volunteerEmail = req.body.volunteerEmail
-  const volunteerPhone = req.body.volunteerPhone
-  const volunteerStreetAddress = req.body.volunteerStreetAddress
-  const volunteerCity = req.body.volunteerCity
-  const volunteerState = req.body.volunteerState
-  const volunteerZip = req.body.volunteerZip
-  const volunteerReferral = req.body.volunteerReferral
-  const volunteerHours = req.body.volunteerHours
-  const volunteerSewing = req.body.volunteerSewing
+  const volunteer_first_name = req.body.volunteer_first_name;
+  const volunteer_last_name = req.body.volunteer_last_name;
+  const volunteer_email = req.body.volunteer_email;
+  const volunteer_phone = req.body.volunteer_phone;
+  const volunteer_address = req.body.volunteer_address;
+  const volunteer_city = req.body.volunteer_city;
+  const volunteer_state = req.body.volunteer_state;
+  const volunteer_zip	 = req.body.volunteer_zip;
+  const volunteer_referral = req.body.volunteer_referral;
+  const volunteer_willing_hours = req.body.volunteer_willing_hours;
+  const volunteer_sewing_level = req.body.volunteer_sewing_level;
+  const volunteer_preferred_contact = req.body.volunteer_preferred_contact;
+  const volunteer_lead = req.body.volunteer_lead;
+  const admin = 'false';
 
-  // knex('volunteers')
-  //   .insert({
-  //     first_name: first_name.toUpperCase(), // Ensure first name is uppercase
-  //     last_name: last_name.toUpperCase(),
-  //     volunteerEmail: volunteerEmail,
-  //     volunteerPhone: volunteerPhone,
-  //     volunteerStreetAddress: volunteerStreetAddress,
-  //     volunteerCity: volunteerCity,
-  //     volunteerState: volunteerState,
-  //     volunteerZip: volunteerZip,
-  //     volunteerReferral: volunteerReferral,
-  //     volunteerHours: volunteerHours,
-  //     volunteerSewing: volunteerSewing
-  //   })
+  knex('volunteers')
+    .insert({
+      volunteer_first_name: volunteer_first_name.toLowerCase(),
+      volunteer_last_name: volunteer_last_name.toLowerCase(),
+      volunteer_email: volunteer_email,
+      volunteer_phone: volunteer_phone,
+      volunteer_address: volunteer_address.toLowerCase(),
+      volunteer_city: volunteer_city.toLowerCase(),
+      volunteer_state: volunteer_state,
+      volunteer_zip: volunteer_zip,
+      volunteer_referral: volunteer_referral,
+      volunteer_willing_hours: volunteer_willing_hours,
+      volunteer_sewing_level: volunteer_sewing_level,
+      volunteer_preferred_contact: volunteer_preferred_contact,
+      volunteer_lead: volunteer_lead,
+      admin: admin
+    })
 
+    // We redirect the user back to the landing page, but notify them that their submission is being processed
     .then(() => {
-      res.redirect('/volunteerSignup'); // Redirect to the character list page after adding
+      res.redirect('/volunteerSignup');
   })
   .catch(error => {
     console.error('Error adding Volunteer:', error);
     res.status(500).send('Internal Server Error');
 });
-})
+});
 
 app.get('/sponsors/', (req, res) => {
     res.render('sponsors')
@@ -117,7 +129,6 @@ app.get('/About/story', (req, res) => {
 });
 
 //This is for admin login yeah?
-
 app.get('/adminLogin', (req, res) => {
     res.render('adminLogin')
 });
@@ -154,10 +165,32 @@ app.get('/logout', (req, res) => {
 });
 
 
-
-
 // THIS IS FOR EVENTS.EJS -> FOR THE ADMIN TO EDIT EVENTS
 
+
+
+
+// THIS ALLOWS THE ADMIN TO VIEW ALL THE UPCOMING AND PAST EVENTS 
+app.get('/viewEvents', async (req, res) => {
+  try {
+    const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
+
+    const upcomingEvents = await knex('events').where('event_date', '>=', currentDate);
+    const pastEvents = await knex('events').where('event_date', '<', currentDate);
+
+    res.render('events', {
+      upcomingEvents: upcomingEvents,
+      pastEvents: pastEvents
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error fetching events');
+  }
+});
+
+
+
+// THIS ALLOWS THE ADMIN TO EDIT EVENTS
 app.get('/events/:id', (req, res) => {
 let id = req.params.id;
 // Query the Volunteer by ID first
@@ -178,7 +211,6 @@ knex('events')
 
 app.post('/events/:id', (req, res) => {
   const id = req.params.id;
-
 
   const contact_first_name = req.body.contact_first_name
   const contact_last_name = req.body.contact_last_name
@@ -205,32 +237,22 @@ app.post('/events/:id', (req, res) => {
   const event_actual_adults = req.body.event_actual_adults
   const event_actual_children = req.body.event_actual_children
   const jen_story = req.body.jen_story
-
   const pockets_brought = req.body.pockets_brought
   const pockets_in_progress = req.body.pockets_in_progress
   const pockets_finished = req.body.pockets_finished
-
   const collars_brought = req.body.collars_brought
   const collars_in_progress = req.body.collars_in_progress
   const collars_finished = req.body.collars_finished
-
   const envenlopes_brought = req.body.envenlopes_brought
   const envenlopes_in_progress = req.body.envenlopes_in_progress
   const envenlopes_finished = req.body.envenlopes_finished
-
   const vests_brought = req.body.vests_brought
   const vests_in_progress = req.body.vests_in_progress
   const vests_finished = req.body.vests_finished
-
   const completed_product = req.body.completed_product
 
-
-
- 
-
-
   // Update the Events in the database
-    knex('pokemon') // MAKE SURE THIS IS THE NAME OF THE TABLE IN THE DATABASE
+    knex('events') 
      .where('id', id)
      .update({
 
@@ -259,36 +281,30 @@ app.post('/events/:id', (req, res) => {
       event_actual_adults: event_actual_adults, 
       event_actual_children: event_actual_children, 
       jen_story: jen_story, 
-
       pockets_brought: pockets_brought, 
       pockets_in_progress: pockets_in_progress, 
-      pockets_finished: pockets_finished, 
-
+      pockets_finished: pockets_finished,
       collars_brought: collars_brought, 
       collars_in_progress: collars_in_progress, 
       collars_finished: collars_finished, 
-      
       envenlopes_brought: envenlopes_brought,
       envenlopes_in_progress: envenlopes_in_progress,  
       envenlopes_finished: envenlopes_finished, 
-
-    
-
       vests_brought: vests_brought, 
       vests_in_progress: vests_in_progress, 
       vests_finished: vests_finished, 
-      
       completed_product: completed_product, 
 
      })
      .then(() => {
-       res.redirect('/'); // Redirect to the list of events after saving -> FIX THIS ROUTE, IT WILL BE WRONG
+       res.redirect('/adminIndex'); // Redirect to the list of events after saving -> FIX THIS ROUTE, IT WILL BE WRONG
      })
      .catch(error => {
        console.log('Error updating Event:', error);
        res.status(500).send('Internal Server Error');
      });
  });
+
 
 
   // POST ROUTE FOR DELETING characters
@@ -298,7 +314,7 @@ app.post('/deleteEvent/:id', (req, res) => {
   .where('id', id)
   .del() // Deletes the record with the specified ID
   .then(() => {
-    res.redirect('/'); // Redirect to the events list after deletion
+    res.redirect('/adminIndex'); // Redirect to the events list after deletion
   })
   // error handling
   .catch(error => {
@@ -309,7 +325,6 @@ app.post('/deleteEvent/:id', (req, res) => {
 
 
 // THIS IS FOR volunteers.EJS -> for the admin to EDIT INFO FOR VOLUNTEERS
-
 app.get('/volunteerMaintenance', (req, res) => {
   knex.select('*').from('volunteers').orderBy('volunteer_last_name')
   .then(volunteers => {
@@ -318,6 +333,7 @@ app.get('/volunteerMaintenance', (req, res) => {
 });
 
 app.get('/editVolunteer/:id', (req, res) => {
+
   let id = req.params.id; // to extract a parameter out of the route ^^^ , id is the parameter ID; if it was num, do req.params.num
   // using it to find the record in the database
   
@@ -333,6 +349,7 @@ app.get('/editVolunteer/:id', (req, res) => {
       else {
         res.render("editVolunteer", {volunteer});// if the record is found, render the editVolunteer.ejs file and pass the volunteer
       }
+
     })
     .catch(error => {
       console.log('Error fetching Volunteer for editing:', error);
@@ -425,10 +442,6 @@ app.post('/updateVolunteer/:id', (req, res) => {
   });
 
 
-
-
-
-
 app.get('/addPoke', (req, res) => {
     // Fetch Pokémon types to populate the dropdown
     knex('poke_type')
@@ -442,6 +455,7 @@ app.get('/addPoke', (req, res) => {
             res.status(500).send('Internal Server Error');
         });
 });
+
 
 app.post('/addPoke', (req, res) => {
   // Extract form values from req.body
@@ -470,26 +484,6 @@ app.post('/addPoke', (req, res) => {
       });
 });
 
+
 // Allows the server to listen
 app.listen(port, () => console.log("Express App has started and server is listening on http://localhost:" + port));
-
-    // knex('pokemon')
-    //   .join('poke_type', 'pokemon.poke_type_id', '=', 'poke_type.id')
-    //   .select(
-    //     'pokemon.id',
-    //     'pokemon.description',
-    //     'pokemon.base_total',
-    //     'pokemon.date_created',
-    //     'pokemon.active_poke',
-    //     'pokemon.gender',
-    //     'pokemon.poke_type_id',
-    //     'poke_type.description as poke_type_description'
-    //   )
-    //   .then(pokemon => {
-    //     // Render the index.ejs template and pass the data
-    //     res.render('index', { pokemon, security });
-    //   })
-    //   .catch(error => {
-    //     console.log('Error querying database:', error);
-    //     res.status(500).send('Internal Server Error');
-    //   });
