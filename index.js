@@ -24,7 +24,7 @@ app.use(session({
   saveUninitialized: true,
   cookie: { 
     secure: false, // TODO Set to true if using HTTPS
-    maxAge: 24 * 60 * 60 * 1000 // 1 day
+    maxAge: 60 * 60 * 1000 // 1 hour
   }
 }));
 
@@ -179,6 +179,17 @@ app.get('/adminIndex', (req, res) => {
   } else {
     res.redirect('/adminLogin');
   }
+});
+
+// Send to the page to edit the admin
+app.get('/editAdmin', (req, res) => {
+  knex('volunteers')
+  .select('*')
+  .where('username', req.session.username)
+  .first()
+  .then((user) => {
+    res.render('editAdmin', {volunteer: user});
+  });
 });
 
 app.get('/logout', (req, res) => {
@@ -467,8 +478,8 @@ app.get('/editVolunteer/:id', (req, res) => {
   });
 
 
-app.post('/updateVolunteer/:id', (req, res) => {
-  const id = req.params.id; // this is how you pull out the parameter TO SEE WHAT volunteer YOU ARE DEALING WITH
+app.post('/updateAdmin/:id', (req, res) => {
+  const id = req.params.id; // this is how you pull out the parameter TO SEE WHAT admin YOU ARE DEALING WITH
 
   const first_name = req.body.volunteer_first_name
   const last_name = req.body.volunteer_last_name
@@ -513,7 +524,7 @@ app.post('/updateVolunteer/:id', (req, res) => {
     })
 
     .then(() => {
-      res.redirect('/volunteerMaintenance'); // Redirect to the list of volunteers after saving
+      res.redirect('/adminIndex'); // Redirect to the index page after saving
     })
     .catch(error => {
       console.error('Error updating Volunteer:', error);
@@ -521,21 +532,74 @@ app.post('/updateVolunteer/:id', (req, res) => {
     });
     });
 
-
-  // LETS YOU DELETE A VOLUNTEER 
-  app.post('/deleteVolunteer/:id', (req, res) => {
-    const id = req.params.id;
-    knex('volunteers') // put the name of the database here
+  app.post('/updateVolunteer/:id', (req, res) => {
+    const id = req.params.id; // this is how you pull out the parameter TO SEE WHAT volunteer YOU ARE DEALING WITH
+  
+    const first_name = req.body.volunteer_first_name
+    const last_name = req.body.volunteer_last_name
+    const volunteer_email = req.body.volunteer_email
+    const volunteer_phone = req.body.volunteer_phone
+    const volunteer_street_address = req.body.volunteer_address
+    const volunteer_city = req.body.volunteer_city
+    const volunteer_state = req.body.volunteer_state
+    const volunteer_zip = req.body.volunteer_zip
+    const volunteer_preferred_contact = req.body.volunteer_preferred_contact
+    const volunteer_willing_hours = parseInt(req.body.volunteer_willing_hours)
+    const sewing_level = req.body.sewing_level
+    const volunteer_referral = req.body.volunteer_referral
+    const volunteer_admin = req.body.admin === 'true'
+    const volunteer_lead = req.body.volunteer_lead === 'true'
+    const username = req.body.username
+    const password = req.body.password
+  
+    // Update the Volunteer in the database
+    knex('volunteers')
       .where('volunteerid', id)
-      .del() // Deletes the record with the specified ID
+      // LEFT: column names IN THE TABLE ALREADY
+      // RIGHT: values you want to store in the database that were entered into the FORM! CAN USE VARIABLES BC YOU MADE CONST ONES ABOVE
+      // description could have been req.body.description, but since we made these variables up top, we can just use the variables here
+      .update({
+        volunteer_first_name: first_name, 
+        volunteer_last_name: last_name, 
+        volunteer_email: volunteer_email,
+        volunteer_phone: volunteer_phone,
+        volunteer_address: volunteer_street_address, 
+        volunteer_city: volunteer_city, 
+        volunteer_state: volunteer_state, 
+        volunteer_zip: volunteer_zip,
+        volunteer_referral: volunteer_referral, 
+        volunteer_willing_hours: volunteer_willing_hours,
+        volunteer_sewing_level: sewing_level,
+        volunteer_preferred_contact: volunteer_preferred_contact,
+        admin: volunteer_admin,
+        volunteer_lead: volunteer_lead,
+        username: username,
+        password: password
+      })
+  
       .then(() => {
-        res.redirect('/volunteerMaintenance'); // Redirect to the volunteers list after deletion
+        res.redirect('/volunteerMaintenance'); // Redirect to the list of volunteers after saving
       })
       .catch(error => {
-        console.log('Error deleting Volunteer:', error);
+        console.error('Error updating Volunteer:', error);
         res.status(500).send('Internal Server Error');
       });
-  });
+      });
+
+// LETS YOU DELETE A VOLUNTEER 
+app.post('/deleteVolunteer/:id', (req, res) => {
+  const id = req.params.id;
+  knex('volunteers') // put the name of the database here
+    .where('volunteerid', id)
+    .del() // Deletes the record with the specified ID
+    .then(() => {
+      res.redirect('/volunteerMaintenance'); // Redirect to the volunteers list after deletion
+    })
+    .catch(error => {
+      console.log('Error deleting Volunteer:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
 
 
   
