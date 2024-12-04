@@ -5,8 +5,9 @@
 <head>
   <title>Volunteer Sign Up</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <link rel="stylesheet" href="/public/style/styles.css">
-  <style>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style/styles.css">
+  <!-- <style>
     body {
       font-family: Arial, sans-serif;
       background-color: #f9f9f9;
@@ -54,7 +55,7 @@
       margin-bottom: 15px;
     }
 
-    button {
+    /* button {
       display: block;
       width: 100%;
       background-color: #4CAF50;
@@ -65,7 +66,7 @@
       font-size: 16px;
       cursor: pointer;
       text-align: center;
-    }
+    } */
 
     button:hover {
       background-color: #45a049;
@@ -76,57 +77,65 @@
         width: 90%;
       }
     }
-  </style>
+  </style> -->
 </head>
 <body>
 
 <!-- Navigation bar -->
-  <!-- Our Navigation Bar allows users to navigate from this page back to the Home page, or to any other page on the website -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Turtle Shelter Project</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-  
-        <!-- This is the beginning of the "list" of items in our navigation bar -->
-        <ul class="navbar-nav">
-  
-          <!-- This is the button to go back to the home page -->
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/">Home</a>
-          </li>
-  
-          <!-- This is the button to go to the Sponsors page -->
-          <li class="nav-item">
-            <a class="nav-link" href="/sponsors/">Become A Sponsor</a> 
-          </li>
-  
-          <!-- This button leads to the web page's info page -->
-          <li class="nav-item">
-            <a class="nav-link" href="story">Jen's Story</a>
-          </li>
-  
-          <!-- This is a dropdown with links to the Our Tech and FAQ pages -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              About Us
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" href="/About/ourTech">Our Tech</a></li>
-              <li><a class="dropdown-item" href="/About/faq">FAQs</a></li>
-            </ul>
-          </li>
-        </ul>
-  
-        <!-- We also have a button for admins to login and access their unique links -->
-        <form action="/adminLogin" method="GET" class="d-inline ms-auto">
-          <button type="submit" class="btn button-color mb-2">Login as Admin</button>
-        </form>
-      </div>
+
+
+ <!-- Our Navigation Bar allows users to navigate from this page back to the Home page, or to any other page on the website -->
+ <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Turtle Shelter Project</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+      <!-- This is the beginning of the "list" of items in our navigation bar -->
+      <ul class="navbar-nav">
+
+        <!-- This is the button to go back to the home page -->
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+
+        <!-- This is the button to go to the Sponsors page -->
+        <li class="nav-item">
+          <a class="nav-link" href="/sponsors/">Sponsors</a>
+        </li>
+
+        <!-- This button leads to the web page's info page -->
+        <li class="nav-item">
+          <a class="nav-link" href="/About/story">Our Story</a>
+        </li>
+
+        <!-- This is a dropdown with links to the Our Tech and FAQ pages -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            More Info
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="/About/ourTech">Our Tech</a></li>
+            <li><a class="dropdown-item" href="/About/faq">FAQs</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item ms-2">
+      <!-- This last form is a link to the donation page, which is our call to action to every user that visits
+       the page -->
+       <form action="/donation" method="GET" class="d-inline">
+        <button type="submit" class="btn btn-success btn-lg">Donate Now</button>
+      </form>
+        </li>
+      </ul>
+
+
     </div>
-  </nav>
+  </div>
+</nav>
 
   <!-- Volunteer Form -->
    <!-- This form will receive each of the fields we keep track of in our database, other than their ID (which is auto-
@@ -134,83 +143,142 @@
     the volunteer) -->
     <!-- Each of these fields contains information that management wants to keep track of for each volunteer, which
      is why each is required -->
-  <form action="/volunteerSignup/" method="POST">
-    <label for="volunteer_first_name">First Name</label>
-    <input type="text" id="volunteer_first_name" name="volunteer_first_name" required oninput="this.value = this.value.toUpperCase()">
+<div class="container mt-5 pt-5">
+  <h1>Volunteer Sign Up</h1>
+      <form action="/volunteerSignup/" method="POST">
 
-    <label for="volunteer_last_name">Last Name</label>
-    <input type="text" id="volunteer_last_name" name="volunteer_last_name" required oninput="this.value = this.value.toUpperCase()">
 
-    <label for="volunteer_email">Email</label>
-    <input type="text" id="volunteer_email" name="volunteer_email" required oninput="this.value = this.value.toUpperCase()">
+      <div class="mb-3 row">
+        <label for="volunteer_first_name" class="col-sm-2 col-form-label">First Name</label>
+        <input type="text" id="volunteer_first_name" name="volunteer_first_name" required oninput="this.value = this.value.toLowerCase()">
+      </div>
 
-    <label for="volunteer_phone">Phone Number</label>
+    <div class="mb-3 row">
+    <label for="volunteer_last_name" class="col-sm-2 col-form-label">Last Name</label>
+    <input type="text" id="volunteer_last_name" name="volunteer_last_name" required oninput="this.value = this.value.toLowerCase()">
+    </div>
+
+    <div class="mb-3 row">
+    <label for="volunteer_email" class="col-sm-2 col-form-label">Email</label>
+    <input type="text" id="volunteer_email" name="volunteer_email" required oninput="this.value = this.value.toLowerCase()">
+    </div>
+
+    <div class="mb-3 row">
+    <label for="volunteer_phone" class="col-sm-2 col-form-label">Phone Number</label>
     <input type="text" id="volunteer_phone" name="volunteer_phone" required>
+    </div>
 
-    <label for="volunteer_address">Street Address</label>
-    <input type="text" id="volunteer_address" name="volunteer_address" required oninput="this.value = this.value.toUpperCase()">
+    <div class="mb-3 row">
+    <label for="volunteer_address" class="col-sm-2 col-form-label">Street Address</label>
+    <input type="text" id="volunteer_address" name="volunteer_address" required oninput="this.value = this.value.toLowerCase()">
+    </div>
 
-    <label for="volunteer_city">City</label>
-    <input type="text" id="volunteer_city" name="volunteer_city" required oninput="this.value = this.value.toUpperCase()">
+    <div class="mb-3 row">
+    <label for="volunteer_city" class="col-sm-2 col-form-label">City</label>
+    <input type="text" id="volunteer_city" name="volunteer_city" required oninput="this.value = this.value.toLowerCase()">
+    </div>
 
-    <label for="volunteer_state">State</label>
-    <select name="volunteer_state" id="volunteer_state" required>
-        <% states.forEach(function(state) { %>
-            <option value="<%= state %>"><%= state %></option>
-        <% }); %>
-    </select>
+    <div class="mb-3 row">
+      <label for="volunteer_state" class="form-label">State</label>
+      <div class="col-sm-10">
+      <select name="volunteer_state" id="volunteer_state" required>
+          <% states.forEach(function(state) { %>
+              <option value="<%= state %>"><%= state %></option>
+          <% }); %>
+      </select>
+      </div>
+    </div>
 
-    <label for="volunteer_zip	">Zipcode</label>
-    <input type="text" id="volunteer_zip	" name="volunteer_zip	" required>
+    <div class="mb-3 row">
+    <label for="volunteer_zip" class="col-sm-2 col-form-label">Zipcode</label>
+    <input type="number" id="volunteer_zip" name="volunteer_zip" required>
+    </div>
 
-    <label>Referral Method:</label>
-    <label>
-      <input type="radio" name="volunteer_referral" value="website" required> Website
-    </label>
-    <label>
-      <input type="radio" name="volunteer_referral" value="friend" required> Friend
-    </label>
-    <label>
-      <input type="radio" name="volunteer_referral" value="socialMedia" required> Social Media
-    </label>
-    <label>
-      <input type="radio" name="volunteer_referral" value="Podcast" required> Podcast
-    </label>
-    <label>
-      <input type="radio" name="volunteer_referral" value="other" required> Other
-    </label>
+    <div class="mb-3 row">
+      <label class="form-label">Referral Method:</label>
+      <label>
+        <input type="radio" name="volunteer_referral" value="online" required> Online
+      </label>
+      <label>
+        <input type="radio" name="volunteer_referral" value="word_of_mouth" required> Word Of Mouth
+      </label>
+      <label>
+        <input type="radio" name="volunteer_referral" value="other" required> Other
+      </label>
+    </div>
 
+    <div class="mb-3 row">
     <label for="volunteer_willing_hours">Hours Willing to Work (per Month)</label>
     <input type="number" id="volunteer_willing_hours" name="volunteer_willing_hours" max="40" required>
+    </div>
 
-    <label>Sewing Experience:</label>
+    <div class="mb-3 row">
+    <label class="form-label">Sewing Experience:</label>
     <label>
-      <input type="radio" name="volunteer_sewing_level" value="Beginner" required> Beginner
+      <input type="radio" name="volunteer_sewing_level" value="beginner" required> Beginner
     </label>
     <label>
-      <input type="radio" name="volunteer_sewing_level" value="Intermediate" required> Intermediate
+      <input type="radio" name="volunteer_sewing_level" value="intermediate" required> Intermediate
     </label>
     <label>
-      <input type="radio" name="volunteer_sewing_level" value="Advanced" required> Advanced
+      <input type="radio" name="volunteer_sewing_level" value="advanced" required> Advanced
     </label>
+    </div>
 
-    <label>Preferred Method of Contact:</label>
+    <div class="mb-3 row">
+    <label class="form-label">Preferred Method of Contact:</label>
     <label>
-      <input type="radio" name="volunteer_preferred_contact" value="Phone" required> Phone
+      <input type="radio" name="volunteer_preferred_contact" value="phone" required> Phone
     </label>
     <label>
-      <input type="radio" name="volunteer_preferred_contact" value="Email" required> Email
+      <input type="radio" name="volunteer_preferred_contact" value="email" required> Email
     </label>
+    </div>
 
-    <label for="volunteerLead">
-      <input type="checkbox" id="volunteerLead" name="volunteerLead" value="false">
+    <div class="mb-3 form-check">
+    <label for="volunteer-lead">
+      <input class="form-check-input" type="checkbox" id="volunteer_lead" name="volunteer_lead" value="true">
       Are you willing to be a Lead?<br>
       <span style="font-size: 75%;">This means you will help to direct events requested by participants. You will not be asked to coordinate events, but may be asked to help transport materials and communicate with other volunteers.</span>
     </label>
+    </div>
 
     <!-- This button will not only submit the volunteer sign up form, but will also notify the user that their submission
      is being processed as they are routed back to the home page -->
-    <button type="submit" onclick="return confirm('Your Submission is Being Processed!');">Submit</button>
+    <button type="submit" class="btn btn-success btn-lg" 
+    onclick="return confirm('Your Submission is Being Processed!');">Submit</button>
   </form>
+</div>
+
+<!-- Footer with links to the Contct Us page, the Admin login, and a link to our Facebook --> 
+<footer class="bg-light text-center text-lg-start mt-5">
+  <div class="row justify-content-center">
+
+    <!-- Link to the Contact Us Page -->
+    <div class="col-auto">
+      <form action="/About/contact" method="GET" class="d-inline">
+        <button type="submit" class="btn button-color mb-2">Contact Us</button>
+      </form>
+    </div>
+
+    <!-- Facebook Icon//Link -->
+    <div class="col-auto">
+      <a href="https://www.facebook.com/turtleshelterproject" target="_blank" class="text-decoration-none">
+        <i class="fab fa-facebook fa-2x text-primary"></i>
+      </a>
+    </div>
+
+    <!-- Link to the Admin Login -->
+    <div class="col-auto">
+      <form action="/adminLogin" method="GET" class="d-inline">
+        <button type="submit" class="btn button-color mb-2">Login as Admin</button>
+      </form>
+    </div>
+  </div>
+</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
 </body>
 </html>

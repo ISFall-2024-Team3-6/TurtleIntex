@@ -2,32 +2,127 @@
 <html>
 <head>
   <title>Donations</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="/style/styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    table {
-      width: 80%;
-      margin: 20px auto;
-      border-collapse: collapse;
-      font-size: 10px; /* Reduce the font size of the table */
+    body {
+      margin: 0;
+      padding: 0;
     }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 5px; /* Reduce the padding to decrease row height */
+    .background-section {
+      background-image: url('/images/people-sewing.jpg');
+      background-size: cover;
+      background-position: 0 -180px;
+      height: 600px; /* Adjust the height as needed */
+      position: relative;
+    }
+    .background-section .content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white; /* Adjust text color for better visibility */
       text-align: center;
-      line-height: 1.2; /* Adjust line height for smaller rows */
-    }
-    th {
-      background-color: #F2F2F2;
-      font-weight: bold;
-    }
-    button {
-      padding: 4px 8px; /* Adjust button size */
-      margin: 2px;
-      font-size: 12px; /* Adjust button font size */
-      cursor: pointer;
     }
   </style>
 </head>
 <body>
-    <h5>This will be the donation page</h5>
+
+<!-- Navigation bar -->
+ <!-- Our Navigation Bar allows users to navigate from this page back to the Home page, or to any other page on the website -->
+ <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Turtle Shelter Project</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+      <!-- This is the beginning of the "list" of items in our navigation bar -->
+      <ul class="navbar-nav">
+
+        <!-- This is the button to go back to the home page -->
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+
+        <!-- This is the button to go to the Sponsors page -->
+        <li class="nav-item">
+          <a class="nav-link" href="/sponsors/">Sponsors</a>
+        </li>
+
+        <!-- This button leads to the web page's info page -->
+        <li class="nav-item">
+          <a class="nav-link" href="/About/story">Our Story</a>
+        </li>
+
+        <!-- This is a dropdown with links to the Our Tech and FAQ pages -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            More Info
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="/About/ourTech">Our Tech</a></li>
+            <li><a class="dropdown-item" href="/About/faq">FAQs</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- This last form is a link to the donation page, which is our call to action to every user that visits
+       the page -->
+      <form action="/donation" method="GET" class="d-inline ms-auto">
+        <button type="submit" class="btn btn-success btn-lg">Donate Now</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<!-- Background Section -->
+<div class="background-section"></div>
+
+<!-- Main Content -->
+<div class="container mt-5 pt-5 text-center">
+  <div class="content">
+    <h1>Click the button below to donate with credit, debit, or PayPal</h1>
+   <form action="https://www.paypal.com/donate" method="post" target="_top">
+      <input type="hidden" name="business" value="HPEFBZJLE8XNL" />
+      <input type="hidden" name="no_recurring" value="0" />
+      <input type="hidden" name="item_name" value="Help the Turtle Shelter Project provide shelter!" />
+      <input type="hidden" name="currency_code" value="USD" />
+      <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+      <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+      </form>
+  </div>
+</div>
+    
+<!-- Footer with links to the Contct Us page, the Admin login, and a link to our Facebook --> 
+<footer class="bg-light text-center text-lg-start mt-5">
+  <div class="row justify-content-center">
+
+    <!-- Link to the Contact Us Page -->
+    <div class="col-auto">
+      <form action="/About/contact" method="GET" class="d-inline">
+        <button type="submit" class="btn button-color mb-2">Contact Us</button>
+      </form>
+    </div>
+
+    <!-- Facebook Icon//Link -->
+    <div class="col-auto">
+      <a href="https://www.facebook.com/turtleshelterproject" target="_blank" class="text-decoration-none">
+        <i class="fab fa-facebook fa-2x text-primary"></i>
+      </a>
+    </div>
+
+    <!-- Link to the Admin Login -->
+    <div class="col-auto">
+      <form action="/adminLogin" method="GET" class="d-inline">
+        <button type="submit" class="btn button-color mb-2">Login as Admin</button>
+      </form>
+    </div>
+  </div>
+</footer>
+      
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

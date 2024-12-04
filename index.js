@@ -1,5 +1,6 @@
 let express = require("express");
-const { devNull } = require("os");
+const session = require('express-session');
+const pgSession = require('connect-pg-simple')(session);
 
 // Create the express app
 let app = express();
@@ -16,7 +17,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.urlencoded({extended: true}));
 
-let admin = false;
+// Configure session middleware
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'keyboard',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { 
+    secure: false, // TODO Set to true if using HTTPS
+    maxAge: 60 * 60 * 1000 // 1 hour
+  }
+}));
+
 
 // Connects to the locally hosted database
 const knex = require("knex") ({
@@ -34,12 +45,16 @@ const knex = require("knex") ({
 app.get('/', (req, res) => {
   knex.select('*').from('events')
   .then(events => {
-    res.render('index', {events, admin});
+    res.render('index', {events});
   })
   });
 
 app.get('/eventSignup/', (req, res) => {
     res.render('eventSignup')
+});
+
+app.get('/donationCompletion/', (req, res) => {
+  res.render('donationCompletion')
 });
 
 //This is the GET route to access the Volunteer Sign Up Page. Upon loading, we insert an array of state abberviations
@@ -69,12 +84,12 @@ app.post('/volunteerSignup/', (req, res) => {
   const volunteer_address = req.body.volunteer_address;
   const volunteer_city = req.body.volunteer_city;
   const volunteer_state = req.body.volunteer_state;
-  const volunteer_zip	 = req.body.volunteer_zip;
+  const volunteer_zip	 = parseInt(req.body.volunteer_zip);
   const volunteer_referral = req.body.volunteer_referral;
   const volunteer_willing_hours = req.body.volunteer_willing_hours;
   const volunteer_sewing_level = req.body.volunteer_sewing_level;
   const volunteer_preferred_contact = req.body.volunteer_preferred_contact;
-  const volunteer_lead = req.body.volunteer_lead;
+  const volunteer_lead = req.body.volunteer_lead === 'true';
   const admin = 'false';
 
   knex('volunteers')
@@ -145,10 +160,12 @@ app.post('/login', async (req, res) => {
           .first(); // Returns the first matching record
 
       if (user && user.password === password) { // Replace with hashed password comparison in production
-          admin = true;
-          res.render('adminIndex', { admin });
+          req.session.admin = true;
+          req.session.username = username;
+          res.render('adminIndex', { admin : req.session.admin });
+
       } else {
-          admin = false;
+        req.session.admin = false;
           res.render('adminLogin', { error: 'Invalid credentials' }); // Render login page with error
       }
   } catch (error) {
@@ -157,19 +174,144 @@ app.post('/login', async (req, res) => {
 });
 
 app.get('/adminIndex', (req, res) => {
-  res.render('adminIndex', { admin: true }); // Pass the admin variable as needed
+  if (req.session.admin) {
+    res.render('adminIndex', { admin: req.session.admin });
+  } else {
+    res.redirect('/adminLogin');
+  }
+});
+
+// Send to the page to edit the admin
+app.get('/editAdmin', (req, res) => {
+  knex('volunteers')
+  .select('*')
+  .where('username', req.session.username)
+  .first()
+  .then((user) => {
+    res.render('editAdmin', {volunteer: user});
+  });
 });
 
 app.get('/logout', (req, res) => {
-  admin = false;
-  res.redirect('/');
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).send('Failed to log out');
+    }
+    res.redirect('/');
+  });
 });
 
+// This is for the eventSignup.ejs
+app.get('/eventSignup', (req, res) => {
+  knex('events')
+    .select('event_date')
+    .then((results) => {
+      // Extract event_date values and ensure they are valid dates
+      const unavailableDatesArray = results
+        .map((dateObj) => dateObj.event_date)
+        .filter((date) => date !== null); // Remove null or invalid dates if any
 
-// THIS IS FOR EVENTS.EJS -> FOR THE ADMIN TO EDIT EVENTS
+      // Pass the unavailable dates array to the EJS template
+      console.log("Unavailable Dates from DB:", unavailableDatesArray);
+      res.render('eventSignup', { unavailableDates: unavailableDatesArray });
+
+    })
+    .catch((error) => {
+      // Log the error and respond with a user-friendly message
+      console.error('Error fetching unavailable dates:', error);
+      res.status(500).send('Internal Server Error: Unable to retrieve unavailable dates.');
+    });
+});
+
+app.get('/unavailable-dates', (req, res) => {
+  knex('events')
+    .select('event_date')
+    .then((results) => {
+      const unavailableDatesArray = results
+        .map((dateObj) => dateObj.event_date)
+        .filter((date) => date !== null); // Filter out invalid dates
+
+      console.log("Unavailable Dates Sent via API:", unavailableDatesArray);
+      res.json(unavailableDatesArray); // Send JSON response
+    })
+    .catch((error) => {
+      console.error('Error fetching unavailable dates:', error);
+      res.status(500).json({ error: 'Unable to fetch unavailable dates.' });
+    });
+});
+
+app.post('/submit-event-request', (req, res) => {
+  // Extract form data from the request body
+  const {
+    event_date,
+    back_up_date: event_backup_date,
+    back_up_date_2: event_backup_date_2,
+    event_type,
+    event_start_time,
+    desired_event_duration: event_expected_duration,
+    event_address,
+    event_city,
+    event_state,
+    event_zip,
+    event_space_capacity,
+    number_sewers,
+    machines_volunteered,
+    event_expected_adults,
+    event_expected_children,
+    table_types,
+    jen_story,
+    requestee_first_name: contact_first_name,
+    requestee_last_name: contact_last_name,
+    requestee_email: contact_email,
+    requestee_phone: contact_phone,
+    preferred_contact_method: contact_preferred_contact,
+  } = req.body;
 
 
+  // Sanitize optional fields
+  const sanitizedBackupDate2 = event_backup_date_2 || null;
+  const sanitizedMachinesVolunteered = machines_volunteered ? parseInt(machines_volunteered, 10) : 0;
+  const sanitizedExpectedChildren = event_expected_children ? parseInt(event_expected_children, 10) : 0;
+  const sanitizedNumberSewers = number_sewers ? parseInt(number_sewers, 10) : 0;
 
+  const data = {
+    event_date,
+    event_backup_date,
+    event_backup_date_2: sanitizedBackupDate2, // Optional: handle null
+    event_type: event_type.toLowerCase(),
+    event_start_time,
+    event_expected_duration,
+    event_address: event_address.toLowerCase(),
+    event_city: event_city.toLowerCase(),
+    event_state: event_state.toLowerCase(),
+    event_zip,
+    event_space_capacity,
+    number_sewers: sanitizedNumberSewers, // Optional: default to 0,
+    machines_volunteered: sanitizedMachinesVolunteered, // Optional: default to 0,
+    event_expected_adults,
+    event_expected_children: sanitizedExpectedChildren, // Optional: default to 0,
+    table_types: table_types.toLowerCase(),
+    jen_story: jen_story.toLowerCase(),
+    contact_first_name: contact_first_name.toLowerCase(),
+    contact_last_name: contact_last_name.toLowerCase(),
+    contact_email: contact_email.toLowerCase(),
+    contact_phone,
+    contact_preferred_contact: contact_preferred_contact.toLowerCase(),
+  };
+  
+  // Use Knex.js to insert data into the 'event_requests' table
+  knex('events')
+    .insert(data)
+    .then(() => {
+      // Redirect to a confirmation page or send a success response
+      res.redirect('/'); // Redirect to a success page
+    })
+    .catch((error) => {
+      // Log and handle errors
+      console.error('Error adding Event Request:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
 
 // THIS ALLOWS THE ADMIN TO VIEW ALL THE UPCOMING AND PAST EVENTS 
 app.get('/viewEvents', async (req, res) => {
@@ -522,8 +664,8 @@ app.get('/editVolunteer/:id', (req, res) => {
   });
 
 
-app.post('/updateVolunteer/:id', (req, res) => {
-  const id = req.params.id; // this is how you pull out the parameter TO SEE WHAT volunteer YOU ARE DEALING WITH
+app.post('/updateAdmin/:id', (req, res) => {
+  const id = req.params.id; // this is how you pull out the parameter TO SEE WHAT admin YOU ARE DEALING WITH
 
   const first_name = req.body.volunteer_first_name
   const last_name = req.body.volunteer_last_name
@@ -537,8 +679,10 @@ app.post('/updateVolunteer/:id', (req, res) => {
   const volunteer_willing_hours = parseInt(req.body.volunteer_willing_hours)
   const sewing_level = req.body.sewing_level
   const volunteer_referral = req.body.volunteer_referral
-  const volunteer_admin = req.body.volunteer_admin === 'true'
+  const volunteer_admin = req.body.admin === 'true'
   const volunteer_lead = req.body.volunteer_lead === 'true'
+  const username = req.body.username
+  const password = req.body.password
 
   // Update the Volunteer in the database
   knex('volunteers')
@@ -560,11 +704,13 @@ app.post('/updateVolunteer/:id', (req, res) => {
       volunteer_sewing_level: sewing_level,
       volunteer_preferred_contact: volunteer_preferred_contact,
       admin: volunteer_admin,
-      volunteer_lead: volunteer_lead
+      volunteer_lead: volunteer_lead,
+      username: username,
+      password: password
     })
 
     .then(() => {
-      res.redirect('/volunteerMaintenance'); // Redirect to the list of volunteers after saving
+      res.redirect('/adminIndex'); // Redirect to the index page after saving
     })
     .catch(error => {
       console.error('Error updating Volunteer:', error);
@@ -572,21 +718,74 @@ app.post('/updateVolunteer/:id', (req, res) => {
     });
     });
 
-
-  // LETS YOU DELETE A VOLUNTEER 
-  app.post('/deleteVolunteer/:id', (req, res) => {
-    const id = req.params.id;
-    knex('volunteers') // put the name of the database here
+  app.post('/updateVolunteer/:id', (req, res) => {
+    const id = req.params.id; // this is how you pull out the parameter TO SEE WHAT volunteer YOU ARE DEALING WITH
+  
+    const first_name = req.body.volunteer_first_name
+    const last_name = req.body.volunteer_last_name
+    const volunteer_email = req.body.volunteer_email
+    const volunteer_phone = req.body.volunteer_phone
+    const volunteer_street_address = req.body.volunteer_address
+    const volunteer_city = req.body.volunteer_city
+    const volunteer_state = req.body.volunteer_state
+    const volunteer_zip = req.body.volunteer_zip
+    const volunteer_preferred_contact = req.body.volunteer_preferred_contact
+    const volunteer_willing_hours = parseInt(req.body.volunteer_willing_hours)
+    const sewing_level = req.body.sewing_level
+    const volunteer_referral = req.body.volunteer_referral
+    const volunteer_admin = req.body.admin === 'true'
+    const volunteer_lead = req.body.volunteer_lead === 'true'
+    const username = req.body.username
+    const password = req.body.password
+  
+    // Update the Volunteer in the database
+    knex('volunteers')
       .where('volunteerid', id)
-      .del() // Deletes the record with the specified ID
+      // LEFT: column names IN THE TABLE ALREADY
+      // RIGHT: values you want to store in the database that were entered into the FORM! CAN USE VARIABLES BC YOU MADE CONST ONES ABOVE
+      // description could have been req.body.description, but since we made these variables up top, we can just use the variables here
+      .update({
+        volunteer_first_name: first_name, 
+        volunteer_last_name: last_name, 
+        volunteer_email: volunteer_email,
+        volunteer_phone: volunteer_phone,
+        volunteer_address: volunteer_street_address, 
+        volunteer_city: volunteer_city, 
+        volunteer_state: volunteer_state, 
+        volunteer_zip: volunteer_zip,
+        volunteer_referral: volunteer_referral, 
+        volunteer_willing_hours: volunteer_willing_hours,
+        volunteer_sewing_level: sewing_level,
+        volunteer_preferred_contact: volunteer_preferred_contact,
+        admin: volunteer_admin,
+        volunteer_lead: volunteer_lead,
+        username: username,
+        password: password
+      })
+  
       .then(() => {
-        res.redirect('/volunteerMaintenance'); // Redirect to the volunteers list after deletion
+        res.redirect('/volunteerMaintenance'); // Redirect to the list of volunteers after saving
       })
       .catch(error => {
-        console.log('Error deleting Volunteer:', error);
+        console.error('Error updating Volunteer:', error);
         res.status(500).send('Internal Server Error');
       });
-  });
+      });
+
+// LETS YOU DELETE A VOLUNTEER 
+app.post('/deleteVolunteer/:id', (req, res) => {
+  const id = req.params.id;
+  knex('volunteers') // put the name of the database here
+    .where('volunteerid', id)
+    .del() // Deletes the record with the specified ID
+    .then(() => {
+      res.redirect('/volunteerMaintenance'); // Redirect to the volunteers list after deletion
+    })
+    .catch(error => {
+      console.log('Error deleting Volunteer:', error);
+      res.status(500).send('Internal Server Error');
+    });
+});
 
 
   

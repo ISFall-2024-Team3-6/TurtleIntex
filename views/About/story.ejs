@@ -4,68 +4,10 @@
 <head>
   <title>Our Story</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <link rel="stylesheet" href="/public/style/styles.css">
+  <link rel="stylesheet" href="/style/styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    /* Body starts below the navbar */
-    body {
-      padding-top: 80px;
-      background-color: #f9f9f9;
-      font-family: 'Georgia', serif; /* Use a serif font for a professional feel */
-      color: #333;
-      line-height: 1.8; /* Make text easier to read */
-    }
-
-    /* Navbar customization */
-    .navbar {
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add slight shadow for depth */
-    }
-    .navbar-brand {
-      font-weight: bold;
-      font-size: 1.5rem;
-    }
-
-    /* Headings styling */
-    h1 {
-      text-align: center;
-      margin-top: 20px;
-      color: #2c3e50;
-    }
-    h5 {
-      margin-top: 30px;
-      color: #34495e;
-      font-style: italic;
-    }
-
-    /* Paragraph styling */
-    p {
-      margin: 20px auto;
-      width: 90%; /* Center the text */
-      text-align: justify; /* Justify text for a clean layout */
-      background: #ffffff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Links */
-    a {
-      color: #007bff;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-
-    /* Image styling */
-    img {
-      display: block;
-      margin: 20px auto;
-      max-width: 100%;
-      height: auto;
-      border-radius: 10px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+    
   </style>
 </head>
 <body>
@@ -90,18 +32,18 @@
 
         <!-- This is the button to go to the Sponsors page -->
         <li class="nav-item">
-          <a class="nav-link" href="/sponsors/">Become A Sponsor</a>
+          <a class="nav-link" href="/sponsors/">Sponsors</a>
         </li>
 
         <!-- This button leads to the web page's info page -->
         <li class="nav-item">
-          <a class="nav-link" href="story">Our Story</a>
+          <a class="nav-link" href="/About/story">Our Story</a>
         </li>
 
         <!-- This is a dropdown with links to the Our Tech and FAQ pages -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            About Us
+            More Info
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <li><a class="dropdown-item" href="/About/ourTech">Our Tech</a></li>
@@ -110,9 +52,10 @@
         </li>
       </ul>
 
-      <!-- We also have a button for admins to login and access their unique links -->
-      <form action="/adminLogin" method="GET" class="d-inline ms-auto">
-        <button type="submit" class="btn button-color mb-2">Login as Admin</button>
+      <!-- This last form is a link to the donation page, which is our call to action to every user that visits
+       the page -->
+      <form action="/donation" method="GET" class="d-inline ms-auto">
+        <button type="submit" class="btn btn-success btn-lg">Donate Now</button>
       </form>
     </div>
   </div>
@@ -120,6 +63,7 @@
 
 <!-- Most of the content below was taken straight from Turtle Shelter Project's original website. We feel it would be
  wrong to alter the story from the way Jen would put it. -->
+ <div class="container">
     <h1>How the Turtle Shelter Project Came to Be</h1>
     <img src="/assets/jen.png">
     <h5>Jen's Story</h5>
@@ -181,6 +125,41 @@
       conserve it.  The vests are very well made to provide durability, wind resistance, insulation, and comfort.  
       They are a very effective way to help provide life-saving warmth.</p>
 
+
+      <h1>Learn more about the issue of Homelessness in the United States</h1>
+      <br>
+      <div class='tableauPlaceholder' id='viz1733341403360' style='position: relative'><noscript><a href='#'><img alt='Dashboard 1 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;HJ&#47;HJPBT8KFB&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='path' value='shared&#47;HJPBT8KFB' /> <param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;HJ&#47;HJPBT8KFB&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1733341403360');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else { vizElement.style.width='100%';vizElement.style.height='977px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
       <span style="text-align: center;"> <a href='/donation/'>Learn How You Can Help</a></span> 
+
+      </div>
+
+<!-- Footer with links to the Contct Us page, the Admin login, and a link to our Facebook --> 
+<footer class="bg-light text-center text-lg-start mt-5">
+  <div class="row justify-content-center">
+
+    <!-- Link to the Contact Us Page -->
+    <div class="col-auto">
+      <form action="/About/contact" method="GET" class="d-inline">
+        <button type="submit" class="btn button-color mb-2">Contact Us</button>
+      </form>
+    </div>
+
+    <!-- Facebook Icon//Link -->
+    <div class="col-auto">
+      <a href="https://www.facebook.com/turtleshelterproject" target="_blank" class="text-decoration-none">
+        <i class="fab fa-facebook fa-2x text-primary"></i>
+      </a>
+    </div>
+
+    <!-- Link to the Admin Login -->
+    <div class="col-auto">
+      <form action="/adminLogin" method="GET" class="d-inline">
+        <button type="submit" class="btn button-color mb-2">Login as Admin</button>
+      </form>
+    </div>
+  </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
