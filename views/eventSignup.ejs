@@ -143,15 +143,15 @@ button:hover {
           <label class="required-label">Event Type</label>
           <div class="radio-group">
             <label class="radio-label">
-              <input type="radio" id="sewing" name="event_type" value="Sewing" required>
+              <input type="radio" id="sewing" name="event_type" value="S" required>
               Sewing
             </label>
             <label class="radio-label">
-              <input type="radio" id="non_sewing" name="event_type" value="Non-Sewing" required>
+              <input type="radio" id="non_sewing" name="event_type" value="NS" required>
               Non-Sewing
             </label>
             <label class="radio-label">
-              <input type="radio" id="both" name="event_type" value="Both" required>
+              <input type="radio" id="both" name="event_type" value="B" required>
               Both
             </label>
           </div>
@@ -280,26 +280,41 @@ button:hover {
 
   <!-- Flatpickr Integration -->
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <div id="data-container" data-unavailable-dates='[]'></div>
+  <div id="data-container"></div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      try {
-        const dataContainer = document.getElementById("data-container");
-        const unavailableDates = JSON.parse(dataContainer?.getAttribute("data-unavailable-dates") || "[]");
+    document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const response = await fetch('/unavailable-dates'); // Fetch unavailable dates
+    if (!response.ok) {
+      throw new Error("Failed to fetch unavailable dates");
+    }
 
-        const flatpickrOptions = {
-          disable: unavailableDates.map((date) => new Date(date)),
-          dateFormat: "Y-m-d",
-        };
+    const unavailableDates = await response.json();
+    console.log("Unavailable Dates Fetched:", unavailableDates);
 
-        flatpickr("#event_date", flatpickrOptions);
-        flatpickr("#back_up_date", flatpickrOptions);
-        flatpickr("#back_up_date_2", flatpickrOptions);
-      } catch (error) {
-        console.error("Error initializing Flatpickr:", error);
-      }
+    // Normalize dates to "YYYY-MM-DD" format (ignoring time)
+    const parsedDates = unavailableDates.map(date => {
+      const d = new Date(date); // Parse the ISO string
+      return d.toISOString().split('T')[0]; // Get the date part in "YYYY-MM-DD" format
     });
+
+    console.log("Parsed Dates for Flatpickr:", parsedDates);
+
+    // Initialize Flatpickr with normalized dates
+    const flatpickrOptions = {
+      disable: parsedDates,
+      dateFormat: "Y-m-d",
+    };
+
+    flatpickr("#event_date", flatpickrOptions);
+    flatpickr("#back_up_date", flatpickrOptions);
+    flatpickr("#back_up_date_2", flatpickrOptions);
+  } catch (error) {
+    console.error("Error initializing Flatpickr with unavailable dates:", error);
+  }
+});
+
 
   // Define an array of valid times
   const validTimes = [

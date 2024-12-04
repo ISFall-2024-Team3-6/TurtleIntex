@@ -212,7 +212,9 @@ app.get('/eventSignup', (req, res) => {
         .filter((date) => date !== null); // Remove null or invalid dates if any
 
       // Pass the unavailable dates array to the EJS template
+      console.log("Unavailable Dates from DB:", unavailableDatesArray);
       res.render('eventSignup', { unavailableDates: unavailableDatesArray });
+
     })
     .catch((error) => {
       // Log the error and respond with a user-friendly message
@@ -221,6 +223,22 @@ app.get('/eventSignup', (req, res) => {
     });
 });
 
+app.get('/unavailable-dates', (req, res) => {
+  knex('events')
+    .select('event_date')
+    .then((results) => {
+      const unavailableDatesArray = results
+        .map((dateObj) => dateObj.event_date)
+        .filter((date) => date !== null); // Filter out invalid dates
+
+      console.log("Unavailable Dates Sent via API:", unavailableDatesArray);
+      res.json(unavailableDatesArray); // Send JSON response
+    })
+    .catch((error) => {
+      console.error('Error fetching unavailable dates:', error);
+      res.status(500).json({ error: 'Unable to fetch unavailable dates.' });
+    });
+});
 
 app.post('/submit-event-request', (req, res) => {
   // Extract form data from the request body
@@ -249,10 +267,17 @@ app.post('/submit-event-request', (req, res) => {
     preferred_contact_method: contact_preferred_contact,
   } = req.body;
 
+
+  // Sanitize optional fields
+  const sanitizedBackupDate2 = event_backup_date_2 || null;
+  const sanitizedMachinesVolunteered = machines_volunteered ? parseInt(machines_volunteered, 10) : 0;
+  const sanitizedExpectedChildren = event_expected_children ? parseInt(event_expected_children, 10) : 0;
+  const sanitizedNumberSewers = number_sewers ? parseInt(number_sewers, 10) : 0;
+
   const data = {
     event_date,
     event_backup_date,
-    event_backup_date_2,
+    event_backup_date_2: sanitizedBackupDate2, // Optional: handle null
     event_type: event_type.toLowerCase(),
     event_start_time,
     event_expected_duration,
@@ -261,10 +286,10 @@ app.post('/submit-event-request', (req, res) => {
     event_state: event_state.toLowerCase(),
     event_zip,
     event_space_capacity,
-    number_sewers,
-    machines_volunteered,
+    number_sewers: sanitizedNumberSewers, // Optional: default to 0,
+    machines_volunteered: sanitizedMachinesVolunteered, // Optional: default to 0,
     event_expected_adults,
-    event_expected_children,
+    event_expected_children: sanitizedExpectedChildren, // Optional: default to 0,
     table_types: table_types.toLowerCase(),
     jen_story: jen_story.toLowerCase(),
     contact_first_name: contact_first_name.toLowerCase(),
@@ -274,7 +299,6 @@ app.post('/submit-event-request', (req, res) => {
     contact_preferred_contact: contact_preferred_contact.toLowerCase(),
   };
   
-
   // Use Knex.js to insert data into the 'event_requests' table
   knex('events')
     .insert(data)
@@ -288,8 +312,6 @@ app.post('/submit-event-request', (req, res) => {
       res.status(500).send('Internal Server Error');
     });
 });
-
-
 
 // THIS ALLOWS THE ADMIN TO VIEW ALL THE UPCOMING AND PAST EVENTS 
 app.get('/viewEvents', async (req, res) => {
