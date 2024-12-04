@@ -161,6 +161,31 @@ app.get('/logout', (req, res) => {
 
 
 // THIS IS FOR EVENTS.EJS -> FOR THE ADMIN TO EDIT EVENTS
+
+
+
+
+// THIS ALLOWS THE ADMIN TO VIEW ALL THE UPCOMING AND PAST EVENTS 
+app.get('/viewEvents', async (req, res) => {
+  try {
+    const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
+
+    const upcomingEvents = await knex('events').where('event_date', '>=', currentDate);
+    const pastEvents = await knex('events').where('event_date', '<', currentDate);
+
+    res.render('events', {
+      upcomingEvents: upcomingEvents,
+      pastEvents: pastEvents
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error fetching events');
+  }
+});
+
+
+
+// THIS ALLOWS THE ADMIN TO EDIT EVENTS
 app.get('/events/:id', (req, res) => {
 let id = req.params.id;
 // Query the Volunteer by ID first
@@ -222,7 +247,7 @@ app.post('/events/:id', (req, res) => {
   const completed_product = req.body.completed_product
 
   // Update the Events in the database
-    knex('pokemon') // MAKE SURE THIS IS THE NAME OF THE TABLE IN THE DATABASE
+    knex('events') 
      .where('id', id)
      .update({
 
@@ -267,13 +292,14 @@ app.post('/events/:id', (req, res) => {
 
      })
      .then(() => {
-       res.redirect('/'); // Redirect to the list of events after saving -> FIX THIS ROUTE, IT WILL BE WRONG
+       res.redirect('/adminIndex'); // Redirect to the list of events after saving -> FIX THIS ROUTE, IT WILL BE WRONG
      })
      .catch(error => {
        console.log('Error updating Event:', error);
        res.status(500).send('Internal Server Error');
      });
  });
+
 
 
   // POST ROUTE FOR DELETING characters
@@ -283,7 +309,7 @@ app.post('/deleteEvent/:id', (req, res) => {
   .where('id', id)
   .del() // Deletes the record with the specified ID
   .then(() => {
-    res.redirect('/'); // Redirect to the events list after deletion
+    res.redirect('/adminIndex'); // Redirect to the events list after deletion
   })
   // error handling
   .catch(error => {

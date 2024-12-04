@@ -117,13 +117,13 @@
     <!-- Sewing Level (Radio Buttons) -->
     <label>Sewing Level</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
     <label>
-      <input type="radio" name="volunteer_sewing_level " value="S" <%= volunteers.volunteer_sewing_level === 'B' ? 'checked' : '' %>> Beginner
+      <input type="radio" name="volunteer_sewing_level " value="beginner" <%= volunteers.volunteer_sewing_level === 'beginner' ? 'checked' : '' %>> Beginner
     </label>
     <label>
-      <input type="radio" name="volunteer_sewing_level" value="I" <%= volunteers.volunteer_sewing_level === 'I' ? 'checked' : '' %>> Intermediate
+      <input type="radio" name="volunteer_sewing_level" value="intermediate" <%= volunteers.volunteer_sewing_level === 'intermediate' ? 'checked' : '' %>> Intermediate
     </label>
     <label>
-      <input type="radio" name="volunteer_sewing_level" value="E" <%= volunteers.volunteer_sewing_level === 'E' ? 'checked' : '' %>> Experienced
+      <input type="radio" name="volunteer_sewing_level" value="advanced" <%= volunteers.volunteer_sewing_level === 'advanced' ? 'checked' : '' %>> Advanced
     </label>
 
 
