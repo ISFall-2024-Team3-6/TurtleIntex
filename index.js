@@ -399,8 +399,10 @@ app.post('/updateVolunteer/:id', (req, res) => {
   const volunteer_willing_hours = parseInt(req.body.volunteer_willing_hours)
   const sewing_level = req.body.sewing_level
   const volunteer_referral = req.body.volunteer_referral
-  const volunteer_admin = req.body.volunteer_admin === 'true'
+  const volunteer_admin = req.body.admin === 'true'
   const volunteer_lead = req.body.volunteer_lead === 'true'
+  const username = req.body.username
+  const password = req.body.password
 
   // Update the Volunteer in the database
   knex('volunteers')
@@ -422,7 +424,9 @@ app.post('/updateVolunteer/:id', (req, res) => {
       volunteer_sewing_level: sewing_level,
       volunteer_preferred_contact: volunteer_preferred_contact,
       admin: volunteer_admin,
-      volunteer_lead: volunteer_lead
+      volunteer_lead: volunteer_lead,
+      username: username,
+      password: password
     })
 
     .then(() => {
