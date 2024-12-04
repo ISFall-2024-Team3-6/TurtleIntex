@@ -1,4 +1,5 @@
 let express = require("express");
+const { devNull } = require("os");
 
 // Create the express app
 let app = express();
@@ -130,7 +131,7 @@ app.get('/About/story', (req, res) => {
 
 //This is for admin login yeah?
 app.get('/adminLogin', (req, res) => {
-    res.render('adminLogin')
+    res.render('adminLogin', {error: null})
 });
 
 app.post('/login', async (req, res) => {
