@@ -5,7 +5,12 @@
   <link rel="stylesheet" href="/style/styles.css">
 </head>
 <body>
-    <h5>This will be the admin login page</h5>
+<% if (error) { %>
+  <script>
+  window.alert("Invalid Credentials");
+  </script>
+  <% } %>
+
     <form action="/login" method="post">
       <!-- User Name -->
       <label for="username" style="display: block; margin-bottom: 5px;">User Name:</label>
