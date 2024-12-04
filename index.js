@@ -362,7 +362,7 @@ app.get('/eventMaintenance', (req, res) => {
     res.status(500).send('Server error: Invalid current date');
     return;
   }
-  knex.select('*').from('events').orderBy('event_date')
+  knex.select('*').from('events').orderBy('event_date', 'desc')
       .then(events => {
         const upcomingEvents = events.filter(event => new Date(event.event_date) > currentDate);
         const pastEvents = events.filter(event => new Date(event.event_date) <= currentDate);
