@@ -84,12 +84,12 @@ app.post('/volunteerSignup/', (req, res) => {
   const volunteer_address = req.body.volunteer_address;
   const volunteer_city = req.body.volunteer_city;
   const volunteer_state = req.body.volunteer_state;
-  const volunteer_zip	 = req.body.volunteer_zip;
+  const volunteer_zip	 = parseInt(req.body.volunteer_zip);
   const volunteer_referral = req.body.volunteer_referral;
   const volunteer_willing_hours = req.body.volunteer_willing_hours;
   const volunteer_sewing_level = req.body.volunteer_sewing_level;
   const volunteer_preferred_contact = req.body.volunteer_preferred_contact;
-  const volunteer_lead = req.body.volunteer_lead;
+  const volunteer_lead = req.body.volunteer_lead === 'true';
   const admin = 'false';
 
   knex('volunteers')
