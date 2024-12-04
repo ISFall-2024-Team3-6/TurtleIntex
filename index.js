@@ -49,6 +49,10 @@ app.get('/eventSignup/', (req, res) => {
     res.render('eventSignup')
 });
 
+app.get('/donationCompletion/', (req, res) => {
+  res.render('donationCompletion')
+});
+
 //This is the GET route to access the Volunteer Sign Up Page. Upon loading, we insert an array of state abberviations
 // to eliminate as much human error as we know how. These values will populate the state dropdown on the page
 app.get('/volunteerSignup/', (req, res) => {
