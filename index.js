@@ -183,6 +183,11 @@ app.get('/adminIndex', (req, res) => {
 
 // Send to the page to edit the admin
 app.get('/editAdmin', (req, res) => {
+  // Check if they are logged in
+  if (!req.session.admin) {
+  res.redirect('/adminLogin');
+  }
+  
   knex('volunteers')
   .select('*')
   .where('username', req.session.username)
@@ -315,6 +320,12 @@ app.post('/submit-event-request', (req, res) => {
 
 // THIS ALLOWS THE ADMIN TO VIEW ALL THE UPCOMING AND PAST EVENTS 
 app.get('/viewEvents', async (req, res) => {
+
+    // Check if they are logged in
+    if (!req.session.admin) {
+      res.redirect('/adminLogin');
+    }
+
   try {
     const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
 
@@ -338,6 +349,12 @@ app.get('/viewEvents', async (req, res) => {
 
 // THIS ALLOWS THE ADMIN TO View all EVENTS
 app.get('/eventMaintenance', (req, res) => {
+
+  // Check if they are logged in
+  if (!req.session.admin) {
+    res.redirect('/adminLogin');
+  }
+
   const currentDate = new Date();  // This should create a valid Date object
   
   if (isNaN(currentDate)) {
@@ -360,6 +377,12 @@ app.get('/eventMaintenance', (req, res) => {
 
 // THIS ALLOWS THE ADMIN TO EDIT EVENTS
 app.get('/editEvents/:id', async (req, res) => {
+
+    // Check if they are logged in
+    if (!req.session.admin) {
+      res.redirect('/adminLogin');
+    }
+
   let id = req.params.id;
   // Query the Event by ID 
   let chosenEvent;
@@ -399,13 +422,17 @@ app.get('/editEvents/:id', async (req, res) => {
   }
 
 
-  console.log(volunteers_attended);
-
   res.render('editEvents', { event : chosenEvent , volunteers : matchedVolunteers, eventvolunteers : volunteers_attended });
 });
 
 // THIS ALLOWS THE ADMIN TO EDIT UPCOMING EVENTS
 app.get('/editUpcomingEvents/:id', (req, res) => {
+
+    // Check if they are logged in
+    if (!req.session.admin) {
+      res.redirect('/adminLogin');
+    }
+
   let id = req.params.id;
   // Query the Event by ID 
   knex('events') 
@@ -432,7 +459,6 @@ app.post('/updateEvents/:id', async (req, res) => {
 
   let volunteerIDs = req.body.volunteers_attended;
 
-  console.log(volunteerIDs);
 
   const contact_first_name = req.body.contact_first_name
   const contact_last_name = req.body.contact_last_name
@@ -675,6 +701,12 @@ app.post('/deleteUpcomingEvents/:id', (req, res) => {
 
 // THIS IS FOR volunteers.EJS -> for the admin to EDIT INFO FOR VOLUNTEERS
 app.get('/volunteerMaintenance', (req, res) => {
+
+    // Check if they are logged in
+    if (!req.session.admin) {
+      res.redirect('/adminLogin');
+    }
+
   knex.select('*').from('volunteers').orderBy('volunteer_last_name')
   .then(volunteers => {
     res.render('volunteers', {volunteers});
@@ -682,6 +714,11 @@ app.get('/volunteerMaintenance', (req, res) => {
 });
 
 app.get('/editVolunteer/:id', (req, res) => {
+
+    // Check if they are logged in
+    if (!req.session.admin) {
+      res.redirect('/adminLogin');
+    }
 
   let id = req.params.id; // to extract a parameter out of the route ^^^ , id is the parameter ID; if it was num, do req.params.num
   // using it to find the record in the database
@@ -847,48 +884,6 @@ app.post('/deleteVolunteer/:id', (req, res) => {
       });
   });
 
-
-app.get('/addPoke', (req, res) => {
-    // Fetch Pokémon types to populate the dropdown
-    knex('poke_type')
-        .select('id', 'description')
-        .then(poke_types => {
-            // Render the add form with the Pokémon types data
-            res.render('addPoke', { poke_types });
-        })
-        .catch(error => {
-            console.log('Error fetching Pokémon types:', error);
-            res.status(500).send('Internal Server Error');
-        });
-});
-
-
-app.post('/addPoke', (req, res) => {
-  // Extract form values from req.body
-  const description = req.body.description || ''; // Default to empty string if not provided
-  const base_total = parseInt(req.body.base_total, 10); // Convert to integer
-  const date_created = req.body.date_created || new Date().toISOString().split('T')[0]; // Default to today
-  const active_poke = req.body.active_poke === 'true'; // Checkbox returns true or undefined
-  const gender = req.body.gender || 'U'; // Default to 'U' for Unknown
-  const poke_type_id = parseInt(req.body.poke_type_id, 10); // Convert to integer
-  // Insert the new Pokémon into the database
-  knex('pokemon')
-      .insert({
-          description: description.toUpperCase(), // Ensure description is uppercase
-          base_total: base_total,
-          date_created: date_created,
-          active_poke: active_poke,
-          gender: gender,
-          poke_type_id: poke_type_id,
-      })
-      .then(() => {
-          res.redirect('/'); // Redirect to the Pokémon list page after adding
-      })
-      .catch(error => {
-          console.log('Error adding Pokémon:', error);
-          res.status(500).send('Internal Server Error');
-      });
-});
 
 
 // Allows the server to listen
