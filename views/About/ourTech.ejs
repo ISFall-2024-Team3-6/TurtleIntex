@@ -5,6 +5,7 @@
   <title>Our Tech</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="/style/styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
     /* Body starts below the navbar */
     body {
@@ -95,7 +96,7 @@
 
         <!-- This button leads to the web page's info page -->
         <li class="nav-item">
-          <a class="nav-link" href="story">Our Story</a>
+          <a class="nav-link" href="/About/story">Our Story</a>
         </li>
 
         <!-- This is a dropdown with links to the Our Tech and FAQ pages -->
@@ -109,6 +110,12 @@
           </ul>
         </li>
       </ul>
+
+      <!-- This last form is a link to the donation page, which is our call to action to every user that visits
+       the page -->
+      <form action="/donation" method="GET" class="d-inline ms-auto">
+        <button type="submit" class="btn btn-success btn-lg">Donate Now</button>
+      </form>
     </div>
   </div>
 </nav>
@@ -161,6 +168,33 @@
           and not for our families...lives can be saved from this technology."</p>
 </div>
 
-          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<!-- Footer with links to the Contct Us page, the Admin login, and a link to our Facebook --> 
+<footer class="bg-light text-center text-lg-start mt-5">
+  <div class="row justify-content-center">
+
+    <!-- Link to the Contact Us Page -->
+    <div class="col-auto">
+      <form action="/About/contact" method="GET" class="d-inline">
+        <button type="submit" class="btn button-color mb-2">Contact Us</button>
+      </form>
+    </div>
+
+    <!-- Facebook Icon//Link -->
+    <div class="col-auto">
+      <a href="https://www.facebook.com/turtleshelterproject" target="_blank" class="text-decoration-none">
+        <i class="fab fa-facebook fa-2x text-primary"></i>
+      </a>
+    </div>
+
+    <!-- Link to the Admin Login -->
+    <div class="col-auto">
+      <form action="/adminLogin" method="GET" class="d-inline">
+        <button type="submit" class="btn button-color mb-2">Login as Admin</button>
+      </form>
+    </div>
+  </div>
+</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
