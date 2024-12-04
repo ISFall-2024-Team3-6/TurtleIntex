@@ -9,13 +9,13 @@
 }
 
 /* Basic styling for the body */
-body {
+/* body {
    font-family: 'Roboto', sans-serif;
    line-height: 1.6;
    background-color: #f4f4f4;
    color: #333;
    padding: 20px;
-}
+} */
 
 /* Container for centering content */
 .container {
@@ -127,3 +127,5 @@ body {
    background-color: #F2F2F2;
    font-weight: bold;
  }
+
+ 
