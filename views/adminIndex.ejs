@@ -42,9 +42,13 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-      <form action="/logout" method="GET" class="d-inline ms-auto">
-        <button type="submit" class="btn button-color mb-2">Logout</button>
-      </form>
+    <ul class="navbar-nav ms-auto">
+        <li class="nav-item ms-2">
+          <form action="/logout" method="GET" class="d-inline">
+            <button type="submit" class="btn button-color mb-2">Logout</button>
+          </form>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>
@@ -60,7 +64,7 @@
       <button type="submit" class="btn button-color btn-sm">Volunteer Maintenance</button>
     </form>
     <br>
-    <form action="/adminEdit" method="GET" class="d-inline-block mb-3">
+    <form action="/editAdmin" method="GET" class="d-inline-block mb-3">
       <button type="submit" class="btn button-color btn-sm">Admin Account Maintenance</button>
     </form>
   </div>
