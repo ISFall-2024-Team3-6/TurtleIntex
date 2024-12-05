@@ -404,7 +404,7 @@ app.get('/viewEvents', async (req, res) => {
 
 
 
-// THIS ALLOWS THE ADMIN TO View all EVENTS
+// GET ROUTE THAT ALLOWS THE ADMIN TO View all EVENTS
 app.get('/eventMaintenance', (req, res) => {
 
   // Check if they are logged in
@@ -430,9 +430,7 @@ app.get('/eventMaintenance', (req, res) => {
   });
 
 
-
-
-// THIS ALLOWS THE ADMIN TO EDIT EVENTS
+// GET ROUTE THAT ALLOWS THE ADMIN TO EDIT EVENTS
 app.get('/editEvents/:id', async (req, res) => {
 
     // Check if they are logged in
@@ -478,11 +476,11 @@ app.get('/editEvents/:id', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 
-
   res.render('editEvents', { event : chosenEvent , volunteers : matchedVolunteers, eventvolunteers : volunteers_attended });
 });
 
-// THIS ALLOWS THE ADMIN TO EDIT UPCOMING EVENTS
+
+// GET ROUTE THAT ALLOWS THE ADMIN TO EDIT UPCOMING EVENTS
 app.get('/editUpcomingEvents/:id', (req, res) => {
 
     // Check if they are logged in
@@ -508,14 +506,11 @@ app.get('/editUpcomingEvents/:id', (req, res) => {
 });
 
 
-
-
-
+//Post route to edit past events
 app.post('/updateEvents/:id', async (req, res) => {
   const id = req.params.id;
 
   let volunteerIDs = req.body.volunteers_attended;
-
 
   const contact_first_name = req.body.contact_first_name
   const contact_last_name = req.body.contact_last_name
@@ -536,7 +531,6 @@ app.post('/updateEvents/:id', async (req, res) => {
     event_backup_date_2 = null;
   }
   
-
   const event_start_time = req.body.event_start_time
   const event_expected_duration = req.body.event_expected_duration
   const event_actual_duration = req.body.event_actual_duration
@@ -566,6 +560,7 @@ app.post('/updateEvents/:id', async (req, res) => {
   const vests_in_progress = req.body.vests_in_progress
   const vests_finished = req.body.vests_finished
   const completed_products = req.body.completed_products
+
 
   // Update the Events in the database
   try { 
@@ -658,11 +653,9 @@ app.post('/updateEvents/:id', async (req, res) => {
   if (!event_backup_date_2) {
     event_backup_date_2 = null;
   }
-  
 
   const event_start_time = req.body.event_start_time
   const event_expected_duration = req.body.event_expected_duration
-  
   const event_address = req.body.event_address
   const event_city = req.body.event_city
   const event_state = req.body.event_state
@@ -673,16 +666,12 @@ app.post('/updateEvents/:id', async (req, res) => {
   const machines_volunteered = req.body.machines_volunteered
   const event_expected_adults = req.body.event_expected_adults
   const event_expected_children = req.body.event_expected_children
-
   const jen_story = req.body.jen_story
-
- 
 
   // Update the Events in the database
     knex('events') 
      .where('eventid', id)
      .update({
-
       contact_first_name: contact_first_name, 
       contact_last_name: contact_last_name, 
       contact_phone: contact_phone, 
@@ -694,7 +683,6 @@ app.post('/updateEvents/:id', async (req, res) => {
       event_backup_date_2: event_backup_date_2, 
       event_start_time: event_start_time, 
       event_expected_duration: event_expected_duration, 
-      
       event_address: event_address,
       event_city: event_city, 
       event_state: event_state, 
@@ -705,10 +693,8 @@ app.post('/updateEvents/:id', async (req, res) => {
       machines_volunteered: machines_volunteered, 
       event_expected_adults: event_expected_adults, 
       event_expected_children: event_expected_children, 
- 
       jen_story: jen_story, 
     
-
      })
      .then(() => {
        res.redirect('/eventMaintenance'); // Redirect to the list of events after saving -> FIX THIS ROUTE, IT WILL BE WRONG
@@ -720,9 +706,7 @@ app.post('/updateEvents/:id', async (req, res) => {
  });
 
 
-
-
-  // POST ROUTE FOR DELETING Past Events
+// POST ROUTE FOR DELETING Past Events
 app.post('/deleteEvents/:id', (req, res) => {
   const id = req.params.id;
   knex('events')
@@ -739,7 +723,7 @@ app.post('/deleteEvents/:id', (req, res) => {
   });
 
 
-    // POST ROUTE FOR DELETING Upcoming Events
+// POST ROUTE FOR DELETING Upcoming Events
 app.post('/deleteUpcomingEvents/:id', (req, res) => {
   const id = req.params.id;
   knex('events')
@@ -770,6 +754,7 @@ app.get('/volunteerMaintenance', (req, res) => {
   })
 });
 
+// Get route for the edit volunteer page
 app.get('/editVolunteer/:id', (req, res) => {
 
     // Check if they are logged in
@@ -801,6 +786,7 @@ app.get('/editVolunteer/:id', (req, res) => {
   });
 
 
+// Post route to edit admin in database
 app.post('/updateAdmin/:id', (req, res) => {
   const id = req.params.id; // this is how you pull out the parameter TO SEE WHAT admin YOU ARE DEALING WITH
 
@@ -857,6 +843,7 @@ app.post('/updateAdmin/:id', (req, res) => {
     });
     });
 
+  //Post route to update volunteer records in database 
 
   app.post('/updateVolunteer/:id', (req, res) => {
     const id = req.params.id; // this is how you pull out the parameter TO SEE WHAT volunteer YOU ARE DEALING WITH
