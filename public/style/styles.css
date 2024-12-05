@@ -20,11 +20,11 @@ body {
 /* Container for centering content */
 .container {
    max-width: 1200px;
-   margin: 0 auto;
+   margin: 75px auto;
    padding: 20px;
    background: #fff;
    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-   padding-top: 75px;
+   padding-top: 25px;
 }
 
 /* Header styling */
@@ -244,6 +244,12 @@ body {
  }
  
  
+ .centered-div {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+ }
  
  /* For responsiveness, adjust the size on smaller screens */
  @media (max-width: 768px) {
