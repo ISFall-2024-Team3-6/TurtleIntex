@@ -70,8 +70,9 @@
       </div>
     </div>
   </nav>
-</head>
 
+<!-- Headers for the events table -->
+</head>
 
   <h1 style="text-align: center;">Upcoming Events</h1>
   <table>
@@ -101,6 +102,7 @@
         <th>Do you want to hear Jen's story?</th>
       </tr>
     </thead>
+    <!-- Get the upcoming events from the database and put the buttons in for edit and delete -->
     <tbody>
       <% if (upcomingEvents && upcomingEvents.length > 0) { %>
         <% upcomingEvents.forEach(row => { %>
@@ -160,6 +162,7 @@
     </tbody>
   </table>
 
+<!-- Get the past events from the database and make the actions column sticky on the left side so that it doesn't scroll -->
   <h1 style="text-align: center;">Past Events</h1>
   <div style="overflow-x: auto; position: relative; max-width: 86vw; margin: 0 auto; border: 1px solid #ccc;">
     <table id="pastEventsTable" style="border-collapse: collapse; width: 100%; table-layout: auto;">
@@ -194,6 +197,8 @@
           <th>Completed Products</th>
         </tr>
       </thead>
+
+      <!-- Fill the data into the table for the relevant columns -->
       <tbody>
         <% if (pastEvents && pastEvents.length > 0) { %>
           <% pastEvents.forEach(row => { %>

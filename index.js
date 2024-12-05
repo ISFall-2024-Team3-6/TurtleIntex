@@ -351,7 +351,7 @@ app.post('/submit-event-request', (req, res) => {
   const data = {
     event_date,
     event_backup_date,
-    event_backup_date_2: sanitizedBackupDate2, // Optional: handle null
+    event_backup_date_2: sanitizedBackupDate2,
     event_type: event_type.toUpperCase(),
     event_start_time,
     event_expected_duration,
@@ -360,10 +360,10 @@ app.post('/submit-event-request', (req, res) => {
     event_state: event_state.toLowerCase(),
     event_zip,
     event_space_capacity,
-    number_sewers: sanitizedNumberSewers, // Optional: default to 0,
-    machines_volunteered: sanitizedMachinesVolunteered, // Optional: default to 0,
+    number_sewers: sanitizedNumberSewers,
+    machines_volunteered: sanitizedMachinesVolunteered,
     event_expected_adults,
-    event_expected_children: sanitizedExpectedChildren, // Optional: default to 0,
+    event_expected_children: sanitizedExpectedChildren,
     table_types: table_types.toLowerCase(),
     jen_story: jen_story.toLowerCase(),
     contact_first_name: contact_first_name.toLowerCase(),
@@ -373,15 +373,14 @@ app.post('/submit-event-request', (req, res) => {
     contact_preferred_contact: contact_preferred_contact.toLowerCase(),
   };
   
-  // Use Knex.js to insert data into the 'event_requests' table
+  // insert data into the 'event_requests' table
   knex('events')
     .insert(data)
     .then(() => {
       if (req.session.admin) {
         res.redirect('/adminIndex'); // Redirect to the admin index page
       } else {
-      // Redirect to a confirmation page or send a success response
-      res.redirect('/'); // Redirect to a success page
+      res.redirect('/'); // redirect home
       }
     })
     .catch((error) => {
@@ -428,7 +427,7 @@ app.get('/eventMaintenance', (req, res) => {
     res.redirect('/adminLogin');
   }
 
-  const currentDate = new Date();  // This should create a valid Date object
+  const currentDate = new Date();  // create a valid Date object
   
   if (isNaN(currentDate)) {
     console.log('Error: Invalid current date');
