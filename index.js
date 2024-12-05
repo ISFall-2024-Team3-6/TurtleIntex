@@ -352,7 +352,7 @@ app.post('/submit-event-request', (req, res) => {
     event_date,
     event_backup_date,
     event_backup_date_2: sanitizedBackupDate2, // Optional: handle null
-    event_type: event_type.toLowerCase(),
+    event_type: event_type.toUpperCase(),
     event_start_time,
     event_expected_duration,
     event_address: event_address.toLowerCase(),
