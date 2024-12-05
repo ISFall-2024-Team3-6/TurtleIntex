@@ -570,7 +570,7 @@ app.post('/updateEvents/:id', async (req, res) => {
 
   // Update the Events in the database
   try { 
-  knex('events') 
+  await knex('events') 
      .where('eventid', id)
      .update({
 
