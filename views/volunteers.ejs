@@ -2,6 +2,8 @@
 <html>
 <head>
   <title>Volunteer Maintenance</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="/style/styles.css">
   <style>
     table {
       width: 80%;
@@ -28,179 +30,125 @@
   </style>
 </head>
 <body>
-    <h5>This will be the volunteer maintenance page</h5>
-    <h1 style="text-align: center;">Edit Volunteers</h1>
-  <form action="/volunteers/<%= event.id %>" method="POST">
-    
 
-    <!-- I really do not think that an admin should be able to change the name of the volunteer -->
+    <!-- Navigation bar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/adminIndex">Admin Console</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <form action="/logout" method="GET" class="d-inline ms-auto">
+          <button type="submit" class="btn button-color mb-2">Logout</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+<div class="container mt-5 pt-5">
+  <h1 style="text-align: center;">Volunteer Records</h1>
+  <table id="volunteerTable">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>Address</th>
+        <th>Referral Method</th>
+        <th>Monthly Volunteer Hours Available</th>
+        <th>Sewing Level</th>
+        <th>Lead</th>
+        <th>Admin</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% volunteers.forEach(row => { %>
+        <tr>
+          <td><%= row.volunteer_first_name.toUpperCase() %></td>
+          <td><%= row.volunteer_last_name.toUpperCase() %></td>
+          <td><%= row.volunteer_email %></td>
+          <td><%= row.volunteer_phone %></td>
+          <td><%= row.volunteer_address.toUpperCase() %>, <%= row.volunteer_city.toUpperCase()%>, <%= row.volunteer_state.toUpperCase() %> <%= row.volunteer_zip %></td>
+          <td><%= row.volunteer_referral.toUpperCase() %></td>
+          <td><%= row.volunteer_willing_hours %></td>
+          <td><%= row.volunteer_sewing_level.toUpperCase() %></td>
+          <td><%= row.volunteer_lead%></td>
+          <td><%= row.admin%></td>
+          <td>
+            <form action="/editVolunteer/<%= row.volunteerid%>" method="GET" style="display:inline;">
+              <button type="submit">Edit</button>
+            </form>
+            <form action="/deleteVolunteer/<%= row.volunteerid%>" method="POST" style="display: inline;">
+              <button type="submit" onclick="return confirm('Are you sure you want to delete this record?');">Remove</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </div> 
+  </table>
+  <div id="paginationControls" style="text-align: center; margin-top: 10px; margin-bottom: 10px;">
+    <!-- Buttons will be dynamically generated -->
+  </div>
 
-    <!-- Volunteer First Name -->
-    <label for="first_name">What is the volunteer's first name?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="text" id="first_name" name="first_name" value="<%= volunteers.first_name %>" required>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+    const pastEventsTable = document.getElementById('volunteerTable'); // Target the past events table
+    if (!pastEventsTable) {
+      console.error('Past Events table not found!');
+      return;
+    }
 
-    <!-- Volunteer Last Name -->
-    <label for="last_name">What is the volunteer's last name?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="text" id="last_name" name="last_name" value="<%= volunteers.last_name %>" required>
+    const tableBody = pastEventsTable.querySelector('tbody'); // Get the table body
+    const rows = tableBody.querySelectorAll('tr'); // Get all rows in the body
+    const paginationControls = document.getElementById('paginationControls'); // Pagination controls container
 
-    <!-- Volunteer Email -->
-    <label for="volunteer_email">What is your email?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="text" id="volunteer_email" name="volunteer_email" value="<%= volunteers.volunteer_email %>">
-    
+    const rowsPerPage = 10; // Number of rows per page
+    const totalPages = Math.ceil(rows.length / rowsPerPage); // Calculate total pages
+    let currentPage = 1; // Start at the first page
 
-    <!-- Volunteer Phone Number -->
-    <label for="volunteer_phone">What is a good phone number?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="volunteer_phone" name="volunteer_phone" value="<%= volunteers.volunteer_phone %>" required>
+    // Function to display rows for the current page
+    function showPage(page) {
+      currentPage = page;
 
+      const startIndex = (page - 1) * rowsPerPage;
+      const endIndex = startIndex + rowsPerPage;
 
-    <!-- Volunteer Street Address -->
-    <label for="volunteer_street_address">Volunteer Address</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="text" id="volunteer_street_address" name="volunteer_street_address" value="<%= volunteers.volunteer_street_address %>" required>
+      // Show only rows for the current page
+      rows.forEach((row, index) => {
+        row.style.display = index >= startIndex && index < endIndex ? '' : 'none';
+      });
 
-    <!-- Volunteer city -->
-    <label for="volunteer_city">Volunteer City</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="text" id="volunteer_city" name="volunteer_city" value="<%= volunteers.volunteer_city %>" required>
+      // Update pagination controls
+      updatePaginationControls();
+    }
 
-    <!-- Volunteer State -->
-    <label for="volunteer_state">Volunteer State</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="text" id="volunteer_state" name="volunteer_state" value="<%= volunteers.volunteer_state %>" required>
+    // Function to create and update pagination controls
+    function updatePaginationControls() {
+      paginationControls.innerHTML = ''; // Clear existing controls
 
-    <!-- Volunteer Zip Code -->
-    <label for="volunteer_zip">Volunteer Zipcode</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="volunteer_zip" name="volunteer_zip" value="<%= volunteers.volunteer_zip %>" required>
+      for (let i = 1; i <= totalPages; i++) {
+        const button = document.createElement('button');
+        button.textContent = i; // Page number
+        button.style.margin = '0 5px';
+        button.style.padding = '5px 10px';
+        button.style.cursor = 'pointer';
+        button.disabled = i === currentPage; // Disable button for the current page
 
+        // Event listener to switch pages
+        button.addEventListener('click', () => showPage(i));
+        paginationControls.appendChild(button);
+      }
+    }
 
-    <!-- Volunteer Referral Method Dropdown box -> shows the one that has already been selected on the OG form the user filled out -->
-    <label for="volunteer_referral_method">How did you hear about this volunteer opportunity?</label>
-    <select id="volunteer_referral_method" name="volunteer_referral_method" required>
-      <option value="website" <%= events.volunteer_referral_method === 'website' ? 'selected' : '' %>>Website</option>
-      <option value="friend" <%= events.volunteer_referral_method === 'friend' ? 'selected' : '' %>>Friend</option>
-      <option value="social_media" <%= events.volunteer_referral_method === 'social_media' ? 'selected' : '' %>>Social Media</option>
-      <option value="other" <%= events.volunteer_referral_method === 'other' ? 'selected' : '' %>>Other</option>
-      <option value="facebook_ad" <%= events.volunteer_referral_method === 'facebook_ad' ? 'selected' : '' %>>Facebook Ad</option>
-      <option value="newspaper_ad" <%= events.volunteer_referral_method === 'newspaper_ad' ? 'selected' : '' %>>Newspaper Ad</option>
-      <option value="radio_broadcast" <%= events.volunteer_referral_method === 'radio_broadcast' ? 'selected' : '' %>>Radio Broadcast</option>
-      <option value="community_bulletin" <%= events.volunteer_referral_method === 'community_bulletin' ? 'selected' : '' %>>Community Bulletin</option>
-      <option value="word_of_mouth" <%= events.volunteer_referral_method === 'word_of_mouth' ? 'selected' : '' %>>Word of Mouth</option>
-    </select>
-
-
-    <!-- Volunteer Availability -> Volunteer can select multiple options for days when they are availble (Mon-Sat) -->
-    <label>Volunteer Availability: (can select multiple options)</label><br>
-    <input type="checkbox" id="monday" name="volunteer_availability" value="Monday" <%= events.volunteer_availability.includes('Monday') ? 'checked' : '' %>>
-    <label for="monday">Monday</label><br>
-
-    <input type="checkbox" id="tuesday" name="volunteer_availability" value="Tuesday" <%= events.volunteer_availability.includes('Tuesday') ? 'checked' : '' %>>
-    <label for="tuesday">Tuesday</label><br>
-
-    <input type="checkbox" id="wednesday" name="volunteer_availability" value="Wednesday" <%= events.volunteer_availability.includes('Wednesday') ? 'checked' : '' %>>
-    <label for="wednesday">Wednesday</label><br>
-
-    <input type="checkbox" id="thursday" name="volunteer_availability" value="Thursday" <%= events.volunteer_availability.includes('Thursday') ? 'checked' : '' %>>
-    <label for="thursday">Thursday</label><br>
-
-    <input type="checkbox" id="friday" name="volunteer_availability" value="Friday" <%= events.volunteer_availability.includes('Friday') ? 'checked' : '' %>>
-    <label for="friday">Friday</label><br>
-
-    <input type="checkbox" id="saturday" name="volunteer_availability" value="Saturday" <%= events.volunteer_availability.includes('Saturday') ? 'checked' : '' %>>
-    <label for="saturday">Saturday</label><br>
-
-
-
-
-
-
-    <!-- Number of Hours Willing to Volunteer Per Month -->
-    <label for="volunteer_hours_willing ">How many hours are your willing to volunteer per month?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="volunteer_hours_willing" name="volunteer_hours_willing" value="<%= volunteers.volunteer_hours_willing %>" required>
-
-    <!-- Sewing Level (Radio Buttons) -->
-    <label>Sewing Level</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <label>
-      <input type="radio" name="volunteer_sewing_level " value="S" <%= volunteers.volunteer_sewing_level === 'B' ? 'checked' : '' %>> Beginner
-    </label>
-    <label>
-      <input type="radio" name="volunteer_sewing_level" value="I" <%= volunteers.volunteer_sewing_level === 'I' ? 'checked' : '' %>> Intermediate
-    </label>
-    <label>
-      <input type="radio" name="volunteer_sewing_level" value="E" <%= volunteers.volunteer_sewing_level === 'E' ? 'checked' : '' %>> Experienced
-    </label>
-
-
-   
-
-    <!-- Perferred Contact Method (Radio Buttons) -->
-    <label>What is your perferred contact method? </label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <label>
-      <input type="radio" name="preferred_contact" value="P" <%= volunteers.preferred_contact === 'P' ? 'checked' : '' %>> Phone
-    </label>
-    <label>
-      <input type="radio" name="preferred_contact" value="E" <%= volunteers.preferred_contact === 'E' ? 'checked' : '' %>> Email
-    </label>
-    <label>
-      <input type="radio" name="preferred_contact" value="B" <%= volunteers.preferred_contact === 'B' ? 'checked' : '' %>> Both
-    </label>
-
-
-    
-
-
-
-
-
-    <!-- LEFTOVERS BELOW -> USE THE TABLE TO FIGURE OUT WHAT YOU WANT YOUR ADMIN TO BE ABLE TO EDIT   -->
-
-    
-    
-
-    
-    
-    
-    <!-- DO WE NEED A DROP DOWN OPTION??? YES FOR VOLUNTEER REFERAL METHOD, BUT WE MAY NOT NEED IT IN THIS FORMAT-> I WILL KEEP THIS ON THE PAGE JUST IN CASE -->
-
-    <!-- I DO NOT THINK SO, I WOULD ONLY THINK THAT THE "HOW YOU HEARD ABOUT US" COULD GO HERE, BUT I REALLY
-     DON'T SEE A NEED FOR AN ADMIN TO BE ABLE TO CHANGE THIS INFO SO I AM NOT GOING TO INCLUDE IT -->
-
-    
-     
-    <!-- Pokémon Type -->
-    <!-- <label for="poke_type_id">Pokémon Type</label> -->
-    
-    <!-- MAKES A DROP DOWN LIST WITH OPTIONS with THE <Select> html tag -->
-    <!-- for an option, you provide a value and descrition -->
-
-    <!-- <select id="poke_type_id" name="poke_type_id"> -->
-      <!-- <% poke_types.forEach(type => { %>  -->
-        <!-- for every record in the array called poke_types, pass it to the variable called type one at a time - WE MADE THIS ARRAY IN OUR SECOND KNEX STATEMENT FOR EDIT IN THE INDEX.JS FILE-->
-        
-	<!-- <option value="<%= type.id %>" <%= pokemon.poke_type_id === type.id ? 'selected' : '' %>> -->
-            <!-- make an option (one of the many options ), the value is the id from the type; if the type is the current type, then just have this already selected and chosen -->
-            <!-- if your current poke_type_id has the same id, then highlight that record (ie SELECTED) -->
-            <!--  -->
-            <!-- <%= type.description %> -->
-            <!-- now you display the description -->
-        <!-- </option> -->
-      <!-- <% }) %> -->
-    <!-- </select> -->
-    
-    
-
-
-
-
-
-    <!-- This allows you to delete volunteers -->
-    <form action="/deleteVolunteer/<%= row.id %>" method="POST" style="display:inline;">
-      <button type="submit" onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
-    </form>
-
-
-
-
-    <!-- Submit Button always goes at the end of a form!!-->
-    <button type="submit">Save Changes</button>
-
-
-  </form>
+    // Initialize pagination
+    if (rows.length > 0) {
+      showPage(1); // Show the first page by default
+    } else {
+      paginationControls.textContent = 'No rows to display.'; // Handle empty tables
+    }
+  });
+    </script>
+  
 </body>
 </html>

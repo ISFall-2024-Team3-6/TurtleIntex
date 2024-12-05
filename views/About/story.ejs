@@ -1,33 +1,268 @@
+<!-- This is the story page for the Turtle Shelter Project, made by Porter Graham of Team 3-6 for BYU IS INTEX 2024 -->
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Jen's Story</title>
+  <title>Our Story</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="/style/styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    table {
-      width: 80%;
-      margin: 20px auto;
-      border-collapse: collapse;
-      font-size: 10px; /* Reduce the font size of the table */
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 5px; /* Reduce the padding to decrease row height */
-      text-align: center;
-      line-height: 1.2; /* Adjust line height for smaller rows */
-    }
-    th {
-      background-color: #F2F2F2;
-      font-weight: bold;
-    }
-    button {
-      padding: 4px 8px; /* Adjust button size */
-      margin: 2px;
-      font-size: 12px; /* Adjust button font size */
-      cursor: pointer;
-    }
+     /* Chat Icon */
+     .chat-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 36px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 50%;
+            padding: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        .chat-icon:hover {
+            background-color: #45a049;
+        }
+
+        /* Chat Box */
+        .chat-box {
+            position: fixed;
+            bottom: 70px;
+            right: 20px;
+            width: 300px;
+            max-width: 80%;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            display: none;
+            z-index: 999;
+        }
+
+        #chatContent {
+            height: 250px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+
+        #chatForm {
+            display: flex;
+            gap: 10px;
+        }
+
+        #userInput {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .button-chat {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .chat-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Message bubble */
+        .user-message, .bot-message {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+
+        .user-message {
+            background-color: #DCF8C6;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+
+        .bot-message {
+            background-color: #f1f1f1;
+            align-self: flex-start;
+            margin-right: auto;
+        }
   </style>
 </head>
 <body>
-    <h5>This will be the jen's story page</h5>
+
+  <!-- Chatbot Icon -->
+    <!-- Chatbot Icon -->
+    <!-- <div id="chatIcon" class="chat-icon">🐢</div> -->
+    <div id="chatIcon" class="chat-icon">?</div>
+    
+    <!-- Hidden Chat Box -->
+    <div id="chatBox" class="chat-box">
+        <div id="chatContent"></div>
+        <form id="chatForm" action="/chat" method="POST">
+            <input type="text" id="userInput" name="question" placeholder="Ask a question" required>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+<!-- Navigation bar -->
+ <!-- Our Navigation Bar allows users to navigate from this page back to the Home page, or to any other page on the website -->
+ <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <div class="container-fluid">
+    <img src="/assets/logo.png" alt="Turtle Shelter Project Logo" style="width: 100px; height: auto;">
+    <a class="navbar-brand" href="#">Turtle Shelter Project</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+      <!-- This is the beginning of the "list" of items in our navigation bar -->
+      <ul class="navbar-nav">
+
+        <!-- This is the button to go back to the home page -->
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+
+        <!-- This is the button to go to the Sponsors page -->
+        <li class="nav-item">
+          <a class="nav-link" href="/sponsors/">Sponsors</a>
+        </li>
+
+        <!-- This button leads to the web page's info page -->
+        <li class="nav-item">
+          <a class="nav-link" href="/About/story">Our Story</a>
+        </li>
+
+        <!-- This is a dropdown with links to the Our Tech and FAQ pages -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            More Info
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="/About/ourTech">Our Tech</a></li>
+            <li><a class="dropdown-item" href="/About/faq">FAQs</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- This last form is a link to the donation page, which is our call to action to every user that visits
+       the page -->
+      <form action="/donation" method="GET" class="d-inline ms-auto">
+        <button type="submit" class="btn btn-success btn-lg">Donate Now</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<!-- Most of the content below was taken straight from Turtle Shelter Project's original website. We feel it would be
+ wrong to alter the story from the way Jen would put it. -->
+ <div class="container">
+    <h1>How the Turtle Shelter Project Came to Be</h1>
+    <img src="/assets/jen.png">
+    <h5>Jen's Story</h5>
+    <p>Jen, the founder of the Turtle Shelter Project, had this to say about the start of the Project:<br>
+      My addiction led me to being homeless on several occasions throughout my life, and during that time I 
+      personally knew seven people who froze to death. When I first learned about this lifesaving technology, 
+      my mind flooded with ideas on how many people's lives this could save. I'd recently been homeless during 
+      an extreme winter. It had been one of the coldest winters Utah had suffered in a long time, so the misery 
+      of surviving the bitter cold was still very fresh in my mind.<br>
+
+      While I was homeless I remember feeling the chill all the way to my bones. I couldn't even think or function. 
+      It completely zapped me of my energy so much that I was losing my will to live. Everything felt beyond 
+      overwhelming. Simple tasks, like finding a bathroom, seemed to feel like huge obstacles. The crazy thing 
+      about it was: I had a car I was living in; I had a storage unit I could hang out in during the day and at 
+      night; and I had an income that was sufficient for my needs. But being homeless completely broke me - 
+      even with all of the resources I had available to me.<br>
+
+      I began thinking that if homelessness crushed me, even with all that I had, then what would it do to someone 
+      who had much less, or even nothing?  I wanted to do something to help people with this burden. When I learned 
+      about foam clothing, I knew without a doubt that God was telling me -"THIS IS HOW YOU CAN HELP!"<br>
+      
+      After a lot of prayer and asking God to put the right people in my path, I started talking to everyone 
+      about my desire to make foam clothing for the homeless. Eventually I told the right person and that is 
+      how I met Marian Edmonds-Allen. At the time Marian, an ordained minister, was the executive director for 
+      the Utah Pride Center. Prior to that she had served as the Executive Director of OUTreach Resource Centers 
+      and in 2015 was named a Petra Fellow for her work with LGBTQ homeless youth.<br>
+      
+      Marian was particularly interested in my idea for getting foam clothing into the hands of the homeless 
+      and arranged a meeting to hear more. But it was still just an idea.  The truth is I had no idea how to 
+      make the project happen, and at the time I had only been clean and sober for 7 months.  Things were put 
+      on hold for a while because Marian took a new job at Parity in New York and resigned from the Pride Center.  
+      I had been in drug rehab, but I needed to finish getting clean, sober, and stable.  My recovery sponsor
+      kept telling me that this was God's project, not mine, and I needed to let go and let God make this happen 
+      in HIS time.<br>
+      
+      After about 2 years, in January 2017, God led me to Angela Roth.  Angela is someone who not only knows 
+      how to create a pattern but can sew like a rock star! Coincidentally, when I met her she had been praying 
+      for an opportunity to use her sewing and patterning talents to do something truly meaningful for people 
+      with a genuine need.  We teamed up and started the Turtle Shelter Project!<br>
+      
+      We decided to make vests because we thought a simple vest would be able to keep a person's core warm.  
+      If your core is warm, the rest of you stays warm longer.  We came up with a vest pattern that would be 
+      fairly easy for volunteers to make and keep production cost down.  After purchasing materials for 50 vests, 
+      we had only spent $30 for each one. The goal was to use labor donated by volunteers. This would give people 
+      the opportunity to serve in any capacity, whether it be time or money, and to truly do something meaningful 
+      that can help save lives.<br>
+      
+      Between September 2017 and January of 2018, with the help of many volunteers, we produced 50 TSP vests.  
+      We handed some out to people experiencing homelessness to do some field testing for us and let us know how 
+      they worked.  The response has been excellent!  As a result of their feedback, we have made improvements 
+      to the vests.  We have added hoods, pockets, and a sturdy belt to help them fit better. We have also used 
+      some of the vests to do field testing by ourselves and friends and family who were willing. The results 
+      have been very encouraging!<br>
+      
+      We want these vests to go to people living outdoors or who don't have access to shelters, because they are 
+      the ones who need this technology the most.  The vests are called "Turtle Shelters" because they are a portable 
+      shelter - just like a turtle taking its shelter with it.  Wearing a Turtle Shelter Vest makes having a source 
+      of heat a nicety, but not a necessity because the foam insulation in the vest will harness the body's heat and 
+      conserve it.  The vests are very well made to provide durability, wind resistance, insulation, and comfort.  
+      They are a very effective way to help provide life-saving warmth.</p>
+
+
+      <h1>Learn more about the issue of Homelessness in the United States</h1>
+      <br>
+      <div class='tableauPlaceholder' id='viz1733341403360' style='position: relative'><noscript><a href='#'><img alt='Dashboard 1 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;HJ&#47;HJPBT8KFB&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='path' value='shared&#47;HJPBT8KFB' /> <param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;HJ&#47;HJPBT8KFB&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1733341403360');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else { vizElement.style.width='100%';vizElement.style.height='977px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+      <span style="text-align: center;"> <a href='/donation/'>Learn How You Can Help</a></span> 
+
+      </div>
+
+<!-- Footer with links to the Contct Us page, the Admin login, and a link to our Facebook --> 
+<footer class="bg-dark-gray text-center text-lg-start mt-5 py-3">
+  <div class="row justify-content-center">
+
+    <!-- Link to the Contact Us Page -->
+    <div class="col-auto">
+      <form action="/About/contact" method="GET" class="d-inline">
+        <button type="submit" class="btn button-color mb-2">Contact Us</button>
+      </form>
+    </div>
+
+    <!-- Facebook Icon//Link -->
+    <div class="col-auto">
+      <a href="https://www.facebook.com/turtleshelterproject" target="_blank" class="text-decoration-none" >
+        <i class="fab fa-facebook fa-2x "></i>
+      </a>
+    </div>
+
+    <!-- Link to the Admin Login -->
+    <div class="col-auto">
+      <form action="/adminLogin" method="GET" class="d-inline">
+        <button type="submit" class="btn button-color mb-2">Login as Admin</button>
+      </form>
+    </div>
+  </div>
+  <div class="text-center mt-3">
+  <p class="mt-3 mb-0 text-white small">Turtle Shelter Project est. 2017</p>
+</div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="/chat.js"></script> <!-- Correct path to chat.js -->
 </body>
 </html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin User Maintenance</title>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+   <link rel="stylesheet" href="/style/styles.css">
+  <style>
+    table {
+      width: 80%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      font-size: 10px; /* Reduce the font size of the table */
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 5px; /* Reduce the padding to decrease row height */
+      text-align: center;
+      line-height: 1.2; /* Adjust line height for smaller rows */
+    }
+    th {
+      background-color: #F2F2F2;
+      font-weight: bold;
+    }
+    button {
+      padding: 4px 8px; /* Adjust button size */
+      margin: 2px;
+      font-size: 12px; /* Adjust button font size */
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- Nav Bar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/adminIndex">Admin Console</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <ul class="navbar-nav">
+       </ul>
+        <form action="/logout" method="GET" class="d-inline ms-auto">
+          <button type="submit" class="btn button-color mb-2">Logout</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+
+ <div class="container mt-5 pt-5">
+    <h1>Edit Admin Account</h1>
+    <form action="/updateAdmin/<%=volunteer.volunteerid%>" method="post">
+
+       <!-- Volunteer First Name -->
+       <div class="mb-3 row">
+          <label for="first_name" class="col-sm-2 col-form-label">First Name</label>
+          <div class="col-sm-10">
+             <input type="text" id="first_name" name="first_name" class="form-control" value="<%= volunteer.volunteer_first_name %>" required oninput="this.value = this.value.toLowerCase()">
+          </div>
+       </div>
+
+       <!-- Volunteer Last Name -->
+       <div class="mb-3 row">
+          <label for="last_name" class="col-sm-2 col-form-label">Last Name</label>
+          <div class="col-sm-10">
+             <input type="text" id="last_name" name="last_name" class="form-control" value="<%= volunteer.volunteer_last_name %>" required oninput="this.value = this.value.toLowerCase()">
+          </div>
+       </div>
+
+       <!-- Volunteer Email -->
+       <div class="mb-3 row">
+          <label for="volunteer_email" class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-10">
+             <input type="email" id="volunteer_email" name="volunteer_email" class="form-control" value="<%= volunteer.volunteer_email %>" oninput="this.value = this.value.toLowerCase()">
+          </div>
+       </div>
+
+       <!-- Volunteer Phone Number -->
+       <div class="mb-3 row">
+          <label for="volunteer_phone" class="col-sm-2 col-form-label">Phone Number</label>
+          <div class="col-sm-10">
+             <input type="tel" id="volunteer_phone" name="volunteer_phone" class="form-control" value="<%= volunteer.volunteer_phone %>" required oninput="this.value = this.value.toLowerCase()">
+          </div>
+       </div>
+
+       <!-- Volunteer Street Address -->
+       <div class="mb-3 row">
+          <label for="volunteer_address" class="col-sm-2 col-form-label">Address</label>
+          <div class="col-sm-10">
+             <input type="text" id="volunteer_address" name="volunteer_address" class="form-control" value="<%= volunteer.volunteer_address %>" required oninput="this.value = this.value.toLowerCase()">
+          </div>
+       </div>
+
+       <!-- Volunteer City -->
+       <div class="mb-3 row">
+          <label for="volunteer_city" class="col-sm-2 col-form-label">City</label>
+          <div class="col-sm-10">
+             <input type="text" id="volunteer_city" name="volunteer_city" class="form-control" value="<%= volunteer.volunteer_city %>" required oninput="this.value = this.value.toLowerCase()">
+          </div>
+       </div>
+
+       <!-- Volunteer State -->
+       <div class="mb-3 row">
+          <label for="volunteer_state" class="col-sm-2 col-form-label">State</label>
+          <div class="col-sm-10">
+             <input type="text" id="volunteer_state" name="volunteer_state" class="form-control" value="<%= volunteer.volunteer_state %>" required oninput="this.value = this.value.toLowerCase()">
+          </div>
+       </div>
+
+       <!-- Volunteer Zip Code -->
+       <div class="mb-3 row">
+          <label for="volunteer_zip" class="col-sm-2 col-form-label">Zip Code</label>
+          <div class="col-sm-10">
+             <input type="number" id="volunteer_zip" name="volunteer_zip" class="form-control" value="<%= volunteer.volunteer_zip %>" required>
+          </div>
+       </div>
+
+       <!-- Volunteer Referral Method Dropdown box -> shows the one that has already been selected on the OG form the user filled out -->
+       <div class="mb-3">
+          <label for="volunteer_referral" class="form-label">How did this volunteer hear about this opportunity?</label>
+          <select id="volunteer_referral" name="volunteer_referral" class="form-select" required>
+             <option value="online" <%= volunteer.volunteer_referral === 'online' ? 'selected' : '' %>>Online</option>
+             <option value="word_of_mouth" <%= volunteer.volunteer_referral === 'word_of_mouth' ? 'selected' : '' %>>Word of Mouth</option>
+             <option value="other" <%= volunteer.volunteer_referral === 'other' ? 'selected' : '' %>>Other</option>
+          </select>
+       </div>
+
+       <!-- Number of Hours Willing to Volunteer Per Month -->
+       <div class="mb-3">
+          <label for="volunteer_willing_hours" class="form-label">How many hours are they willing to volunteer per month?</label>
+          <input type="number" id="volunteer_willing_hours" name="volunteer_willing_hours" class="form-control" value="<%= volunteer.volunteer_willing_hours %>" required>
+       </div>
+
+       <!-- Sewing Level (Radio Buttons) -->
+       <div class="mb-3">
+          <label class="form-label">Sewing Level</label>
+          <div class="form-check">
+             <input type="radio" id="sewing_level_beginner" name="volunteer_sewing_level" class="form-check-input" value="beginner" <%= volunteer.volunteer_sewing_level === 'beginner' ? 'checked' : '' %>>
+             <label for="sewing_level_beginner" class="form-check-label">Beginner</label>
+          </div>
+          <div class="form-check">
+             <input type="radio" id="sewing_level_intermediate" name="volunteer_sewing_level" class="form-check-input" value="intermediate" <%= volunteer.volunteer_sewing_level === 'intermediate' ? 'checked' : '' %>>
+             <label for="sewing_level_intermediate" class="form-check-label">Intermediate</label>
+          </div>
+          <div class="form-check">
+             <input type="radio" id="sewing_level_advanced" name="volunteer_sewing_level" class="form-check-input" value="advanced" <%= volunteer.volunteer_sewing_level === 'advanced' ? 'checked' : '' %>>
+             <label for="sewing_level_advanced" class="form-check-label">Advanced</label>
+          </div>
+       </div>
+
+       <!-- Preferred Contact Method (Radio Buttons) -->
+       <div class="mb-3">
+          <label class="form-label">What is their preferred contact method?</label>
+          <div class="form-check">
+             <input type="radio" id="preferred_contact_phone" name="volunteer_preferred_contact" class="form-check-input" value="phone" <%= volunteer.volunteer_preferred_contact === 'phone' ? 'checked' : '' %>>
+             <label for="preferred_contact_phone" class="form-check-label">Phone</label>
+          </div>
+          <div class="form-check">
+             <input type="radio" id="preferred_contact_email" name="volunteer_preferred_contact" class="form-check-input" value="email" <%= volunteer.volunteer_preferred_contact === 'email' ? 'checked' : '' %>>
+             <label for="preferred_contact_email" class="form-check-label">Email</label>
+          </div>
+       </div>
+
+       <!-- TRUE/FALSE -> values for whether a volunteer is an admin or a volunteer team lead -->
+       <div class="mb-3 form-check">
+          <input type="checkbox" id="team_lead" name="volunteer_lead" class="form-check-input" value="true" <%= volunteer.volunteer_lead ? 'checked' : '' %>>
+          <label for="team_lead" class="form-check-label">Team Lead</label>
+       </div>
+
+       <!-- Conditionally Rendered Section -->
+       <div id="admin-section">
+          <div class="mb-3">
+             <label for="username" class="form-label">Admin Username</label>
+             <input type="text" id="username" name="username" class="form-control" value="<%= volunteer.username %>">
+          </div>
+          <div class="mb-3">
+             <label for="password" class="form-label">Admin Password</label>
+             <input type="text" id="password" name="password" class="form-control" value="<%=volunteer.password%>">
+          </div>
+       </div>
+
+       <!-- Submit Button -->
+       <div class="mb-3 row">
+          <div class="col-sm-10 offset-sm-2">
+             <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+       </div>
+    </form>
+ </div>
+</body>
+</html>

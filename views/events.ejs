@@ -1,19 +1,43 @@
 <!DOCTYPE html>
 <html>
+  <%
+  // Define the function at the top of your EJS file
+  function capitalize(str) {
+    if (!str) return '';
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  }
+%>
 <head>
-  <title>Events Maintenance</title>
+  <title>Events</title> 
+ 
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="/style/styles.css">
+ 
   <style>
+    /* Style the sticky column */
+    .sticky-column {
+      position: sticky;
+      left: 0;
+      background: #f4f4f4; /* Optional: background color */
+      z-index: 2; /* Ensure it appears above the scrolling content */
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional: shadow for better visibility */
+    }
     table {
       width: 80%;
       margin: 20px auto;
       border-collapse: collapse;
       font-size: 10px; /* Reduce the font size of the table */
     }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 5px; /* Reduce the padding to decrease row height */
-      text-align: center;
-      line-height: 1.2; /* Adjust line height for smaller rows */
+
+    /* Sticky column styles */
+    th, td:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 1;
+      background: #f4f4f4; /* Match the table's header background */
+    }
+    thead th {
+      z-index: 2; /* Ensure header stays above other cells */
     }
     th {
       background-color: #F2F2F2;
@@ -25,148 +49,266 @@
       font-size: 12px; /* Adjust button font size */
       cursor: pointer;
     }
+    tbody tr:nth-child(even) {
+      background: #f9f9f9;
+    }
   </style>
+  
+
 </head>
 <body>
-    <h5>This will be the Events Maintenance page</h5>
-    <!-- first thing you HAVE IS A FORM, SO MAKE SURE TO HAVE YOUR INPUTS NAMED -->
-  <h1 style="text-align: center;">Edit Events</h1>
-  <form action="/events/<%= event.id %>" method="POST">
-    <!-- calling a route to edit, has a parameter called id -->
-    <!-- you can now pass the record Number through, so you pass it back as a PARAMETER -->
-    <!-- so you can find the record and update it now -->
-    
-
-    <!-- Event Name -->
-    <label for="event_name">Event Name</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="text" id="event_name" name="event_name" value="<%= events.event_name %>">
-
-
-    <!-- Event Description (Radio Buttons) -->
-    <label>Event Description</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <label>
-      <input type="radio" name="description" value="S" <%= events.description === 'M' ? 'checked' : '' %>> Sewing
-    </label>
-    <label>
-      <input type="radio" name="description" value="NS" <%= events.description === 'F' ? 'checked' : '' %>> Non-Sewing
-    </label>
-    <label>
-      <input type="radio" name="description" value="B" <%= events.description === 'U' ? 'checked' : '' %>> Both
-    </label>
+  <!-- Navigation bar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/adminIndex">Admin Console</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <form action="/logout" method="GET" class="d-inline ms-auto">
+          <button type="submit" class="btn button-color mb-2">Logout</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+</head>
 
 
-    <!-- Date of the Event -->
-    <label for="event_date">Event Date</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="date" id="event_date" name="event_date" value="<%= events.event_date.toISOString().split('T')[0] %>" required>
+  <h1 style="text-align: center;">Upcoming Events</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Actions</th>
+        <th>Contact First Name</th>
+        <th>Contact Last Name</th>
+        <th>Contact Phone</th>
+        <th>Contact Email</th>
+        <th>Contact Preferred</th>
+        <th>Event Type</th>
+        <th>Event Date</th>
+        <th>Event Backup Date</th>
+        <th>Event Backup Date 2</th>
+        <th>Event Start Time</th>
+        <th>Event Expected Duration</th>
+        <th>Event Address</th>
+        <th>Event City</th>
+        <th>Event State</th>
+        <th>Event Zipcode</th>
+        <th>Event Space Capacity</th>
+        <th>Table Type</th>
+        <th>Number of Sewers</th>
+        <th>Expected Adults</th>
+        <th>Expected Children</th>
+        <th>Do you want to hear Jen's story?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (upcomingEvents && upcomingEvents.length > 0) { %>
+        <% upcomingEvents.forEach(row => { %>
+          <tr>
+            <td>
+              <form action="/editUpcomingEvents/<%= row.eventid%>" method="GET" style="display:inline;">
+                <button type="submit">Edit</button>
+              </form>
+              <form action="/deleteUpcomingEvents/<%= row.eventid%>" method="POST" style="display: inline;">
+                <button type="submit" onclick="return confirm('Are you sure you want to delete this record?');">Remove</button>
+              </form>
+            </td>
+            <td><%= capitalize(row.contact_first_name) %></td>
+            <td><%= capitalize(row.contact_last_name) %></td>
+            <td><%= row.contact_phone %></td>
+            <td><%= row.contact_email %></td>
+            <td><%= capitalize(row.contact_preferred_contact) %></td>
+            <td>
+              <%= row.event_type === 'NS' ? 'Non-sewing' : row.event_type === 'S' ? 'Sewing' : row.event_type === 'B' ? 'Both' : '' %>
+            </td>
+            
+            <!-- <td><%= row.event_date ? row.event_date.toISOString().split('T')[0] : '' %></td> -->
+
+            <td>
+              <% if (row.event_date) { 
+                let date = new Date(row.event_date);
+                let formattedDate = `${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}-${date.getFullYear()}`;
+                %>
+                <%= formattedDate %>
+              <% } else { %>
+                <%= '' %>
+              <% } %>
+            </td>
 
 
-    <!-- BackUp Date 1 of the Event -->
-    <label for="back_up_date_1">Backup 1 Event Date</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="date" id="back_up_date_1" name="back_up_date_1" value="<%= events.back_up_date_1.toISOString().split('T')[0] %>">
+            <td><%= row.event_backup_date ? row.event_backup_date.toISOString().split('T')[0] : '' %></td>
+            <td><%= row.event_backup_date_2 ? row.event_backup_date_2.toISOString().split('T')[0] : '' %></td>
+            <td><%= row.event_start_time %></td>
+            <td><%= row.event_expected_duration %></td>
+            <td><%= row.event_address %></td>
+            <td><%= capitalize(row.event_city) %></td>
+            <td><%= capitalize(row.event_state) %></td>
+            <td><%= row.event_zip %></td>
+            <td><%= row.event_space_capacity %></td>
+            <td><%= capitalize(row.table_types) %></td>
+            <td><%= row.number_sewers %></td>
+            <td><%= row.event_expected_adults %></td>
+            <td><%= row.event_expected_children %></td>
+            <td><%= row.jen_story ? "Yes" : "No" %></td>
 
+          </tr>
+          <% }) %>
+          <% } else { %>
+            <tr><td colspan="36">No upcoming events found</td></tr>
+          <% } %>
+        </tr>
+    </tbody>
+  </table>
 
-    <!-- BackUp Date 2 of the Event -->
-    <label for="back_up_date_2">Backup 2 Event Date</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="date" id="back_up_date_2" name="back_up_date_2" value="<%= events.back_up_date_2.toISOString().split('T')[0] %>">
-    
-
-    <!-- Event Start Time -->
-    <label for="event_start_time">Select a start time for the event:</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="time" id="event_start_time" name="event_start_time" min="08:00" max="19:00">
-
-
-    <!-- Event Duration Projected -->
-    <label for="event_duration_projected">How long will this event last?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="event_duration_projected" name="event_duration_projected" value="<%= events.event_duration_projected %>" required>
-
-
-    <!-- Event Duration Actual -->
-    <label for="event_duration_actual">How long did this event last?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="event_duration_actual" name="event_duration_actual" value="<%= events.event_duration_actual || events.event_duration_projected %>" required>
-    <!-- It will use the event_duration_actual value if it exists; otherwise, it will default to the event_duration_projected value. -->
-
-
-    <!-- Event Address -->
-    <label for="event_address">Event Address</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="text" id="event_address" name="event_address" value="<%= events.event_address %>" required>
-
-
-    <!-- Expected Number of Attendees --> 
-    <label for="event_num_participants_projected">Number of Expected Participants</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="event_num_participants_projected" name="event_num_participants_projected" value="<%= events.event_num_participants_projected %>" required>
-
-
-    <!-- Actual Number of Attendees -->
-    <label for="event_num_participants_actual">Number of Actual Participants</label>
-    <input type="number" id="event_num_participants_actual" name="event_num_participants_actual" value="<%= events.event_num_participants_actual || events.event_num_participants_projected %>" required>
-    <!-- It will use the event_num_participants_actual value if it exists; otherwise, it will default to the event_num_participants_projected value. -->
-
-
-    <!-- Event Contact Name -->
-    <label for="requestee_name">What is a good contact name?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="text" id="requestee_name" name="requestee_name" value="<%= events.requestee_name %>" required>
-
-
-    <!-- Event Contact Phone Number -->
-    <label for="requestee_phone">What is a good phone number?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="requestee_phone" name="requestee_phone" value="<%= events.requestee_phone %>" required>
-
-
-    <!-- Event Contact Email -->
-    <label for="requestee_email">What is a good email?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="text" id="requestee_email" name="requestee_email" value="<%= events.requestee_email %>" required>
-    
-
-    <!-- Jen Shares Story (Checkbox) -->
-    <label for="jen_story"> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-      <input type="checkbox" id="jen_story" name="jen_story" value="true" <%= events.share_story ? 'checked' : '' %>>
-      Check this box if you would like Jen to share her story! 
-    </label>
-
-
-
-
-
-    <!-- SHOULD WE ADD THESE? OR HOW SHOULD WE HANDLE THESE -> THEY ARE NOT ON THE OG EVENT REQUEST FORM -->
-
-    <!-- Pockets Made -->
-    <label for="pockets">How many pockets were made?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="pockets" name="pockets" value="<%= events.pockets %>" required>
-
-    <!-- Collars Made -->
-    <label for="collars">How many collars were made?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="collars" name="collars" value="<%= events.collars %>" required>
-
-    <!-- Envenlopes Made -->
-    <label for="envenlopes">How many envenlopes were made?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="envenlopes" name="envenlopes" value="<%= events.envenlopes %>" required>
-
-    <!-- Vests Made -->
-    <label for="vests">How many vests were made?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="vests" name="vests" value="<%= events.vests %>" required>
-
-    <!-- Total products (not completed, just completed individual pieces) -->
-    <label for="event_products_produced">How many total individual pieces were made?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="event_products_produced" name="event_products_produced" value="<%= events.event_products_produced %>" required>
-
-    <!-- Completed Products -->
-    <label for="completed_products">How many completed products were made?</label> <!-- CHANGE THESE NAMES TO WHAT THE COLUMN IS IN THE DATABASE-->
-    <input type="number" id="completed_products" name="completed_products" value="<%= events.completed_products %>" required>
-
-    
-
-
-
-
-    <!-- This allows you to delete events  -->
-    <form action="/deleteEvent/<%= row.id %>" method="POST" style="display:inline;">
-      <button type="submit" onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
-    </form>
-
-    
-    <!-- Submit Button always goes at the end of a form!!-->
-    <button type="submit">Save Changes</button>
+  <h1 style="text-align: center;">Past Events</h1>
+  <div style="overflow-x: auto; position: relative; max-width: 86vw; margin: 0 auto; border: 1px solid #ccc;">
+    <table id="pastEventsTable" style="border-collapse: collapse; width: 100%; table-layout: auto;">
+      <thead>
+        <tr>
+          <th style="position: sticky; left: 0; z-index: 3; background: #f4f4f4;">Actions</th>
+          <th>Contact Email</th>
+          <th>Event Type</th>
+          <th>Event Date</th>
+          <th>Event Start Time</th>
+          <th>Event Actual Duration</th>
+          <th>Event Address</th>
+          <th>Event City</th>
+          <th>Event State</th>
+          <th>Event Zipcode</th>
+          <th>Event Space Capacity</th>
+          <th>Number of Sewers</th>
+          <th>Actual Adults</th>
+          <th>Actual Children</th>
+          <th>Pockets Brought</th>
+          <th>Pockets In Progress</th>
+          <th>Pockets Finished</th>
+          <th>Collars Brought</th>
+          <th>Collars In Progress</th>
+          <th>Collars Finished</th>
+          <th>Envelopes Brought</th>
+          <th>Envelopes In Progress</th>
+          <th>Envelopes Finished</th>
+          <th>Vests Brought</th>
+          <th>Vests In Progress</th>
+          <th>Vests Finished</th>
+          <th>Completed Products</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (pastEvents && pastEvents.length > 0) { %>
+          <% pastEvents.forEach(row => { %>
+            <tr>
+              <td style="position: sticky; left: 0; z-index: 2; background: #f9f9f9;">
+                <form action="/editEvents/<%= row.eventid %>" method="GET" style="display:inline;">
+                  <button type="submit">Edit</button>
+                </form>
+                <form action="/deleteEvents/<%= row.eventid %>" method="POST" style="display:inline;">
+                  <button type="submit" onclick="return confirm('Are you sure you want to delete this record?');">Remove</button>
+                </form>
+              </td>
+              <td><%= row.contact_email %></td>
+              <td>
+                <%= row.event_type === 'NS' ? 'Non-sewing' : row.event_type === 'S' ? 'Sewing' : row.event_type === 'B' ? 'Both' : '' %>
+              </td>
+              <td><%= row.event_date ? row.event_date.toISOString().split('T')[0] : '' %></td>
+              <td><%= row.event_start_time %></td>
+              <td><%= row.event_actual_duration %></td>
+              <td><%= row.event_address %></td>
+              <td><%= capitalize(row.event_city) %></td>
+              <td><%= capitalize(row.event_state) %></td>
+              <td><%= row.event_zip %></td>
+              <td><%= row.event_space_capacity %></td>
+              <td><%= row.number_sewers %></td>
+              <td><%= row.event_actual_adults %></td>
+              <td><%= row.event_actual_children %></td>
+              <td><%= row.pockets_brought %></td>
+              <td><%= row.pockets_in_progress %></td>
+              <td><%= row.pockets_finished %></td>
+              <td><%= row.collars_brought %></td>
+              <td><%= row.collars_in_progress %></td>
+              <td><%= row.collars_finished %></td>
+              <td><%= row.envelopes_brought %></td>
+              <td><%= row.envelopes_in_progress %></td>
+              <td><%= row.envelopes_finished %></td>
+              <td><%= row.vests_brought %></td>
+              <td><%= row.vests_in_progress %></td>
+              <td><%= row.vests_finished %></td>
+              <td><%= row.completed_products %></td>
+            </tr>
+          <% }) %>
+        <% } else { %>
+          <tr>
+            <td colspan="27">No past events found</td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+      <!-- Pagination Controls -->
+    <div id="paginationControls" style="text-align: center; margin-top: 10px; margin-bottom: 10px;">
+        <!-- Buttons will be dynamically generated -->
+    </div>
+  </div>
   
-  </form>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const pastEventsTable = document.getElementById('pastEventsTable'); // Target the past events table
+    if (!pastEventsTable) {
+      console.error('Past Events table not found!');
+      return;
+    }
+
+    const tableBody = pastEventsTable.querySelector('tbody'); // Get the table body
+    const rows = tableBody.querySelectorAll('tr'); // Get all rows in the body
+    const paginationControls = document.getElementById('paginationControls'); // Pagination controls container
+
+    const rowsPerPage = 10; // Number of rows per page
+    const totalPages = Math.ceil(rows.length / rowsPerPage); // Calculate total pages
+    let currentPage = 1; // Start at the first page
+
+    // Function to display rows for the current page
+    function showPage(page) {
+      currentPage = page;
+
+      const startIndex = (page - 1) * rowsPerPage;
+      const endIndex = startIndex + rowsPerPage;
+
+      // Show only rows for the current page
+      rows.forEach((row, index) => {
+        row.style.display = index >= startIndex && index < endIndex ? '' : 'none';
+      });
+
+      // Update pagination controls
+      updatePaginationControls();
+    }
+
+    // Function to create and update pagination controls
+    function updatePaginationControls() {
+      paginationControls.innerHTML = ''; // Clear existing controls
+
+      for (let i = 1; i <= totalPages; i++) {
+        const button = document.createElement('button');
+        button.textContent = i; // Page number
+        button.style.margin = '0 5px';
+        button.style.padding = '5px 10px';
+        button.style.cursor = 'pointer';
+        button.disabled = i === currentPage; // Disable button for the current page
+
+        // Event listener to switch pages
+        button.addEventListener('click', () => showPage(i));
+        paginationControls.appendChild(button);
+      }
+    }
+
+    // Initialize pagination
+    if (rows.length > 0) {
+      showPage(1); // Show the first page by default
+    } else {
+      paginationControls.textContent = 'No rows to display.'; // Handle empty tables
+    }
+  });
+
+  </script>
+
 </body>
 </html>

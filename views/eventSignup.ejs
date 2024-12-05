@@ -1,33 +1,519 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Event Sign Up</title>
-  <style>
-    table {
-      width: 80%;
-      margin: 20px auto;
-      border-collapse: collapse;
-      font-size: 10px; /* Reduce the font size of the table */
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="style/styles.css">
+
+<!-- <style>
+/* General Styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f7f7f7; /* Soft white background */
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  padding-top: 70px; /* Adjust this value to match the navbar height */
+}
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 28px;
+  color: #333333;
+}
+.form-container {
+  max-width: 1200px;
+  background: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  border: 2px solid #cccccc;
+}
+.form-section-container {
+  margin-bottom: 30px;
+  padding: 30px;
+  background-color: #e6e6e6;
+  border-radius: 8px;
+  border: 2px solid #cccccc;
+}
+.form-section-title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 25px;
+  color: #333333;
+}
+.form-section {
+  margin-bottom: 25px;
+}
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+  color: #333333;
+}
+.required-label::after {
+  content: " *";
+  color: #ff4d4d;
+}
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="time"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 12px; /* Slightly larger padding for input fields */
+  margin-bottom: 15px; /* More space under inputs */
+  border: 1px solid #cccccc; /* Light gray border */
+  border-radius: 6px; /* Slightly larger rounding */
+  box-sizing: border-box;
+  font-size: 16px; /* Slightly larger font */
+}
+.radio-group {
+  margin-top: 15px;
+  display: flex;
+  gap: 40px;
+}
+.radio-label {
+  font-size: 16px;
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #333333;
+}
+button {
+  display: block;
+  width: 100%;
+  padding: 18px;
+  background-color: #4574a7d0;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 20px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #666666;
+}
+
+ </style> -->
+
+ <style>
+
+  h5 {
+    text-align: center;
+    font-size: 1.2em;
+    margin-top: 20px;
+  }
+
+
+  .form-section-title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 25px;
+  color: #333333;
+}
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  input[type="text"], input[type="number"], select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+
+  input[type="radio"] {
+    margin-right: 5px;
+  }
+
+  .radio-group {
+    margin-bottom: 15px;
+  }
+
+  /* button {
+    display: block;
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+  } */
+
+  button:hover {
+    background-color: #45a049;
+  }
+
+  @media (max-width: 768px) {
+    form {
+      width: 90%;
     }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 5px; /* Reduce the padding to decrease row height */
-      text-align: center;
-      line-height: 1.2; /* Adjust line height for smaller rows */
-    }
-    th {
-      background-color: #F2F2F2;
-      font-weight: bold;
-    }
-    button {
-      padding: 4px 8px; /* Adjust button size */
-      margin: 2px;
-      font-size: 12px; /* Adjust button font size */
-      cursor: pointer;
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
-    <h5>This will be the event sign up page</h5>
+
+<!-- Navigation bar -->
+ <!-- Our Navigation Bar allows users to navigate from this page back to the Home page, or to any other page on the website -->
+ <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <div class="container-fluid">
+    <img src="/assets/logo.png" alt="Turtle Shelter Project Logo" style="width: 100px; height: auto;">
+    <a class="navbar-brand" href="#">Turtle Shelter Project</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+      <!-- This is the beginning of the "list" of items in our navigation bar -->
+      <ul class="navbar-nav">
+
+        <!-- This is the button to go back to the home page -->
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+
+        <!-- This is the button to go to the Sponsors page -->
+        <li class="nav-item">
+          <a class="nav-link" href="/sponsors/">Sponsors</a>
+        </li>
+
+        <!-- This button leads to the web page's info page -->
+        <li class="nav-item">
+          <a class="nav-link" href="/About/story">Our Story</a>
+        </li>
+
+        <!-- This is a dropdown with links to the Our Tech and FAQ pages -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            More Info
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="/About/ourTech">Our Tech</a></li>
+            <li><a class="dropdown-item" href="/About/faq">FAQs</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item ms-2">
+      <!-- This last form is a link to the donation page, which is our call to action to every user that visits
+       the page -->
+       <form action="/donation" method="GET" class="d-inline">
+        <button type="submit" class="btn btn-success btn-lg">Donate Now</button>
+      </form>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  <div class="container">
+    <h1>Event Request Form</h1>
+    <form action="/submit-event-request" method="POST">
+      <!-- Event Customization Section -->
+      <div class="form-section-container">
+        <div class="form-section-title">Event Customization</div>
+        <div class="form-section">
+          <label for="event_date" class="required-label">Preferred Event Date</label>
+          <input type="text" id="event_date" name="event_date" required>
+        </div>
+        <div class="form-section">
+          <label for="back_up_date" class="required-label">Backup Date 1</label>
+          <input type="text" id="back_up_date" name="back_up_date" required>
+        </div>
+        <div class="form-section">
+          <label for="back_up_date_2">Backup Date 2</label>
+          <input type="text" id="back_up_date_2" name="back_up_date_2">
+        </div>
+        <div class="form-section">
+          <label class="required-label">Event Type</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" id="sewing" name="event_type" value="S" required>
+              Sewing
+            </label>
+            <label class="radio-label">
+              <input type="radio" id="non_sewing" name="event_type" value="NS" required>
+              Non-Sewing
+            </label>
+            <label class="radio-label">
+              <input type="radio" id="both" name="event_type" value="B" required>
+              Both
+            </label>
+          </div>
+        </div>
+        <div class="form-section">
+          <label for="event_start_time" class="required-label">Event Start Time (Between 8:00 AM and 7:00 PM)</label>
+          <select id="event_start_time" name="event_start_time" required>
+            <!-- Options will be dynamically added here -->
+          </select>
+        </div>
+        <div class="form-section">
+          <label for="desired_event_duration" class="required-label">Desired Event Duration (hours)</label>
+          <input type="number" id="desired_event_duration" name="desired_event_duration" min="1" required>
+        </div>
+        <div class="form-section">
+          <label for="table_types" class="required-label">Table Types</label>
+          <select id="table_types" name="table_types" required>
+            <option value="" disabled selected>Select a table type</option>
+            <option value="round">Round</option>
+            <option value="rectangular">Rectangular</option>
+          </select>
+        </div>        
+        <div class="form-section">
+          <label class="required-label">Jen's Story</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" id="jen_story_yes" name="jen_story" value="yes" required>
+              Yes
+            </label>
+            <label class="radio-label">
+              <input type="radio" id="jen_story_no" name="jen_story" value="no" required>
+              No
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-section-container">
+        <div class="form-section-title">Event Details</div>
+        <div class="form-section">
+          <label for="event_address" class="required-label">Event Address</label>
+          <input type="text" id="event_address" name="event_address" required>
+        </div>
+        <div class="form-section">
+          <label for="event_city" class="required-label">City</label>
+          <input type="text" id="event_city" name="event_city" required>
+        </div>
+        <div class="form-section">
+          <label for="event_state" class="required-label">State</label>
+          <input type="text" id="event_state" name="event_state" required>
+        </div>
+        <div class="form-section">
+          <label for="event_zip" class="required-label">ZIP Code</label>
+          <input type="text" id="event_zip" name="event_zip" pattern="[0-9]{5}" title="Five digit ZIP code" required>
+        </div>
+        <div class="form-section">
+          <label for="event_space_capacity" class="required-label">Space Capacity</label>
+          <input type="number" id="event_space_capacity" name="event_space_capacity" min="1" required>
+        </div>
+        <div class="form-section" id="sewing_fields" style="display: none;">
+          <label for="number_sewers" class="required-label">Number of Sewers</label>
+          <input type="number" id="number_sewers" name="number_sewers" min="0">
+        </div>
+        <div class="form-section" id="machines_fields" style="display: none;">
+          <label for="machines_volunteered">Machines Volunteered</label>
+          <input type="number" id="machines_volunteered" name="machines_volunteered" min="0">
+        </div>        
+        <div class="form-section">
+          <label for="event_expected_adults" class="required-label">Expected Number of Adults</label>
+          <input type="number" id="event_expected_adults" name="event_expected_adults" min="0" required>
+        </div>
+        <div class="form-section">
+          <label for="event_expected_children">Expected Number of Children</label>
+          <input type="number" id="event_expected_children" name="event_expected_children" min="0">
+        </div>
+      </div>
+      
+
+      <!-- Contact Info Section -->
+      <div class="form-section-container">
+        <div class="form-section-title">Contact Information</div>
+        <div class="form-section">
+          <label for="requestee_first_name" class="required-label">First Name</label>
+          <input type="text" id="requestee_first_name" name="requestee_first_name" required>
+        </div>
+        <div class="form-section">
+          <label for="requestee_last_name" class="required-label">Last Name</label>
+          <input type="text" id="requestee_last_name" name="requestee_last_name" required>
+        </div>
+        <div class="form-section">
+          <label for="requestee_email" class="required-label">Email</label>
+          <input type="email" id="requestee_email" name="requestee_email" required>
+        </div>
+        <div class="form-section">
+          <label for="requestee_phone" class="required-label">Phone</label>
+          <input 
+            type="tel" 
+            id="requestee_phone" 
+            name="requestee_phone" 
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" 
+            title="Format: 123-456-7890" 
+            required 
+            maxlength="12" 
+          >
+        </div>
+        <div class="form-section">
+          <label class="required-label">Preferred Contact Method</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" id="contact_email" name="preferred_contact_method" value="email" required>
+              Email
+            </label>
+            <label class="radio-label">
+              <input type="radio" id="contact_phone" name="preferred_contact_method" value="phone" required>
+              Phone
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class=“form-section”>
+        <button type=“submit” class="btn btn-success btn-lg"  onclick="return confirm('Your Request is Being Processed!')">Submit Event Request</button>
+      </div>
+    </form>
+  </div>
+
+    <!-- Footer with links to the Contct Us page, the Admin login, and a link to our Facebook --> 
+    <footer class="bg-dark-gray text-center text-lg-start mt-5 py-3">
+      <div class="row justify-content-center">
+    
+        <!-- Link to the Contact Us Page -->
+        <div class="col-auto">
+          <form action="/About/contact" method="GET" class="d-inline">
+            <button type="submit" class="btn button-color mb-2">Contact Us</button>
+          </form>
+        </div>
+    
+        <!-- Facebook Icon//Link -->
+        <div class="col-auto">
+          <a href="https://www.facebook.com/turtleshelterproject" target="_blank" class="text-decoration-none" >
+            <i class="fab fa-facebook fa-2x "></i>
+          </a>
+        </div>
+    
+        <!-- Link to the Admin Login -->
+        <div class="col-auto">
+          <form action="/adminLogin" method="GET" class="d-inline">
+            <button type="submit" class="btn button-color mb-2">Login as Admin</button>
+          </form>
+        </div>
+      </div>
+      <p class="mt-3 mb-0 text-white small">Turtle Shelter Project est. 2017</p>
+    </footer>
+
+
+  <!-- Flatpickr Integration -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <div id="data-container"></div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const response = await fetch('/unavailable-dates'); // Fetch unavailable dates
+    if (!response.ok) {
+      throw new Error("Failed to fetch unavailable dates");
+    }
+
+    const unavailableDates = await response.json();
+    console.log("Unavailable Dates Fetched:", unavailableDates);
+
+    // Normalize dates to "YYYY-MM-DD" format (ignoring time)
+    const parsedDates = unavailableDates.map(date => {
+      const d = new Date(date); // Parse the ISO string
+      return d.toISOString().split('T')[0]; // Get the date part in "YYYY-MM-DD" format
+    });
+
+    console.log("Parsed Dates for Flatpickr:", parsedDates);
+
+    // Initialize Flatpickr with normalized dates
+    const flatpickrOptions = {
+      disable: parsedDates,
+      dateFormat: "Y-m-d",
+    };
+
+    flatpickr("#event_date", flatpickrOptions);
+    flatpickr("#back_up_date", flatpickrOptions);
+    flatpickr("#back_up_date_2", flatpickrOptions);
+  } catch (error) {
+    console.error("Error initializing Flatpickr with unavailable dates:", error);
+  }
+});
+
+
+  // Define an array of valid times
+  const validTimes = [
+    "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
+    "11:00", "11:30", "12:00", "12:30", "13:00", "13:30",
+    "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",
+    "17:00", "17:30", "18:00", "18:30", "19:00"
+  ];
+
+  // Get the select element
+  const select = document.getElementById("event_start_time");
+
+  // Dynamically add options to the select element
+  validTimes.forEach(time => {
+    const option = document.createElement("option");
+    option.value = time;
+    option.textContent = time; // Display time in the dropdown
+    select.appendChild(option);
+  });
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const sewingFields = document.getElementById('sewing_fields');
+      const machinesFields = document.getElementById('machines_fields');
+      const eventTypeInputs = document.querySelectorAll('input[name="event_type"]');
+  
+      function toggleSewingFields() {
+        const selectedValue = document.querySelector('input[name="event_type"]:checked').value;
+        if (selectedValue === 'Sewing' || selectedValue === 'Both') {
+          sewingFields.style.display = 'block';
+          machinesFields.style.display = 'block';
+          document.getElementById('number_sewers').required = true;
+          document.getElementById('machines_volunteered').required = true;
+        } else {
+          sewingFields.style.display = 'none';
+          machinesFields.style.display = 'none';
+          document.getElementById('number_sewers').required = false;
+          document.getElementById('machines_volunteered').required = false;
+        }
+      }
+  
+      eventTypeInputs.forEach(input => {
+        input.addEventListener('change', toggleSewingFields);
+      });
+  
+      // Initialize visibility based on the default selection
+      toggleSewingFields();
+    });
+  </script>
+  <script>
+
+    document.addEventListener("DOMContentLoaded", () => {
+    const phoneInput = document.getElementById("requestee_phone");
+
+    phoneInput.addEventListener("input", function () {
+      let value = this.value.replace(/\D/g, ""); // Remove all non-digit characters
+
+      if (value.length > 3 && value.length <= 6) {
+        value = `${value.slice(0, 3)}-${value.slice(3)}`;
+      } else if (value.length > 6) {
+        value = `${value.slice(0, 3)}-${value.slice(3, 6)}-${value.slice(6, 10)}`;
+      }
+
+      this.value = value;
+    });
+  });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  
 </body>
 </html>

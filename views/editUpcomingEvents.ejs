@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Events Maintenance</title>
+  <style>
+  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Volunteer</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="/style/styles.css">
+</head>
+<body>
+  <!-- Nav Bar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/adminIndex">Admin Console</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <ul class="navbar-nav">
+       <li class="nav-item">
+         <a class="nav-link active" aria-current="page" href="/eventMaintenance">Back to Events</a>
+       </li>
+       </ul>
+        <form action="/logout" method="GET" class="d-inline ms-auto">
+          <button type="submit" class="btn button-color mb-2">Logout</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-5 pt-5">
+    <h1>Edit Events</h1>
+    <form action="/updateUpcomingEvents/<%= event.eventid %>" method="POST">
+  
+      <!-- Contact First Name -->
+      <div class="mb-3 row">
+        <label for="contact_first_name" class="col-sm-2 col-form-label">First Name</label>
+        <div class="col-sm-10">
+          <input type="text" id="contact_first_name" name="contact_first_name" class="form-control" value="<%= event.contact_first_name %>" required oninput="this.value = this.value.toLowerCase()">
+        </div>
+      </div>
+  
+      <!-- Contact Last Name -->
+      <div class="mb-3 row">
+        <label for="contact_last_name" class="col-sm-2 col-form-label">Last Name</label>
+        <div class="col-sm-10">
+          <input type="text" id="contact_last_name" name="contact_last_name" class="form-control" value="<%= event.contact_last_name %>" required>
+        </div>
+      </div>
+  
+      <!-- Event Contact Phone Number -->
+      <div class="mb-3 row">
+        <label for="contact_phone" class="col-sm-2 col-form-label">What is a good phone number?</label>
+        <div class="col-sm-10">
+          <input type="number" id="contact_phone" name="contact_phone" class="form-control" value="<%= event.contact_phone %>" required>
+        </div>
+      </div>
+
+  
+      <!-- Event Contact Email -->
+      <div class="mb-3 row">
+        <label for="contact_email" class="col-sm-2 col-form-label">What is a good email?</label>
+        <div class="col-sm-10">
+          <input type="text" id="contact_email" name="contact_email" class="form-control" value="<%= event.contact_email %>" required>
+        </div>
+      </div>
+  
+      <!-- Preferred Contact Method (Radio Buttons) -->
+      <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label">What is your preferred contact method?</label>
+        <div class="col-sm-10">
+          <label>
+            <input type="radio" name="contact_preferred_contact" value="phone" <%= event.contact_preferred_contact === 'phone' ? 'checked' : '' %>> Phone
+          </label>
+          <label>
+            <input type="radio" name="contact_preferred_contact" value="email" <%= event.contact_preferred_contact === 'email' ? 'checked' : '' %>> Email
+          </label>
+        </div>
+      </div>
+  
+      <!-- Event Type (Radio Buttons) -->
+      <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label">Event Type</label>
+        <div class="col-sm-10">
+          <label>
+            <input type="radio" name="event_type" value="S" <%= event.event_type === 'S' ? 'checked' : '' %>> Sewing
+          </label>
+          <label>
+            <input type="radio" name="event_type" value="NS" <%= event.event_type === 'NS' ? 'checked' : '' %>> Non-Sewing
+          </label>
+          <label>
+            <input type="radio" name="event_type" value="B" <%= event.event_type === 'B' ? 'checked' : '' %>> Both
+          </label>
+        </div>
+      </div>
+  
+      <!-- Event Date -->
+      <div class="mb-3 row">
+        <label for="event_date" class="col-sm-2 col-form-label">Event Date</label>
+        <div class="col-sm-10">
+          <input type="date" id="event_date" name="event_date" class="form-control" value="<%= event.event_date ? event.event_date.toISOString().split('T')[0] : '' %>" required>
+        </div>
+      </div>
+  
+      <!-- Event Backup Date 1 -->
+      <div class="mb-3 row">
+        <label for="event_backup_date" class="col-sm-2 col-form-label">Event Backup Date</label>
+        <div class="col-sm-10">
+          <input type="date" id="event_backup_date" name="event_backup_date" class="form-control" value="<%= event.event_backup_date.toISOString().split('T')[0] %>" required>
+        </div>
+      </div>
+  
+      <!-- Back up Date 2 -->
+      <div class="mb-3 row">
+        <label for="event_backup_date_2" class="col-sm-2 col-form-label">Event Backup Date 2</label>
+        <div class="col-sm-10">
+          <input type="date" id="event_backup_date_2" name="event_backup_date_2" class="form-control" 
+                 value="<%= event.event_backup_date_2 ? event.event_backup_date_2.toISOString().split('T')[0] : null %>">
+        </div>
+      </div>
+  
+      <!-- Event Start Time -->
+      <div class="mb-3 row">
+        <label for="event_start_time" class="col-sm-2 col-form-label">Select a start time for the event:</label>
+        <div class="col-sm-10">
+          <input type="time" id="event_start_time" name="event_start_time" class="form-control" value="<%= event.event_start_time %>" min="08:00" max="19:00" required>
+        </div>
+      </div>
+  
+      <!-- Event Expected Duration -->
+      <div class="mb-3 row">
+        <label for="event_expected_duration" class="col-sm-2 col-form-label">How long do you expect the event to last?</label>
+        <div class="col-sm-10">
+          <input type="number" id="event_expected_duration" name="event_expected_duration" class="form-control" value="<%= event.event_expected_duration %>" required>
+        </div>
+      </div>
+  
+     
+      <!-- Event Street Address -->
+      <div class="mb-3 row">
+        <label for="event_address" class="col-sm-2 col-form-label">Event Street Address</label>
+        <div class="col-sm-10">
+          <input type="text" id="event_address" name="event_address" class="form-control" value="<%= event.event_address %>" required>
+        </div>
+      </div>
+  
+      <!-- Event City -->
+      <div class="mb-3 row">
+        <label for="event_city" class="col-sm-2 col-form-label">Event City</label>
+        <div class="col-sm-10">
+          <input type="text" id="event_city" name="event_city" class="form-control" value="<%= event.event_city %>" required>
+        </div>
+      </div>
+  
+      <!-- Event State -->
+      <div class="mb-3 row">
+        <label for="event_state" class="col-sm-2 col-form-label">Event State</label>
+        <div class="col-sm-10">
+          <input type="text" id="event_state" name="event_state" class="form-control" value="<%= event.event_state %>" required>
+        </div>
+      </div>
+  
+      <!-- Event Zipcode -->
+      <div class="mb-3 row">
+        <label for="event_zip" class="col-sm-2 col-form-label">Event Zipcode</label>
+        <div class="col-sm-10">
+          <input type="number" id="event_zip" name="event_zip" class="form-control" value="<%= event.event_zip %>" required>
+        </div>
+      </div>
+  
+      <!-- Event Space Capacity -->
+      <div class="mb-3 row">
+        <label for="event_space_capacity" class="col-sm-2 col-form-label">Event Space Capacity</label>
+        <div class="col-sm-10">
+          <input type="number" id="event_space_capacity" name="event_space_capacity" class="form-control" value="<%= event.event_space_capacity %>" required>
+        </div>
+      </div>
+
+      <!-- Table Type (Radio Buttons) -->
+      <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label">Select the majority of table types we will use at your event:</label>
+        <div class="col-sm-10">
+          <label>
+            <input type="radio" name="table_types" value="round" <%= event.table_types === 'round' ? 'checked' : '' %>> Round
+          </label>
+          <label>
+            <input type="radio" name="table_types" value="rectangular" <%= event.table_types === 'rectangular' ? 'checked' : '' %>> Rectangular
+          </label>
+          <label>
+            <input type="radio" name="table_types" value="square" <%= event.table_types === 'square' ? 'checked' : '' %>> Square
+          </label>
+        </div>
+      </div>
+
+      <!-- Number of Sewers -->
+      <div class="mb-3 row">
+        <label for="number_sewers" class="col-sm-2 col-form-label">Number of People able to Sew:</label>
+        <div class="col-sm-10">
+          <input type="number" id="number_sewers" name="number_sewers" class="form-control" value="<%= event.number_sewers %>" required>
+        </div>
+      </div>
+
+      <!-- Number of Machines Volunteered -->
+      <div class="mb-3 row">
+        <label for="machines_volunteered" class="col-sm-2 col-form-label">Number of Sewing Machines Participants can bring:</label>
+        <div class="col-sm-10">
+          <input type="number" id="machines_volunteered" name="machines_volunteered" class="form-control" value="<%= event.machines_volunteered %>" required>
+        </div>
+      </div>
+
+      <!-- Expected Number of Adults -->
+      <div class="mb-3 row">
+        <label for="event_expected_adults" class="col-sm-2 col-form-label">Number of Expected Adult Participants:</label>
+        <div class="col-sm-10">
+          <input type="number" id="event_expected_adults" name="event_expected_adults" class="form-control" value="<%= event.event_expected_adults %>" required>
+        </div>
+      </div>
+
+      <!-- Expected Number of Children -->
+      <div class="mb-3 row">
+        <label for="event_expected_children" class="col-sm-2 col-form-label">Number of Expected Child Participants:</label>
+        <div class="col-sm-10">
+          <input type="number" id="event_expected_children" name="event_expected_children" class="form-control" value="<%= event.event_expected_children %>" required>
+        </div>
+      </div>
+
+     
+
+      <!-- Jen Shares Story (Checkbox) -->
+      <div class="mb-3 row">
+        <label for="jen_story" class="col-sm-2 col-form-label">
+          <input type="checkbox" id="jen_story" name="jen_story" value="true" <%= event.jen_story ? 'checked' : '' %>>
+          Check this box if you would like Jen to share her story!
+        </label>
+      </div>
+
+    
+
+
+
+
+
+
+
+        
+      <!-- Submit Button -->
+      <div class="mb-3 row">
+        <div class="col-sm-12 text-center">
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+  
+  </form>
+</body>
+</html>
