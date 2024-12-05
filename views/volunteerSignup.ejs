@@ -8,13 +8,6 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style/styles.css">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f9f9f9;
-      margin: 0;
-      padding: 0;
-      padding-top: 125px; /* Adjust for fixed navigation bar */
-    }
 
     h5 {
       text-align: center;
@@ -22,14 +15,7 @@
       margin-top: 20px;
     }
 
-    form {
-      width: 60%;
-      margin: 20px auto;
-      /* background: #fff; */
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+
 
     label {
       display: block;
@@ -125,7 +111,7 @@
         <li class="nav-item ms-2">
       <!-- This last form is a link to the donation page, which is our call to action to every user that visits
        the page -->
-       <form action="/donation" method="GET" class="d-inline">
+       <form action="/donation" method="GET" class="d-inline ms-auto">
         <button type="submit" class="btn btn-success btn-lg">Donate Now</button>
       </form>
         </li>
@@ -140,7 +126,7 @@
     the volunteer) -->
     <!-- Each of these fields contains information that management wants to keep track of for each volunteer, which
      is why each is required -->
-<div class="container mt-5 pt-5">
+<div class="container">
   <h1>Volunteer Sign Up</h1>
       <form action="/volunteerSignup/" method="POST">
 
