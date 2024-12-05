@@ -46,7 +46,7 @@
   </nav>
 <div class="container mt-5 pt-5">
   <h1 style="text-align: center;">Volunteer Records</h1>
-  <table>
+  <table id="volunteerTable">
     <thead>
       <tr>
         <th>First Name</th>
@@ -85,7 +85,70 @@
           </td>
         </tr>
       <% }) %>
-    </div>
+    </div> 
+  </table>
+  <div id="paginationControls" style="text-align: center; margin-top: 10px; margin-bottom: 10px;">
+    <!-- Buttons will be dynamically generated -->
+  </div>
 
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+    const pastEventsTable = document.getElementById('volunteerTable'); // Target the past events table
+    if (!pastEventsTable) {
+      console.error('Past Events table not found!');
+      return;
+    }
+
+    const tableBody = pastEventsTable.querySelector('tbody'); // Get the table body
+    const rows = tableBody.querySelectorAll('tr'); // Get all rows in the body
+    const paginationControls = document.getElementById('paginationControls'); // Pagination controls container
+
+    const rowsPerPage = 10; // Number of rows per page
+    const totalPages = Math.ceil(rows.length / rowsPerPage); // Calculate total pages
+    let currentPage = 1; // Start at the first page
+
+    // Function to display rows for the current page
+    function showPage(page) {
+      currentPage = page;
+
+      const startIndex = (page - 1) * rowsPerPage;
+      const endIndex = startIndex + rowsPerPage;
+
+      // Show only rows for the current page
+      rows.forEach((row, index) => {
+        row.style.display = index >= startIndex && index < endIndex ? '' : 'none';
+      });
+
+      // Update pagination controls
+      updatePaginationControls();
+    }
+
+    // Function to create and update pagination controls
+    function updatePaginationControls() {
+      paginationControls.innerHTML = ''; // Clear existing controls
+
+      for (let i = 1; i <= totalPages; i++) {
+        const button = document.createElement('button');
+        button.textContent = i; // Page number
+        button.style.margin = '0 5px';
+        button.style.padding = '5px 10px';
+        button.style.cursor = 'pointer';
+        button.disabled = i === currentPage; // Disable button for the current page
+
+        // Event listener to switch pages
+        button.addEventListener('click', () => showPage(i));
+        paginationControls.appendChild(button);
+      }
+    }
+
+    // Initialize pagination
+    if (rows.length > 0) {
+      showPage(1); // Show the first page by default
+    } else {
+      paginationControls.textContent = 'No rows to display.'; // Handle empty tables
+    }
+  });
+    </script>
+  
 </body>
 </html>

@@ -269,6 +269,7 @@ body {
 
 
 
+
 form {
    margin-top: 20px;
 }
@@ -666,4 +667,21 @@ form  .chat-button:hover  {
    background-color: #0056b3;
 }
 
+
+
+ .fb-plugin-container {
+  display: flex;
+  justify-content: center; /* Centers the plugin horizontally */
+  align-items: center;    /* Centers the plugin vertically if needed */
+  min-height: 400px;      /* Ensures the container has a minimum height */
+  width: 100%;            /* Makes the container full width */
+  padding: 20px;          /* Optional: Adds padding for better spacing */
+  box-sizing: border-box; /* Ensures padding is included in the element's total width and height */
+}
+ 
+.fb-page {
+  width: 100%;            /* Ensures the plugin takes full width of the container */
+  max-width: 500px;       /* Optional: Sets a maximum width for the plugin */
+  height: 100%;           /* Ensures the plugin takes full height of the container */
+}
 
