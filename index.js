@@ -107,7 +107,16 @@ app.get('/', (req, res) => {
   });
 
 app.get('/eventSignup/', (req, res) => {
-    res.render('eventSignup')
+
+   const states = [
+      "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia",
+      "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland",
+      "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey",
+      "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina",
+      "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
+  ];
+
+  res.render('eventSignup', {states})
 });
 
 app.get('/donationCompletion/', (req, res) => {
@@ -119,11 +128,11 @@ app.get('/donationCompletion/', (req, res) => {
 app.get('/volunteerSignup/', (req, res) => {
 
   const states = [
-    "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
-    "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
-    "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
-    "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
-    "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
+    "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia",
+    "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland",
+    "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey",
+    "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina",
+    "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
 ];
 
   res.render('volunteerSignup', {states} )
@@ -157,7 +166,7 @@ app.post('/volunteerSignup/', (req, res) => {
       volunteer_phone: volunteer_phone,
       volunteer_address: volunteer_address.toLowerCase(),
       volunteer_city: volunteer_city.toLowerCase(),
-      volunteer_state: volunteer_state,
+      volunteer_state: volunteer_state.toLowerCase(),
       volunteer_zip: volunteer_zip,
       volunteer_referral: volunteer_referral,
       volunteer_willing_hours: volunteer_willing_hours,
@@ -169,7 +178,11 @@ app.post('/volunteerSignup/', (req, res) => {
 
     // We redirect the user back to the landing page, but notify them that their submission is being processed
     .then(() => {
+      if (req.session.admin) {
+        res.redirect('/adminIndex');
+      } else {
       res.redirect('/volunteerSignup');
+      }
   })
   .catch(error => {
     console.error('Error adding Volunteer:', error);
@@ -201,7 +214,7 @@ app.get('/About/story', (req, res) => {
   res.render('About/story')
 });
 
-//This is for admin login yeah?
+//This is for admin login
 app.get('/adminLogin', (req, res) => {
     res.render('adminLogin', {error: null})
 });
@@ -329,7 +342,6 @@ app.post('/submit-event-request', (req, res) => {
     preferred_contact_method: contact_preferred_contact,
   } = req.body;
 
-
   // Sanitize optional fields
   const sanitizedBackupDate2 = event_backup_date_2 || null;
   const sanitizedMachinesVolunteered = machines_volunteered ? parseInt(machines_volunteered, 10) : 0;
@@ -340,7 +352,7 @@ app.post('/submit-event-request', (req, res) => {
     event_date,
     event_backup_date,
     event_backup_date_2: sanitizedBackupDate2, // Optional: handle null
-    event_type: event_type.toLowerCase(),
+    event_type: event_type.toUpperCase(),
     event_start_time,
     event_expected_duration,
     event_address: event_address.toLowerCase(),
@@ -365,8 +377,12 @@ app.post('/submit-event-request', (req, res) => {
   knex('events')
     .insert(data)
     .then(() => {
+      if (req.session.admin) {
+        res.redirect('/adminIndex'); // Redirect to the admin index page
+      } else {
       // Redirect to a confirmation page or send a success response
       res.redirect('/'); // Redirect to a success page
+      }
     })
     .catch((error) => {
       // Log and handle errors
