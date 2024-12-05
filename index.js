@@ -1,7 +1,6 @@
 let express = require("express");
 require('dotenv').config(); // Load environment variables
 const session = require('express-session');
-const pgSession = require('connect-pg-simple')(session);
 const { OpenAI } = require('openai'); // Correctly import OpenAI
 
 // Create the express app
@@ -13,7 +12,7 @@ const port = process.env.PORT || 3000;
 
 // Initialize OpenAI with the API key
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY, // Use the API key from the .env file
+  apiKey: process.env.OPENAI_API_KEY // Use the API key from the .env file
 });
 
 app.set("view engine", "ejs");
