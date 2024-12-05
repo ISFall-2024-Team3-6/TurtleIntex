@@ -62,37 +62,37 @@ app.post('/chat', async (req, res) => {
 
   // General matching for key topics for chat bot
   if (question.includes("turtle shelter") || question.includes("mission") || question.includes("project")) {
-      botResponse = "The Turtle Shelter Project provides portable foam vests for individuals experiencing homelessness to help protect them from freezing temperatures. Learn more about our mission here: [Mission Statement](https://turtleshelterproject.org/mission)";
+      botResponse = "The Turtle Shelter Project provides portable foam vests for individuals experiencing homelessness to help protect them from freezing temperatures. Check out more about our website to learn more about our mission!";
   } else if (question.includes("volunteer") || question.includes("help") || question.includes("make a difference")) {
-      botResponse = "You can make a difference by volunteering! Visit our 'You Can Make a Difference' page to learn how you can help: [Volunteer Here](https://turtleshelterproject.org/you-can-make-a-difference)";
+      botResponse = "You can make a difference by volunteering! Visit our 'You Can Make a Difference' page to learn how you can help!";
   } else if (question.includes("jen") || question.includes("story") || question.includes("founder")) {
-      botResponse = "Jen's story is the inspiration behind the Turtle Shelter Project. Discover her journey and what led her to start this initiative here: [Jen's Story](https://turtleshelterproject.org/jens-story)";
+      botResponse = "Jen's story is the inspiration behind the Turtle Shelter Project. Discover her journey and what led her to start this initiative on the page for Jen's story!";
   } else if (question.includes("donate") || question.includes("donation")) {
-      botResponse = "Your donations help provide critical resources for those in need. Visit our donation page to contribute: [Donate Now](https://turtleshelterproject.org/donate)";
+      botResponse = "Your donations help provide critical resources for those in need. Visit our donation page to contribute to this wonderful cause!";
   } else if (question.includes("vest") || question.includes("vests")) {
-        botResponse = "Learn more about our innovative tech, including protective vests, on our technology page: [Our Tech](https://turtleshelterproject.org/our-tech)";
+        botResponse = "Learn more about our innovative tech, including protective vests, on our technology page!";
   } else if (question.includes("contact") || question.includes("reach out") || question.includes("get in touch")) {
-      botResponse = "You can get in touch with us by visiting our contact page: [Contact Us](https://turtleshelterproject.org/contact)";
+      botResponse = "You can get in touch with us by visiting our contact page! We respond by email, phone, or Facebook!";
   } else if (question.includes("locations") || question.includes("where you operate") || question.includes("cities")) {
-      botResponse = "The Turtle Shelter Project operates in various locations to help individuals facing homelessness. For more specific location information, please visit our locations page: [Locations](https://turtleshelterproject.org/locations)";
+      botResponse = "The Turtle Shelter Project operates in various locations to help individuals facing homelessness. For more specific location information, please sign up to be a volunteer or visit our about page to learn where we operate!";
   } else if (question.includes("impact") || question.includes("how many people helped") || question.includes("results")) {
-      botResponse = "The Turtle Shelter Project has made a significant impact, providing warmth and protection to individuals in need. For detailed impact information, visit our impact page: [Our Impact](https://turtleshelterproject.org/impact)";
+      botResponse = "The Turtle Shelter Project has made a significant impact, providing warmth and protection to individuals in need";
   } else if (question.includes("funding") || question.includes("sponsors") || question.includes("partners")) {
-      botResponse = "We are grateful to our sponsors and partners who help make this project possible. You can learn more about them here: [Our Partners](https://turtleshelterproject.org/partners)";
+      botResponse = "We are grateful to our sponsors and partners who help make this project possible. You can learn more about them on our sponsors page!";
   } else if (question.includes("how it works") || question.includes("process") || question.includes("how can I help")) {
-      botResponse = "The Turtle Shelter Project operates by distributing portable foam vests to individuals in need. You can help by donating, volunteering, or spreading awareness. Learn more here: [How It Works](https://turtleshelterproject.org/how-it-works)";
+      botResponse = "The Turtle Shelter Project operates by distributing portable foam vests to individuals in need. You can help by donating, volunteering, or spreading awareness. Learn more on our volunteer and donate pages on our website!";
   } else if (question.includes("volunteer opportunities") || question.includes("volunteering") || question.includes("get involved")) {
-      botResponse = "We offer various volunteer opportunities to get involved. Check out the volunteer page for more details: [Volunteer Opportunities](https://turtleshelterproject.org/volunteer)";
+      botResponse = "We offer various volunteer opportunities to get involved. Check out the volunteer page for more details!";
   } else if (question.includes("history") || question.includes("beginning") || question.includes("how it started")) {
-      botResponse = "The Turtle Shelter Project was founded with the mission to provide warmth and shelter to those facing homelessness. To learn about its history, visit: [Our History](https://turtleshelterproject.org/history)";
+      botResponse = "The Turtle Shelter Project was founded with the mission to provide warmth and shelter to those facing homelessness. To learn more, please visit Our Story page!";
   } else if (question.includes("donation tax") || question.includes("tax deductible")) {
-      botResponse = "Yes, your donations are tax-deductible. You can find more information about tax benefits here: [Tax Deductible Donations](https://turtleshelterproject.org/donate)";
+      botResponse = "Yes, your donations are tax-deductible. You can find more information about tax benefits by contacting us!";
   } else if (question.includes("news") || question.includes("latest updates") || question.includes("blog")) {
-      botResponse = "Stay up-to-date with the latest news and updates from the Turtle Shelter Project by visiting our blog: [Blog](https://turtleshelterproject.org/blog)";
+      botResponse = "Stay up-to-date with the latest news and updates from the Turtle Shelter Project by contacting us or following us on Facebook!";
   } else if (question.includes("faq") || question.includes("frequently asked questions")) {
-      botResponse = "For answers to common questions, visit our FAQ page: [FAQs](https://turtleshelterproject.org/faq)";
+      botResponse = "For answers to common questions, visit our FAQ page!";
   } else {
-      botResponse = "Sorry, I couldn't find information about that. Please visit our website for more details.";
+      botResponse = "Sorry, I couldn't find information about that. Please visit our website for more details. Thanks for coming :) ";
   }
 
   res.json({ response: botResponse });
@@ -107,7 +107,16 @@ app.get('/', (req, res) => {
   });
 
 app.get('/eventSignup/', (req, res) => {
-    res.render('eventSignup')
+
+   const states = [
+      "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia",
+      "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland",
+      "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey",
+      "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina",
+      "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
+  ];
+
+  res.render('eventSignup', {states})
 });
 
 app.get('/donationCompletion/', (req, res) => {
@@ -119,11 +128,11 @@ app.get('/donationCompletion/', (req, res) => {
 app.get('/volunteerSignup/', (req, res) => {
 
   const states = [
-    "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
-    "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
-    "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
-    "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC",
-    "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
+    "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia",
+    "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland",
+    "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey",
+    "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina",
+    "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
 ];
 
   res.render('volunteerSignup', {states} )
@@ -157,7 +166,7 @@ app.post('/volunteerSignup/', (req, res) => {
       volunteer_phone: volunteer_phone,
       volunteer_address: volunteer_address.toLowerCase(),
       volunteer_city: volunteer_city.toLowerCase(),
-      volunteer_state: volunteer_state,
+      volunteer_state: volunteer_state.toLowerCase(),
       volunteer_zip: volunteer_zip,
       volunteer_referral: volunteer_referral,
       volunteer_willing_hours: volunteer_willing_hours,
@@ -169,7 +178,11 @@ app.post('/volunteerSignup/', (req, res) => {
 
     // We redirect the user back to the landing page, but notify them that their submission is being processed
     .then(() => {
+      if (req.session.admin) {
+        res.redirect('/adminIndex');
+      } else {
       res.redirect('/volunteerSignup');
+      }
   })
   .catch(error => {
     console.error('Error adding Volunteer:', error);
@@ -201,7 +214,7 @@ app.get('/About/story', (req, res) => {
   res.render('About/story')
 });
 
-//This is for admin login yeah?
+//This is for admin login
 app.get('/adminLogin', (req, res) => {
     res.render('adminLogin', {error: null})
 });
@@ -329,7 +342,6 @@ app.post('/submit-event-request', (req, res) => {
     preferred_contact_method: contact_preferred_contact,
   } = req.body;
 
-
   // Sanitize optional fields
   const sanitizedBackupDate2 = event_backup_date_2 || null;
   const sanitizedMachinesVolunteered = machines_volunteered ? parseInt(machines_volunteered, 10) : 0;
@@ -339,8 +351,8 @@ app.post('/submit-event-request', (req, res) => {
   const data = {
     event_date,
     event_backup_date,
-    event_backup_date_2: sanitizedBackupDate2, // Optional: handle null
-    event_type: event_type.toLowerCase(),
+    event_backup_date_2: sanitizedBackupDate2,
+    event_type: event_type.toUpperCase(),
     event_start_time,
     event_expected_duration,
     event_address: event_address.toLowerCase(),
@@ -348,10 +360,10 @@ app.post('/submit-event-request', (req, res) => {
     event_state: event_state.toLowerCase(),
     event_zip,
     event_space_capacity,
-    number_sewers: sanitizedNumberSewers, // Optional: default to 0,
-    machines_volunteered: sanitizedMachinesVolunteered, // Optional: default to 0,
+    number_sewers: sanitizedNumberSewers,
+    machines_volunteered: sanitizedMachinesVolunteered,
     event_expected_adults,
-    event_expected_children: sanitizedExpectedChildren, // Optional: default to 0,
+    event_expected_children: sanitizedExpectedChildren,
     table_types: table_types.toLowerCase(),
     jen_story: jen_story.toLowerCase(),
     contact_first_name: contact_first_name.toLowerCase(),
@@ -361,12 +373,15 @@ app.post('/submit-event-request', (req, res) => {
     contact_preferred_contact: contact_preferred_contact.toLowerCase(),
   };
   
-  // Use Knex.js to insert data into the 'event_requests' table
+  // insert data into the 'event_requests' table
   knex('events')
     .insert(data)
     .then(() => {
-      // Redirect to a confirmation page or send a success response
-      res.redirect('/'); // Redirect to a success page
+      if (req.session.admin) {
+        res.redirect('/adminIndex'); // Redirect to the admin index page
+      } else {
+      res.redirect('/'); // redirect home
+      }
     })
     .catch((error) => {
       // Log and handle errors
@@ -404,7 +419,7 @@ app.get('/viewEvents', async (req, res) => {
 
 
 
-// THIS ALLOWS THE ADMIN TO View all EVENTS
+// GET ROUTE THAT ALLOWS THE ADMIN TO View all EVENTS
 app.get('/eventMaintenance', (req, res) => {
 
   // Check if they are logged in
@@ -412,7 +427,7 @@ app.get('/eventMaintenance', (req, res) => {
     res.redirect('/adminLogin');
   }
 
-  const currentDate = new Date();  // This should create a valid Date object
+  const currentDate = new Date();  // create a valid Date object
   
   if (isNaN(currentDate)) {
     console.log('Error: Invalid current date');
@@ -430,9 +445,7 @@ app.get('/eventMaintenance', (req, res) => {
   });
 
 
-
-
-// THIS ALLOWS THE ADMIN TO EDIT EVENTS
+// GET ROUTE THAT ALLOWS THE ADMIN TO EDIT EVENTS
 app.get('/editEvents/:id', async (req, res) => {
 
     // Check if they are logged in
@@ -478,11 +491,11 @@ app.get('/editEvents/:id', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 
-
   res.render('editEvents', { event : chosenEvent , volunteers : matchedVolunteers, eventvolunteers : volunteers_attended });
 });
 
-// THIS ALLOWS THE ADMIN TO EDIT UPCOMING EVENTS
+
+// GET ROUTE THAT ALLOWS THE ADMIN TO EDIT UPCOMING EVENTS
 app.get('/editUpcomingEvents/:id', (req, res) => {
 
     // Check if they are logged in
@@ -508,14 +521,11 @@ app.get('/editUpcomingEvents/:id', (req, res) => {
 });
 
 
-
-
-
+//Post route to edit past events
 app.post('/updateEvents/:id', async (req, res) => {
   const id = req.params.id;
 
   let volunteerIDs = req.body.volunteers_attended;
-
 
   const contact_first_name = req.body.contact_first_name
   const contact_last_name = req.body.contact_last_name
@@ -536,7 +546,6 @@ app.post('/updateEvents/:id', async (req, res) => {
     event_backup_date_2 = null;
   }
   
-
   const event_start_time = req.body.event_start_time
   const event_expected_duration = req.body.event_expected_duration
   const event_actual_duration = req.body.event_actual_duration
@@ -566,6 +575,7 @@ app.post('/updateEvents/:id', async (req, res) => {
   const vests_in_progress = req.body.vests_in_progress
   const vests_finished = req.body.vests_finished
   const completed_products = req.body.completed_products
+
 
   // Update the Events in the database
   try { 
@@ -658,11 +668,9 @@ app.post('/updateEvents/:id', async (req, res) => {
   if (!event_backup_date_2) {
     event_backup_date_2 = null;
   }
-  
 
   const event_start_time = req.body.event_start_time
   const event_expected_duration = req.body.event_expected_duration
-  
   const event_address = req.body.event_address
   const event_city = req.body.event_city
   const event_state = req.body.event_state
@@ -673,16 +681,12 @@ app.post('/updateEvents/:id', async (req, res) => {
   const machines_volunteered = req.body.machines_volunteered
   const event_expected_adults = req.body.event_expected_adults
   const event_expected_children = req.body.event_expected_children
-
   const jen_story = req.body.jen_story
-
- 
 
   // Update the Events in the database
     knex('events') 
      .where('eventid', id)
      .update({
-
       contact_first_name: contact_first_name, 
       contact_last_name: contact_last_name, 
       contact_phone: contact_phone, 
@@ -694,7 +698,6 @@ app.post('/updateEvents/:id', async (req, res) => {
       event_backup_date_2: event_backup_date_2, 
       event_start_time: event_start_time, 
       event_expected_duration: event_expected_duration, 
-      
       event_address: event_address,
       event_city: event_city, 
       event_state: event_state, 
@@ -705,10 +708,8 @@ app.post('/updateEvents/:id', async (req, res) => {
       machines_volunteered: machines_volunteered, 
       event_expected_adults: event_expected_adults, 
       event_expected_children: event_expected_children, 
- 
       jen_story: jen_story, 
     
-
      })
      .then(() => {
        res.redirect('/eventMaintenance'); // Redirect to the list of events after saving -> FIX THIS ROUTE, IT WILL BE WRONG
@@ -720,9 +721,7 @@ app.post('/updateEvents/:id', async (req, res) => {
  });
 
 
-
-
-  // POST ROUTE FOR DELETING Past Events
+// POST ROUTE FOR DELETING Past Events
 app.post('/deleteEvents/:id', (req, res) => {
   const id = req.params.id;
   knex('events')
@@ -739,7 +738,7 @@ app.post('/deleteEvents/:id', (req, res) => {
   });
 
 
-    // POST ROUTE FOR DELETING Upcoming Events
+// POST ROUTE FOR DELETING Upcoming Events
 app.post('/deleteUpcomingEvents/:id', (req, res) => {
   const id = req.params.id;
   knex('events')
@@ -770,6 +769,7 @@ app.get('/volunteerMaintenance', (req, res) => {
   })
 });
 
+// Get route for the edit volunteer page
 app.get('/editVolunteer/:id', (req, res) => {
 
     // Check if they are logged in
@@ -801,6 +801,7 @@ app.get('/editVolunteer/:id', (req, res) => {
   });
 
 
+// Post route to edit admin in database
 app.post('/updateAdmin/:id', (req, res) => {
   const id = req.params.id; // this is how you pull out the parameter TO SEE WHAT admin YOU ARE DEALING WITH
 
@@ -857,6 +858,7 @@ app.post('/updateAdmin/:id', (req, res) => {
     });
     });
 
+  //Post route to update volunteer records in database 
 
   app.post('/updateVolunteer/:id', (req, res) => {
     const id = req.params.id; // this is how you pull out the parameter TO SEE WHAT volunteer YOU ARE DEALING WITH

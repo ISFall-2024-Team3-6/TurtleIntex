@@ -44,6 +44,8 @@
       </div>
     </div>
   </nav>
+
+  <!-- Creates the table for the Volunteers -->
 <div class="container mt-5 pt-5">
   <h1 style="text-align: center;">Volunteer Records</h1>
   <table id="volunteerTable">
@@ -62,6 +64,7 @@
         <th>Actions</th>
       </tr>
     </thead>
+    <!-- This is dynamically filled with data depending on the number of rows that come back from the database -->
     <tbody>
       <% volunteers.forEach(row => { %>
         <tr>
@@ -92,10 +95,10 @@
   </div>
 
     <script>
-      document.addEventListener('DOMContentLoaded', function () {
-    const pastEventsTable = document.getElementById('volunteerTable'); // Target the past events table
+    document.addEventListener('DOMContentLoaded', function () {
+    const pastEventsTable = document.getElementById('volunteerTable'); // Target the volunteer table
     if (!pastEventsTable) {
-      console.error('Past Events table not found!');
+      console.error('Volunteer table not found!');
       return;
     }
 
@@ -127,6 +130,17 @@
     function updatePaginationControls() {
       paginationControls.innerHTML = ''; // Clear existing controls
 
+      // Create "Previous" arrow button
+      const prevButton = document.createElement('button');
+      prevButton.textContent = '←'; // Left arrow
+      prevButton.style.margin = '0 5px';
+      prevButton.style.padding = '5px 10px';
+      prevButton.style.cursor = 'pointer';
+      prevButton.disabled = currentPage === 1; // Disable if on the first page
+      prevButton.addEventListener('click', () => showPage(currentPage - 1));
+      paginationControls.appendChild(prevButton);
+
+      // Create page number buttons
       for (let i = 1; i <= totalPages; i++) {
         const button = document.createElement('button');
         button.textContent = i; // Page number
@@ -134,11 +148,19 @@
         button.style.padding = '5px 10px';
         button.style.cursor = 'pointer';
         button.disabled = i === currentPage; // Disable button for the current page
-
-        // Event listener to switch pages
         button.addEventListener('click', () => showPage(i));
         paginationControls.appendChild(button);
       }
+
+      // Create "Next" arrow button
+      const nextButton = document.createElement('button');
+      nextButton.textContent = '→'; // Right arrow
+      nextButton.style.margin = '0 5px';
+      nextButton.style.padding = '5px 10px';
+      nextButton.style.cursor = 'pointer';
+      nextButton.disabled = currentPage === totalPages; // Disable if on the last page
+      nextButton.addEventListener('click', () => showPage(currentPage + 1));
+      paginationControls.appendChild(nextButton);
     }
 
     // Initialize pagination
@@ -148,6 +170,7 @@
       paginationControls.textContent = 'No rows to display.'; // Handle empty tables
     }
   });
+
     </script>
   
 </body>

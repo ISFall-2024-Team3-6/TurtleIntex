@@ -4,6 +4,7 @@
   <title>Events Maintenance</title>
   <style>
   </style>
+  <!-- links to the style sheet and bootstrap theme template; Also titled to Edit Volunteer at the top of the page -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edit Volunteer</title>
@@ -11,7 +12,8 @@
   <link rel="stylesheet" href="/style/styles.css">
 </head>
 <body>
-  <!-- Nav Bar -->
+  <!-- Our Navigation Bar allows users to navigate from this page back to the Home page, or to any other page on the website. 
+  This includes all the css and styling, which should be the same across all the pages -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand" href="/adminIndex">Admin Console</a>
@@ -29,12 +31,12 @@
       </div>
     </div>
   </nav>
-
+<!-- connects to the POST route on index.js so any information that is edited or changed will update in the database -->
   <div class="container mt-5 pt-5">
     <h1>Edit Events</h1>
     <form action="/updateEvents/<%= event.eventid %>" method="POST">
   
-      <!-- Contact First Name -->
+      <!-- Contact First Name Section-->
       <div class="mb-3 row">
         <label for="contact_first_name" class="col-sm-2 col-form-label">First Name</label>
         <div class="col-sm-10">
@@ -42,7 +44,7 @@
         </div>
       </div>
   
-      <!-- Contact Last Name -->
+      <!-- Contact Last Name Section-->
       <div class="mb-3 row">
         <label for="contact_last_name" class="col-sm-2 col-form-label">Last Name</label>
         <div class="col-sm-10">
@@ -50,7 +52,7 @@
         </div>
       </div>
   
-      <!-- Event Contact Phone Number -->
+      <!-- Event Contact Phone Number Section-->
       <div class="mb-3 row">
         <label for="contact_phone" class="col-sm-2 col-form-label">What is a good phone number?</label>
         <div class="col-sm-10">
@@ -58,7 +60,7 @@
         </div>
       </div>
   
-      <!-- Event Contact Email -->
+      <!-- Event Contact Email Section-->
       <div class="mb-3 row">
         <label for="contact_email" class="col-sm-2 col-form-label">What is a good email?</label>
         <div class="col-sm-10">
@@ -66,7 +68,7 @@
         </div>
       </div>
   
-      <!-- Preferred Contact Method (Radio Buttons) -->
+      <!-- Preferred Contact Method (Radio Buttons) Section-->
       <div class="mb-3 row">
         <label class="col-sm-2 col-form-label">What is your preferred contact method?</label>
         <div class="col-sm-10">
@@ -79,7 +81,7 @@
         </div>
       </div>
   
-      <!-- Event Type (Radio Buttons) -->
+      <!-- Event Type (Radio Buttons) Section-->
       <div class="mb-3 row">
         <label class="col-sm-2 col-form-label">Event Type</label>
         <div class="col-sm-10">
@@ -95,7 +97,7 @@
         </div>
       </div>
   
-      <!-- Event Date -->
+      <!-- Event Date Section-->
       <div class="mb-3 row">
         <label for="event_date" class="col-sm-2 col-form-label">Event Date</label>
         <div class="col-sm-10">
@@ -106,7 +108,7 @@
     
 
   
-      <!-- Event Backup Date 1 -->
+      <!-- Event Backup Date 1 Section-->
       <div class="mb-3 row">
         <label for="event_backup_date" class="col-sm-2 col-form-label">Event Backup Date</label>
         <div class="col-sm-10">
@@ -114,7 +116,7 @@
         </div>
       </div>
   
-      <!-- Back up Date 2 -->
+      <!-- Back up Date 2 Section, note that this is not required -->
       <div class="mb-3 row">
         <label for="event_backup_date_2" class="col-sm-2 col-form-label">Event Backup Date 2</label>
         <div class="col-sm-10">
@@ -123,7 +125,7 @@
         </div>
       </div>
   
-      <!-- Event Start Time -->
+      <!-- Event Start Time Section -->
       <div class="mb-3 row">
         <label for="event_start_time" class="col-sm-2 col-form-label">Select a start time for the event:</label>
         <div class="col-sm-10">
@@ -131,7 +133,7 @@
         </div>
       </div>
   
-      <!-- Event Expected Duration -->
+      <!-- Event Expected Duration Section-->
       <div class="mb-3 row">
         <label for="event_expected_duration" class="col-sm-2 col-form-label">How long do you expect the event to last?</label>
         <div class="col-sm-10">
@@ -139,7 +141,7 @@
         </div>
       </div>
   
-      <!-- Event Actual Duration -->
+      <!-- Event Actual Duration Section-->
       <div class="mb-3 row">
         <label for="event_actual_duration" class="col-sm-2 col-form-label">How long did this event actually last?</label>
         <div class="col-sm-10">
@@ -147,7 +149,7 @@
         </div>
       </div>
   
-      <!-- Event Street Address -->
+      <!-- Event Street Address Section-->
       <div class="mb-3 row">
         <label for="event_address" class="col-sm-2 col-form-label">Event Street Address</label>
         <div class="col-sm-10">
@@ -155,7 +157,7 @@
         </div>
       </div>
   
-      <!-- Event City -->
+      <!-- Event City Section -->
       <div class="mb-3 row">
         <label for="event_city" class="col-sm-2 col-form-label">Event City</label>
         <div class="col-sm-10">
@@ -163,7 +165,7 @@
         </div>
       </div>
   
-      <!-- Event State -->
+      <!-- Event State Section -->
       <div class="mb-3 row">
         <label for="event_state" class="col-sm-2 col-form-label">Event State</label>
         <div class="col-sm-10">
@@ -171,7 +173,7 @@
         </div>
       </div>
   
-      <!-- Event Zipcode -->
+      <!-- Event Zipcode Section -->
       <div class="mb-3 row">
         <label for="event_zip" class="col-sm-2 col-form-label">Event Zipcode</label>
         <div class="col-sm-10">
@@ -179,7 +181,7 @@
         </div>
       </div>
   
-      <!-- Event Space Capacity -->
+      <!-- Event Space Capacity Section -->
       <div class="mb-3 row">
         <label for="event_space_capacity" class="col-sm-2 col-form-label">Event Space Capacity</label>
         <div class="col-sm-10">
@@ -187,7 +189,7 @@
         </div>
       </div>
 
-      <!-- Table Type (Radio Buttons) -->
+      <!-- Table Type (Radio Buttons) Section-->
       <div class="mb-3 row">
         <label class="col-sm-2 col-form-label">Select the majority of table types we will use at your event:</label>
         <div class="col-sm-10">
@@ -203,7 +205,7 @@
         </div>
       </div>
 
-      <!-- Number of Sewers -->
+      <!-- Number of Sewers Section-->
       <div class="mb-3 row">
         <label for="number_sewers" class="col-sm-2 col-form-label">Number of People able to Sew:</label>
         <div class="col-sm-10">
@@ -211,7 +213,7 @@
         </div>
       </div>
 
-      <!-- Number of Machines Volunteered -->
+      <!-- Number of Machines Volunteered Section-->
       <div class="mb-3 row">
         <label for="machines_volunteered" class="col-sm-2 col-form-label">Number of Sewing Machines Participants can bring:</label>
         <div class="col-sm-10">
@@ -219,7 +221,7 @@
         </div>
       </div>
 
-      <!-- Expected Number of Adults -->
+      <!-- Expected Number of Adults Section-->
       <div class="mb-3 row">
         <label for="event_expected_adults" class="col-sm-2 col-form-label">Number of Expected Adult Participants:</label>
         <div class="col-sm-10">
@@ -227,7 +229,7 @@
         </div>
       </div>
 
-      <!-- Expected Number of Children -->
+      <!-- Expected Number of Children Section-->
       <div class="mb-3 row">
         <label for="event_expected_children" class="col-sm-2 col-form-label">Number of Expected Child Participants:</label>
         <div class="col-sm-10">
@@ -235,7 +237,7 @@
         </div>
       </div>
 
-      <!-- Actual Number of Adults -->
+      <!-- Actual Number of Adults Section-->
       <div class="mb-3 row">
         <label for="event_actual_adults" class="col-sm-2 col-form-label">Number of Actual Adult Participants:</label>
         <div class="col-sm-10">
@@ -243,7 +245,7 @@
         </div>
       </div>
 
-      <!-- Actual Number of Children -->
+      <!-- Actual Number of Children Section-->
       <div class="mb-3 row">
         <label for="event_actual_children" class="col-sm-2 col-form-label">Number of Actual Children Participants:</label>
         <div class="col-sm-10">
@@ -251,7 +253,7 @@
         </div>
       </div>
 
-      <!-- Jen Shares Story (Checkbox) -->
+      <!-- Jen Shares Story (Checkbox) Section-->
       <div class="mb-3 row">
         <label for="jen_story" class="col-sm-2 col-form-label">
           <input type="checkbox" id="jen_story" name="jen_story" value="true" <%= event.jen_story ? 'checked' : '' %>>
@@ -260,7 +262,7 @@
       </div>
 
       <!-- POCKETS -->
-      <!-- Number of Supplies to make this many Pockets -->
+      <!-- Number of Supplies to make this many Pockets Section-->
       <div class="mb-3 row">
         <label for="pockets_brought" class="col-sm-2 col-form-label">How many pockets can we make with the material we've brought?</label>
         <div class="col-sm-10">
@@ -268,7 +270,7 @@
         </div>
       </div>
 
-      <!-- Pockets In Progress -->
+      <!-- Pockets In Progress Section-->
       <div class="mb-3 row">
         <label for="pockets_in_progress" class="col-sm-2 col-form-label">How many pockets are in process?</label>
         <div class="col-sm-10">
@@ -276,7 +278,7 @@
         </div>
       </div>
 
-      <!-- Pockets Finished -->
+      <!-- Pockets Finished Section-->
       <div class="mb-3 row">
         <label for="pockets_finished" class="col-sm-2 col-form-label">How many pockets were finished at the event?</label>
         <div class="col-sm-10">
@@ -285,7 +287,7 @@
       </div>
 
       <!-- COLLARS -->
-      <!-- Number of Supplies to make this many Collars -->
+      <!-- Number of Supplies to make this many Collars Section-->
       <div class="mb-3 row">
         <label for="collars_brought" class="col-sm-2 col-form-label">How many collars can we make with the material we've brought?</label>
         <div class="col-sm-10">
@@ -293,7 +295,7 @@
         </div>
       </div>
 
-      <!-- Collars In Progress -->
+      <!-- Collars In Progress Section-->
       <div class="mb-3 row">
         <label for="collars_in_progress" class="col-sm-2 col-form-label">How many collars are in process?</label>
         <div class="col-sm-10">
@@ -301,7 +303,7 @@
         </div>
       </div>
 
-      <!-- Collars Finished -->
+      <!-- Collars Finished Section-->
       <div class="mb-3 row">
         <label for="collars_finished" class="col-sm-2 col-form-label">How many collars were finished at the event?</label>
         <div class="col-sm-10">
@@ -310,7 +312,7 @@
       </div>
 
       <!-- ENVELOPES -->
-      <!-- Number of Supplies to make this many Envelopes -->
+      <!-- Number of Supplies to make this many Envelopes Section-->
       <div class="mb-3 row">
         <label for="envelopes_brought" class="col-sm-2 col-form-label">How many envelopes can we make with the material we've brought?</label>
         <div class="col-sm-10">
@@ -318,7 +320,7 @@
         </div>
       </div>
 
-      <!-- Envelopes In Progress -->
+      <!-- Envelopes In Progress Section-->
       <div class="mb-3 row">
         <label for="envelopes_in_progress" class="col-sm-2 col-form-label">How many envelopes are in process?</label>
         <div class="col-sm-10">
@@ -326,7 +328,7 @@
         </div>
       </div>
 
-      <!-- Envelopes Finished -->
+      <!-- Envelopes Finished Section-->
       <div class="mb-3 row">
         <label for="envelopes_finished" class="col-sm-2 col-form-label">How many envelopes were finished at the event?</label>
         <div class="col-sm-10">
@@ -335,7 +337,7 @@
       </div>
 
       <!-- VESTS -->
-      <!-- Number of Supplies to make this many Vests -->
+      <!-- Number of Supplies to make this many Vests Section-->
       <div class="mb-3 row">
         <label for="vests_brought" class="col-sm-2 col-form-label">How many vests can we make with the material we've brought?</label>
         <div class="col-sm-10">
@@ -343,7 +345,7 @@
         </div>
       </div>
 
-      <!-- Vests In Progress -->
+      <!-- Vests In Progress Section -->
       <div class="mb-3 row">
         <label for="vests_in_progress" class="col-sm-2 col-form-label">How many vests are in process?</label>
         <div class="col-sm-10">
@@ -351,7 +353,7 @@
         </div>
       </div>
 
-      <!-- Vests Finished -->
+      <!-- Vests Finished Section-->
       <div class="mb-3 row">
         <label for="vests_finished" class="col-sm-2 col-form-label">How many vests were finished at the event?</label>
         <div class="col-sm-10">
@@ -359,7 +361,7 @@
         </div>
       </div>
 
-      <!-- Completed Products -->
+      <!-- Completed Products Section-->
       <div class="mb-3 row">
         <label for="completed_products" class="col-sm-2 col-form-label">How many completed products were made?</label>
         <div class="col-sm-10">
@@ -369,7 +371,7 @@
 
 
 
-      <!-- Scrollable Section for Volunteers Attended -->
+      <!-- Scrollable Section for Volunteers Attended Section-->
       <div class="mb-3 row">
         <label for="volunteers_attended" class="col-sm-2 col-form-label">Which volunteers attended the event?</label>
         <div class="col-sm-10 scrollable-section">
@@ -383,11 +385,7 @@
         </div>
       </div>
 
-
-
-
-        
-      <!-- Submit Button -->
+      <!-- Submit Button to push the changed information back through the POST route to the database-->
       <div class="mb-3 row">
         <div class="col-sm-12 text-center">
           <button type="submit" class="btn btn-primary">Save Changes</button>

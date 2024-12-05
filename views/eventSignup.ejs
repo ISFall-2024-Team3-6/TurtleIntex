@@ -175,7 +175,7 @@ button:hover {
  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
   <div class="container-fluid">
     <img src="/assets/logo.png" alt="Turtle Shelter Project Logo" style="width: 100px; height: auto;">
-    <a class="navbar-brand" href="#">Turtle Shelter Project</a>
+    <a class="navbar-brand" href="/">Turtle Shelter Project</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -226,6 +226,7 @@ button:hover {
   <div class="container">
     <h1>Event Request Form</h1>
     <form action="/submit-event-request" method="POST">
+
       <!-- Event Customization Section -->
       <div class="form-section-container">
         <div class="form-section-title">Event Customization</div>
@@ -277,7 +278,7 @@ button:hover {
           </select>
         </div>        
         <div class="form-section">
-          <label class="required-label">Jen's Story</label>
+          <label class="required-label">Would you like Jen to share her story?</label>
           <div class="radio-group">
             <label class="radio-label">
               <input type="radio" id="jen_story_yes" name="jen_story" value="yes" required>
@@ -300,10 +301,20 @@ button:hover {
           <label for="event_city" class="required-label">City</label>
           <input type="text" id="event_city" name="event_city" required>
         </div>
+
+        <!-- Selection of the state -->
         <div class="form-section">
-          <label for="event_state" class="required-label">State</label>
-          <input type="text" id="event_state" name="event_state" required>
+          <label for="event_state" class="form-label">State</label>
+          <div class="col-sm-10">
+          <select name="event_state" id="event_state" required>
+              <% states.forEach(function(state) { %>
+                  <option value="<%= state %>"><%= state %></option>
+              <% }); %>
+          </select>
+          </div>
         </div>
+
+        <!-- Inputs for the Zip code, space capacity, number of sewers (if applicable), machines volunteered (if applicable), expected num adults, and expected num children -->
         <div class="form-section">
           <label for="event_zip" class="required-label">ZIP Code</label>
           <input type="text" id="event_zip" name="event_zip" pattern="[0-9]{5}" title="Five digit ZIP code" required>
@@ -446,7 +457,6 @@ button:hover {
   }
 });
 
-
   // Define an array of valid times
   const validTimes = [
     "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
@@ -467,51 +477,78 @@ button:hover {
   });
   </script>
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const sewingFields = document.getElementById('sewing_fields');
-      const machinesFields = document.getElementById('machines_fields');
-      const eventTypeInputs = document.querySelectorAll('input[name="event_type"]');
-  
-      function toggleSewingFields() {
-        const selectedValue = document.querySelector('input[name="event_type"]:checked').value;
-        if (selectedValue === 'Sewing' || selectedValue === 'Both') {
-          sewingFields.style.display = 'block';
-          machinesFields.style.display = 'block';
-          document.getElementById('number_sewers').required = true;
-          document.getElementById('machines_volunteered').required = true;
-        } else {
-          sewingFields.style.display = 'none';
-          machinesFields.style.display = 'none';
-          document.getElementById('number_sewers').required = false;
-          document.getElementById('machines_volunteered').required = false;
-        }
-      }
-  
-      eventTypeInputs.forEach(input => {
-        input.addEventListener('change', toggleSewingFields);
-      });
-  
-      // Initialize visibility based on the default selection
-      toggleSewingFields();
-    });
+  document.addEventListener("DOMContentLoaded", () => {
+  // Get references to the sewing and machines fields sections
+  const sewingFields = document.getElementById('sewing_fields'); // Container for sewing-related fields
+  const machinesFields = document.getElementById('machines_fields'); // Container for machine-related fields
+
+  // Get all radio buttons for the "event_type" input group
+  const eventTypeInputs = document.querySelectorAll('input[name="event_type"]');
+
+  /**
+   * Toggles the visibility of the sewing and machines fields based on the selected event type.
+   * If the selected event type is "Sewing" or "Both", the fields will be displayed and required.
+   * Otherwise, the fields will be hidden and not required.
+   */
+  function toggleSewingFields() {
+    // Get the value of the currently selected radio button
+    const selectedValue = document.querySelector('input[name="event_type"]:checked').value;
+
+    // Check the selected value to determine visibility and requirement settings
+    if (selectedValue === 'Sewing' || selectedValue === 'Both') {
+      // Show the sewing and machines fields
+      sewingFields.style.display = 'block';
+      machinesFields.style.display = 'block';
+
+      // Make the related input fields required
+      document.getElementById('number_sewers').required = true;
+      document.getElementById('machines_volunteered').required = true;
+    } else {
+      // Hide the sewing and machines fields
+      sewingFields.style.display = 'none';
+      machinesFields.style.display = 'none';
+
+      // Remove the required attribute from the related input fields
+      document.getElementById('number_sewers').required = false;
+      document.getElementById('machines_volunteered').required = false;
+    }
+  }
+
+  // Add a change event listener to each radio button to handle field toggling
+  eventTypeInputs.forEach(input => {
+    input.addEventListener('change', toggleSewingFields);
+  });
+
+  // Initialize the visibility and requirement settings based on the default selection
+  toggleSewingFields();
+});
+
   </script>
   <script>
 
     document.addEventListener("DOMContentLoaded", () => {
-    const phoneInput = document.getElementById("requestee_phone");
+      // Select the phone input field by its ID
+      const phoneInput = document.getElementById("requestee_phone");
 
-    phoneInput.addEventListener("input", function () {
-      let value = this.value.replace(/\D/g, ""); // Remove all non-digit characters
+      // Add an input event listener to the phone input field
+      phoneInput.addEventListener("input", function () {
+        // Remove all non-digit characters from the input value
+        let value = this.value.replace(/\D/g, ""); 
 
-      if (value.length > 3 && value.length <= 6) {
-        value = `${value.slice(0, 3)}-${value.slice(3)}`;
-      } else if (value.length > 6) {
-        value = `${value.slice(0, 3)}-${value.slice(3, 6)}-${value.slice(6, 10)}`;
-      }
+        // Format the phone number based on the number of digits entered
+        if (value.length > 3 && value.length <= 6) {
+          // Format the input as 'XXX-XXX' when there are 4 to 6 digits
+          value = `${value.slice(0, 3)}-${value.slice(3)}`;
+        } else if (value.length > 6) {
+          // Format the input as 'XXX-XXX-XXXX' when there are more than 6 digits
+          value = `${value.slice(0, 3)}-${value.slice(3, 6)}-${value.slice(6, 10)}`;
+        }
 
-      this.value = value;
+        // Update the value of the input field with the formatted phone number
+        this.value = value;
+      });
     });
-  });
+
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   
