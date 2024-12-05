@@ -44,6 +44,8 @@
       </div>
     </div>
   </nav>
+
+  <!-- Creates the table for the Volunteers -->
 <div class="container mt-5 pt-5">
   <h1 style="text-align: center;">Volunteer Records</h1>
   <table id="volunteerTable">
@@ -62,6 +64,7 @@
         <th>Actions</th>
       </tr>
     </thead>
+    <!-- This is dynamically filled with data depending on the number of rows that come back from the database -->
     <tbody>
       <% volunteers.forEach(row => { %>
         <tr>
