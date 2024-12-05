@@ -107,7 +107,16 @@ app.get('/', (req, res) => {
   });
 
 app.get('/eventSignup/', (req, res) => {
-    res.render('eventSignup')
+
+   const states = [
+      "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia",
+      "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland",
+      "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey",
+      "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina",
+      "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
+  ];
+
+  res.render('eventSignup', {states})
 });
 
 app.get('/donationCompletion/', (req, res) => {
@@ -169,7 +178,11 @@ app.post('/volunteerSignup/', (req, res) => {
 
     // We redirect the user back to the landing page, but notify them that their submission is being processed
     .then(() => {
+      if (req.session.admin) {
+        res.redirect('/adminIndex');
+      } else {
       res.redirect('/volunteerSignup');
+      }
   })
   .catch(error => {
     console.error('Error adding Volunteer:', error);
@@ -201,7 +214,7 @@ app.get('/About/story', (req, res) => {
   res.render('About/story')
 });
 
-//This is for admin login yeah?
+//This is for admin login
 app.get('/adminLogin', (req, res) => {
     res.render('adminLogin', {error: null})
 });
@@ -364,8 +377,12 @@ app.post('/submit-event-request', (req, res) => {
   knex('events')
     .insert(data)
     .then(() => {
+      if (req.session.admin) {
+        res.redirect('/adminIndex'); // Redirect to the admin index page
+      } else {
       // Redirect to a confirmation page or send a success response
       res.redirect('/'); // Redirect to a success page
+      }
     })
     .catch((error) => {
       // Log and handle errors

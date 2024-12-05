@@ -301,8 +301,14 @@ button:hover {
           <input type="text" id="event_city" name="event_city" required>
         </div>
         <div class="form-section">
-          <label for="event_state" class="required-label">State</label>
-          <input type="text" id="event_state" name="event_state" required>
+          <label for="event_state" class="form-label">State</label>
+          <div class="col-sm-10">
+          <select name="event_state" id="event_state" required>
+              <% states.forEach(function(state) { %>
+                  <option value="<%= state %>"><%= state %></option>
+              <% }); %>
+          </select>
+          </div>
         </div>
         <div class="form-section">
           <label for="event_zip" class="required-label">ZIP Code</label>
