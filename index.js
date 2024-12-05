@@ -62,37 +62,37 @@ app.post('/chat', async (req, res) => {
 
   // General matching for key topics for chat bot
   if (question.includes("turtle shelter") || question.includes("mission") || question.includes("project")) {
-      botResponse = "The Turtle Shelter Project provides portable foam vests for individuals experiencing homelessness to help protect them from freezing temperatures. Learn more about our mission here: [Mission Statement](https://turtleshelterproject.org/mission)";
+      botResponse = "The Turtle Shelter Project provides portable foam vests for individuals experiencing homelessness to help protect them from freezing temperatures. Check out more about our website to learn more about our mission!";
   } else if (question.includes("volunteer") || question.includes("help") || question.includes("make a difference")) {
-      botResponse = "You can make a difference by volunteering! Visit our 'You Can Make a Difference' page to learn how you can help: [Volunteer Here](https://turtleshelterproject.org/you-can-make-a-difference)";
+      botResponse = "You can make a difference by volunteering! Visit our 'You Can Make a Difference' page to learn how you can help!";
   } else if (question.includes("jen") || question.includes("story") || question.includes("founder")) {
-      botResponse = "Jen's story is the inspiration behind the Turtle Shelter Project. Discover her journey and what led her to start this initiative here: [Jen's Story](https://turtleshelterproject.org/jens-story)";
+      botResponse = "Jen's story is the inspiration behind the Turtle Shelter Project. Discover her journey and what led her to start this initiative on the page for Jen's story!";
   } else if (question.includes("donate") || question.includes("donation")) {
-      botResponse = "Your donations help provide critical resources for those in need. Visit our donation page to contribute: [Donate Now](https://turtleshelterproject.org/donate)";
+      botResponse = "Your donations help provide critical resources for those in need. Visit our donation page to contribute to this wonderful cause!";
   } else if (question.includes("vest") || question.includes("vests")) {
-        botResponse = "Learn more about our innovative tech, including protective vests, on our technology page: [Our Tech](https://turtleshelterproject.org/our-tech)";
+        botResponse = "Learn more about our innovative tech, including protective vests, on our technology page!";
   } else if (question.includes("contact") || question.includes("reach out") || question.includes("get in touch")) {
-      botResponse = "You can get in touch with us by visiting our contact page: [Contact Us](https://turtleshelterproject.org/contact)";
+      botResponse = "You can get in touch with us by visiting our contact page! We respond by email, phone, or Facebook!";
   } else if (question.includes("locations") || question.includes("where you operate") || question.includes("cities")) {
-      botResponse = "The Turtle Shelter Project operates in various locations to help individuals facing homelessness. For more specific location information, please visit our locations page: [Locations](https://turtleshelterproject.org/locations)";
+      botResponse = "The Turtle Shelter Project operates in various locations to help individuals facing homelessness. For more specific location information, please sign up to be a volunteer or visit our about page to learn where we operate!";
   } else if (question.includes("impact") || question.includes("how many people helped") || question.includes("results")) {
-      botResponse = "The Turtle Shelter Project has made a significant impact, providing warmth and protection to individuals in need. For detailed impact information, visit our impact page: [Our Impact](https://turtleshelterproject.org/impact)";
+      botResponse = "The Turtle Shelter Project has made a significant impact, providing warmth and protection to individuals in need";
   } else if (question.includes("funding") || question.includes("sponsors") || question.includes("partners")) {
-      botResponse = "We are grateful to our sponsors and partners who help make this project possible. You can learn more about them here: [Our Partners](https://turtleshelterproject.org/partners)";
+      botResponse = "We are grateful to our sponsors and partners who help make this project possible. You can learn more about them on our sponsors page!";
   } else if (question.includes("how it works") || question.includes("process") || question.includes("how can I help")) {
-      botResponse = "The Turtle Shelter Project operates by distributing portable foam vests to individuals in need. You can help by donating, volunteering, or spreading awareness. Learn more here: [How It Works](https://turtleshelterproject.org/how-it-works)";
+      botResponse = "The Turtle Shelter Project operates by distributing portable foam vests to individuals in need. You can help by donating, volunteering, or spreading awareness. Learn more on our volunteer and donate pages on our website!";
   } else if (question.includes("volunteer opportunities") || question.includes("volunteering") || question.includes("get involved")) {
-      botResponse = "We offer various volunteer opportunities to get involved. Check out the volunteer page for more details: [Volunteer Opportunities](https://turtleshelterproject.org/volunteer)";
+      botResponse = "We offer various volunteer opportunities to get involved. Check out the volunteer page for more details!";
   } else if (question.includes("history") || question.includes("beginning") || question.includes("how it started")) {
-      botResponse = "The Turtle Shelter Project was founded with the mission to provide warmth and shelter to those facing homelessness. To learn about its history, visit: [Our History](https://turtleshelterproject.org/history)";
+      botResponse = "The Turtle Shelter Project was founded with the mission to provide warmth and shelter to those facing homelessness. To learn more, please visit Our Story page!";
   } else if (question.includes("donation tax") || question.includes("tax deductible")) {
-      botResponse = "Yes, your donations are tax-deductible. You can find more information about tax benefits here: [Tax Deductible Donations](https://turtleshelterproject.org/donate)";
+      botResponse = "Yes, your donations are tax-deductible. You can find more information about tax benefits by contacting us!";
   } else if (question.includes("news") || question.includes("latest updates") || question.includes("blog")) {
-      botResponse = "Stay up-to-date with the latest news and updates from the Turtle Shelter Project by visiting our blog: [Blog](https://turtleshelterproject.org/blog)";
+      botResponse = "Stay up-to-date with the latest news and updates from the Turtle Shelter Project by contacting us or following us on Facebook!";
   } else if (question.includes("faq") || question.includes("frequently asked questions")) {
-      botResponse = "For answers to common questions, visit our FAQ page: [FAQs](https://turtleshelterproject.org/faq)";
+      botResponse = "For answers to common questions, visit our FAQ page!";
   } else {
-      botResponse = "Sorry, I couldn't find information about that. Please visit our website for more details.";
+      botResponse = "Sorry, I couldn't find information about that. Please visit our website for more details. Thanks for coming :) ";
   }
 
   res.json({ response: botResponse });
