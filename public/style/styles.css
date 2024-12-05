@@ -264,4 +264,13 @@ body {
    }
  }
 
-
+ .fb-plugin-container {
+   display: flex;
+   justify-content: center; /* Centers the plugin horizontally */
+   align-items: center;    /* Centers the plugin vertically if needed */
+   height: 100vh;          /* Optional: Makes the container fill the viewport height */
+ }
+ 
+ .fb-page {
+   margin: 0 auto; /* Ensures proper centering for the plugin */
+ }
