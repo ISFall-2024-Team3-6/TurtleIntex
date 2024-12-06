@@ -1,5 +1,10 @@
 # TurtleIntex
 
+- Addy Nygard
+- Caleb Stephenson
+- Davis Larson
+- Porter Graham
+
 ## Access to the website
 
 Here is the link to the website hosted on AWS: [https://turtleshelterproject.team36.org.is404.net](https://turtleshelterproject.team36.org.is404.net)
