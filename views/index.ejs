@@ -7,7 +7,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
 
-    .background-section {
+.background-section {
       padding-top: 50px;
       background-image: url('/images/people-sewing.jpg');
       background-size: cover;
@@ -17,12 +17,16 @@
     }
     .background-section .content {
       position: absolute;
-      top: 50%;
+      bottom: 20px; /* Position the text 20px from the bottom */
       left: 50%;
-      transform: translate(-50%, -50%);
+      transform: translateX(-50%);
       color: white; /* Adjust text color for better visibility */
       text-align: center;
+      background-color: rgba(0, 0, 0, 0.5); /* Optional: Add a semi-transparent background for better readability */
+      padding: 20px; /* Optional: Add padding for better spacing */
+      border-radius: 10px; /* Optional: Add border radius for rounded corners */
     }
+
     /* Chat Icon */
     .chat-icon {
             position: fixed;
@@ -183,7 +187,12 @@
 </nav>
 
 <!-- Background Section -->
-<div class="background-section"></div>
+<div class="background-section">
+  <div class="content">
+    <h1 style="color: #edf0ed;">Welcome to the Turtle Shelter Project</h1>
+    <span style="color: #e2ece3; font-size: 34px;">Aiding the Homeless One Vest at a Time</span>
+  </div>
+</div>
 
 <!-- Event & Volunteer Signup Section -->
 <div class="text-center mt-4">
