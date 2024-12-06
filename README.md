@@ -36,3 +36,9 @@ Videos for Grading-
 Github repo-
 [https://github.com/ISFall-2024-Team3-6/TurtleIntex](https://github.com/ISFall-2024-Team3-6/TurtleIntex)
 
+PgAdmin server connection:
+
+- Hostname: "awseb-e-ivmpumma37-stack-awsebrdsdatabase-upatlbu0rklt.cp6ss68iifrg.us-east-1.rds.amazonaws.com"
+- Username: "intexUser"
+- Password: "Thisisforintex1!"
+- using the ebdb database
