@@ -863,8 +863,8 @@ app.post('/updateAdmin/:id', (req, res) => {
   app.post('/updateVolunteer/:id', (req, res) => {
     const id = req.params.id; // this is how you pull out the parameter TO SEE WHAT volunteer YOU ARE DEALING WITH
   
-    const first_name = req.body.volunteer_first_name
-    const last_name = req.body.volunteer_last_name
+    const first_name = req.body.first_name
+    const last_name = req.body.last_name
     const volunteer_email = req.body.volunteer_email
     const volunteer_phone = req.body.volunteer_phone
     const volunteer_street_address = req.body.volunteer_address
